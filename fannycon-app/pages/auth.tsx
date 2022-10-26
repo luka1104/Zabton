@@ -4,6 +4,7 @@ import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import RPC from "./api/ethersRPC";
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';
 
 function App() {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
@@ -16,8 +17,8 @@ function App() {
         clientId,
         chainConfig: {
           chainNamespace: CHAIN_NAMESPACES.EIP155,
-          chainId: "0x1",
-          rpcTarget: "https://rpc.ankr.com/eth",
+          chainId: "0x13881",
+          rpcTarget: API_URL,
         },
       });
 
