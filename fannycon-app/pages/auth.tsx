@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
-import RPC from "../src/lib/web3auth/web3RPC";
+import RPC from "./api/ethersRPC";
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 
@@ -16,8 +16,8 @@ function App() {
         clientId,
         chainConfig: {
           chainNamespace: CHAIN_NAMESPACES.EIP155,
-          chainId: "0x13881",
-          rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
+          chainId: "0x1",
+          rpcTarget: "https://rpc.ankr.com/eth",
         },
       });
 

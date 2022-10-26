@@ -1,11 +1,15 @@
-import React from 'react'
+import type { NextPage } from 'next';
+import dynamic from "next/dynamic";
 
-const Home = () => {
-  return (
-    <div>
-      index
-    </div>
-  )
+const App = dynamic(
+  () => {
+    return import("./auth");
+  },
+  { ssr: false }
+);
+
+const Home: NextPage = () => {
+  return <App />;
 }
 
 export default Home
