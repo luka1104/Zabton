@@ -1,15 +1,11 @@
-import type { NextPage } from 'next';
-import dynamic from "next/dynamic";
+import React from 'react'
 
-const App = dynamic(
-  () => {
-    return import("./App");
-  },
-  { ssr: false }
-);
-
-const Home: NextPage = () => {
-  return <App />;
+const Home = () => {
+  return (
+    <div>
+      index
+    </div>
+  )
 }
 
 export default Home
