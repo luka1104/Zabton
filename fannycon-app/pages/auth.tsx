@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
-import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
+import { SafeEventEmitterProvider } from "@web3auth/base";
 import RPC from "./api/ethersRPC";
 import { NextPage } from "next";
 
@@ -8,7 +8,7 @@ const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';
 
 const Auth: NextPage = () => {
-  const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
+  const [web3auth, setWeb3auth] = useState<any>(null);
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(null);
 
   const init = async () => {
@@ -16,7 +16,7 @@ const Auth: NextPage = () => {
       const web3auth = new Web3Auth({
         clientId,
         chainConfig: {
-          chainNamespace: CHAIN_NAMESPACES.EIP155,
+          chainNamespace: 'eip155',
           chainId: "0x13881",
           rpcTarget: API_URL,
         },
