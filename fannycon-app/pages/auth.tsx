@@ -11,6 +11,8 @@ function App() {
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(null);
 
   useEffect(() => {
+    console.log(clientId, API_URL);
+
     const init = async () => {
       try {
       const web3auth = new Web3Auth({
