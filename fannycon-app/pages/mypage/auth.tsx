@@ -1,16 +1,21 @@
 import { NextPage } from 'next'
 import React from 'react'
 import dynamic from "next/dynamic";
+import { Box } from '@chakra-ui/react'
 
-const App = dynamic(
+const AuthButton = dynamic(
   () => {
-    return import("../../src/components/auth/auth");
+    return import("../../components/auth/auth");
   },
   { ssr: false }
 );
 
 const Auth: NextPage = () => {
-  return <App />;
+  return (
+    <Box>
+      <AuthButton />
+    </Box>
+  )
 }
 
 export default Auth

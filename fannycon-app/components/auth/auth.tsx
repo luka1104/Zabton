@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
-import RPC from "../../../pages/api/ethersRPC";
+import RPC from "../../pages/api/ethersRPC";
 import { NextPage } from "next";
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
