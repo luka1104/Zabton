@@ -1,15 +1,11 @@
 import type { NextPage } from 'next';
-import dynamic from "next/dynamic";
-
-const App = dynamic(
-  () => {
-    return import("./auth");
-  },
-  { ssr: false }
-);
 
 const Home: NextPage = () => {
-  return <App />;
+  return (
+    <>
+     index
+    </>
+  );
 }
 
 export default Home

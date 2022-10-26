@@ -1,34 +1,42 @@
 import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
-import { SafeEventEmitterProvider } from "@web3auth/base";
-import RPC from "./api/ethersRPC";
+import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
+import RPC from "../../../pages/api/ethersRPC";
 import { NextPage } from "next";
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';
 
 const Auth: NextPage = () => {
-  const [web3auth, setWeb3auth] = useState<any>(null);
+  const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(null);
 
-  const init = async () => {
-    try {
+  useEffect(() => {
+    console.log(clientId, API_URL);
+
+    const init = async () => {
+      try {
       const web3auth = new Web3Auth({
         clientId,
         chainConfig: {
-          chainNamespace: 'eip155',
+          chainNamespace: CHAIN_NAMESPACES.EIP155,
           chainId: "0x13881",
           rpcTarget: API_URL,
         },
       });
-      setWeb3auth(web3auth);
-      await web3auth.initModal(); if (web3auth.provider) {
-        setProvider(web3auth.provider);
+
+          setWeb3auth(web3auth);
+
+      await web3auth.initModal();if (web3auth.provider) {
+            setProvider(web3auth.provider);
+          };
+        } catch (error) {
+          console.error(error);
+        }
       };
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+      init();
+  }, []);
 
   const login = async () => {
     console.log(web3auth);
@@ -151,19 +159,10 @@ const Auth: NextPage = () => {
   );
 
   const unloggedInView = (
-    <>
     <button onClick={login} className="card">
       Login
     </button>
-    <button onClick={init}>
-      init
-    </button>
-    </>
   );
-
-  useEffect(() => {
-    console.log(clientId, API_URL);
-  }, []);
 
   return (
     <div className="container">
