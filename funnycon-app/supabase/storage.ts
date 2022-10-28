@@ -1,7 +1,8 @@
 import { supabaseClient } from "../lib/supabase";
+import { v4 as uuidv4 } from "uuid"
 
 type UploadStorageArgs = {
-  fileList: FileList;
+  image: string;
   bucketName: any;
 };
 
@@ -14,28 +15,27 @@ type GetStorageFileURLBody = {
   pathName: string;
 };
 
-const uuid = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
-}
+// const uuid = () => {
+//   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+//     var r = (Math.random() * 16) | 0,
+//       v = c == 'x' ? r : (r & 0x3) | 0x8
+//     return v.toString(16)
+//   })
+// }
 
 export const uploadStorage = async ({
-  fileList,
+  image,
   bucketName,
 }: UploadStorageArgs): Promise<ReturnUploadStorage> => {
   try {
-    const file = fileList[0];
-    const pathName = `${uuid()}`;
+    const file = image;
+    const pathName = `theme/${uuidv4()}`;
     const { data, error } = await supabaseClient.storage
       .from(bucketName)
       .upload(pathName, file);
     if (error) throw error;
     return {
-      //@ts-ignore
-			pathname: data?.Key.substring(bucketName.length + 1) ?? null
+			pathname: data?.path.substring(bucketName.length + 1) ?? null
 		}
 	} catch (error) {
 		console.error({ error });

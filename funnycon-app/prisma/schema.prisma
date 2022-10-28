@@ -10,7 +10,7 @@ generator client {
 model Theme {
   id           Int      @id @default(autoincrement())
   ownerAddress String
-  title        String
+  contents     String
   imagePath    String?
   type         Int      @default(1)
   Answer       Answer[]
