@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import NextLink from 'next/link'
 import React from 'react'
 import { Center, Icon, Divider } from '@chakra-ui/react'
@@ -6,19 +5,19 @@ import { RiQuestionnaireLine } from 'react-icons/ri'
 import { AiOutlineMessage, AiOutlineUser } from 'react-icons/ai'
 import { HiOutlineClipboardDocumentList } from 'react-icons/hi2'
 
-const Footer: NextPage = () => {
+const Footer: React.FC = () => {
   return (
     <>
       <Center bottom='0' position='fixed' w='100%' h='60px' bg='#F445BE' border='3px solid #242424' fontSize='2xl' color='black' gap={8}>
-        <NextLink href='/' passHref>
+        <NextLink href='/theme/create' passHref>
           <Icon fontSize='30px' as={RiQuestionnaireLine} />
         </NextLink>
         <Divider orientation='vertical' h='3vh' border='1.5px solid black' opacity='1' />
-        <NextLink href='/' passHref>
+        <NextLink href='/answer/select' passHref>
           <Icon fontSize='30px' as={AiOutlineMessage} />
         </NextLink>
         <Divider orientation='vertical' h='3vh' border='1.5px solid black' opacity='1' />
-        <NextLink href='/' passHref>
+        <NextLink href='/validation/select' passHref>
           <Icon fontSize='30px' as={HiOutlineClipboardDocumentList} />
         </NextLink>
         <Divider orientation='vertical' h='3vh' border='1.5px solid black' opacity='1' />
