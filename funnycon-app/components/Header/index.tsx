@@ -1,12 +1,16 @@
-import { NextPage } from 'next'
 import React from 'react'
-import { Center } from '@chakra-ui/react'
+import { Center, Text } from '@chakra-ui/react'
+import NextLink from 'next/link'
 
-const Header: NextPage = () => {
+const Header: React.FC = () => {
   return (
     <>
       <Center top='0' position='fixed' w='100%' h='60px' bg='#F445BE' border='3px solid #242424' fontSize='2xl'>
-        FunnyCon
+        <NextLink href='/' passHref>
+          <Text color='white'>
+            FunnyCon
+          </Text>
+        </NextLink>
       </Center>
     </>
   )
