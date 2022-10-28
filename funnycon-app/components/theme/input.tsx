@@ -91,6 +91,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
             </Center>
             <Center>
               <Input
+                color='black'
                 bg='white'
                 placeholder={placeHolder}
                 type='text'
@@ -143,7 +144,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 right='10px'
                 fontSize='3xl'
                 as={AiOutlineCloseCircle}
-                onClick={() => {setPreview('')}}
+                onClick={() => {setPreview(''), setImage('')}}
               />
             </Box>
             <Center color='black' mt='20px' fontWeight='bold' fontSize='xl' mb='10px'>
@@ -151,6 +152,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
             </Center>
             <Center>
               <Input
+                color='black'
                 bg='white'
                 placeholder={placeHolder}
                 type='text'

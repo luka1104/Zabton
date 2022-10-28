@@ -27,7 +27,7 @@ export const uploadStorage = async ({
       .upload(pathName, file);
     if (error) throw error;
     return {
-			pathname: data?.path.substring(bucketName.length + 1) ?? null
+			pathname: data?.path ?? null
 		}
 	} catch (error) {
 		console.error({ error });

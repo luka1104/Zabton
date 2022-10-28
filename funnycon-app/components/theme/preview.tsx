@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Image from 'next/image'
 import { Box, Center, Icon, Button } from '@chakra-ui/react'
 import { AiOutlineLeft } from 'react-icons/ai'
 import axios from 'axios'
 import { uploadStorage } from '../../supabase/storage'
+import { AccountContext } from 'contexts/account'
 
 interface Props {
   setStep: Function
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) => {
+  const { address } = useContext(AccountContext)
   const [preview, setPreview] = useState<string>('')
 
   const handleUploadStorage = async (image: string | null) => {
@@ -29,7 +31,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
     if(image) {
       const pathname = await handleUploadStorage(image)
       const data = {
-        'ownerAddress': '',
+        'ownerAddress': address ? address : '',
         'contents': contents ? contents : '',
         'imagePath': pathname,
         'type': selectedType,
@@ -43,10 +45,9 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
       return new Promise((resolve, reject) => {
         axios.post('/api/postTheme', data, config)
         .then(response => {
-          if(response.status !== 200) {
-            throw Error("Server error")
-          }
+          if(response.status !== 200) throw Error("Server error")
           resolve(response)
+          window.location.replace('/')
         })
         .catch(e => {
           reject(e);
@@ -68,10 +69,9 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
       return new Promise((resolve, reject) => {
         axios.post('/api/postTheme', data, config)
         .then(response => {
-          if(response.status !== 200) {
-            throw Error("Server error")
-          }
+          if(response.status !== 200) throw Error("Server error")
           resolve(response)
+          window.location.replace('/')
         })
         .catch(e => {
           reject(e)
@@ -117,7 +117,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
         ) : selectedType === 2 ? (
           <>
             <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black' >
-              <Center w='100%' h='100%' fontWeight='bold' fontSize='30px' textAlign='center'>
+              <Center w='100%' h='100%' fontWeight='bold' fontSize='30px' textAlign='center' color='black'>
                 {contents}
               </Center>
             </Box>
@@ -150,6 +150,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
                 textAlign='center'
                 position='absolute'
                 top={window.innerWidth - 160}
+                color='black'
               >
                 {contents}
               </Box>
