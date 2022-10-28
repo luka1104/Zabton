@@ -1,0 +1,25 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Theme {
+  id           Int      @id @default(autoincrement())
+  ownerAddress String
+  title        String
+  imagePath    String?
+  type         Int      @default(1)
+  Answer       Answer[]
+}
+
+model Answer {
+  id           Int    @id @default(autoincrement())
+  ownerAddress String
+  themeId      Int
+  contents     String
+  theme        Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade)
+}
