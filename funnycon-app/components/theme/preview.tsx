@@ -108,6 +108,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
                 colorScheme='pink'
                 w='40%'
                 mt='30px'
+                mb='30px'
                 onClick={handleSubmit}
               >
                 これでOK！
@@ -126,6 +127,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
                 colorScheme='pink'
                 w='40%'
                 mt='30px'
+                mb='30px'
                 onClick={handleSubmit}
               >
                 これでOK！
@@ -134,23 +136,24 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
           </>
         ) : (
           <>
-            <Box position='relative'>
-              <Image
-                src={preview}
-                alt="preview"
-                width={window.innerWidth}
-                height={window.innerHeight}
-              />
+            <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+              <Center>
+                <Image
+                  src={preview}
+                  alt="preview"
+                  width={window.innerWidth * 0.7}
+                  height={window.innerWidth * 0.7}
+                />
+              </Center>
               <Box
                 w='100%'
                 h='100%'
                 p='5%'
+                color='black'
                 fontWeight='bold'
-                fontSize='30px'
+                fontSize='19px'
                 textAlign='center'
                 position='absolute'
-                top={window.innerWidth - 160}
-                color='black'
               >
                 {contents}
               </Box>
@@ -160,6 +163,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
                 colorScheme='pink'
                 w='40%'
                 mt='30px'
+                mb='30px'
                 onClick={handleSubmit}
               >
                 これでOK！

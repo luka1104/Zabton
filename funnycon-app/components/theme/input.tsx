@@ -58,7 +58,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 src={preview ? preview : inputForm}
                 alt="image form"
                 width={window.innerWidth}
-                height={window.innerHeight}
+                height={window.innerWidth}
                 //@ts-ignore
                 onClick={() => {preview ? null : inputRef.current.click()}}
               />
@@ -78,6 +78,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 colorScheme='pink'
                 w='40%'
                 mt='30px'
+                mb='30px'
                 onClick={() => {setStep(2)}}
               >
                 次へ
@@ -108,6 +109,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 colorScheme='pink'
                 w='40%'
                 mt='30px'
+                mb='30px'
                 onClick={() => {setStep(2)}}
               >
                 次へ
@@ -133,7 +135,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 src={preview ? preview : inputForm}
                 alt="image form"
                 width={window.innerWidth}
-                height={window.innerHeight}
+                height={window.innerWidth}
                 //@ts-ignore
                 onClick={() => {preview ? null : inputRefText.current.click()}}
               />
@@ -169,6 +171,7 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 colorScheme='pink'
                 w='40%'
                 mt='30px'
+                mb='30px'
                 onClick={() => {setStep(2)}}
               >
                 次へ

@@ -74,7 +74,6 @@ const Card: React.FC<Props> = ({ theme, w }) => {
                   fontSize='19px'
                   textAlign='center'
                   position='absolute'
-                  // top={w - 160}
                 >
                   {theme.contents}
                 </Box>
