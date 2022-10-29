@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import React from 'react'
-import { Box } from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react'
+import { Box, SimpleGrid } from '@chakra-ui/react'
 import type { GetServerSideProps } from "next";
 import prisma from 'lib/prisma'
 import { Theme } from 'interfaces'
@@ -25,19 +25,25 @@ interface PropTypes {
 }
 
 const Home: NextPage<PropTypes> = ({ themes }) => {
-  const randThemes =  shuffleArray(themes)
-  console.log(randThemes);
+  // const randThemes =  shuffleArray(themes)
+  const [width, setWidth] = useState<number>(0)
+  useEffect(() => {
+    setWidth(window.innerWidth * 0.45)
+  }, [])
   return (
     <>
       <Box mt='60px' color='black'>
-        {randThemes.map((val: any, key: any) => {
-          return (
-            <Card
-              theme={val}
-              key={key}
-            />
-          )
-        })}
+        <SimpleGrid columns={2} spacing={5}>
+          {themes.map((val: any, key: any) => {
+            return (
+              <Card
+                theme={val}
+                w={width}
+                key={key}
+              />
+            )
+          })}
+        </SimpleGrid>
       </Box>
     </>
   );

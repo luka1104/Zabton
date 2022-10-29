@@ -6,10 +6,10 @@ import { getStorageFileURL } from 'supabase/storage'
 
 interface Props {
   theme: Theme
+  w: number
 }
-const Card: React.FC<Props> = ({ theme }) => {
+const Card: React.FC<Props> = ({ theme, w }) => {
   const [imagePath, setImagePath] = useState<string>('')
-  const [width, setWidth] = useState<number>(0)
 
   const handleRenderImage = useCallback(async () => {
     if (!theme.imagePath) return;
@@ -22,60 +22,72 @@ const Card: React.FC<Props> = ({ theme }) => {
   }, []);
 
   useEffect(() => {
+    if(theme.type === 2) return
     handleRenderImage()
-    setWidth(window.innerWidth)
-  }, [])
+  }, [theme])
 
-  if(width === 0) return (
+  if(w === 0) return (
     <></>
   )
 
-  return (
+  if(theme.type !== 2 && !imagePath) return (
+    <></>
+  )
+
+  if(theme) return (
     <>
-      <Box mt='20px'>
-        {theme.type === 1 ? (
-          <>
-            <Image
-              src={imagePath}
-              alt="preview"
-              width={window.innerWidth}
-              height={window.innerHeight}
-            />
-          </>
-        ) : theme.type === 2 ? (
-          <>
-            <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black' >
-              <Center w='100%' h='100%' fontWeight='bold' fontSize='30px' textAlign='center'>
-                {theme.contents}
-              </Center>
-            </Box>
-          </>
-        ) : (
-          <>
-            <Box position='relative'>
+      <Center mt='20px'>
+        <Box w={w} h={w} bg='white' border='2px solid black'>
+          {theme.type === 1 ? (
+            <Center h={w}>
               <Image
                 src={imagePath}
                 alt="preview"
-                width={window.innerWidth}
-                height={window.innerHeight}
+                width={w}
+                height={w}
               />
-              <Box
-                w='100%'
-                h='100%'
-                p='5%'
-                fontWeight='bold'
-                fontSize='30px'
-                textAlign='center'
-                position='absolute'
-                top={window.innerWidth - 160}
-              >
-                {theme.contents}
+            </Center>
+          ) : theme.type === 2 ? (
+            <>
+              <Box>
+                <Center w={w} h={w} fontWeight='bold' fontSize='30px' textAlign='center'>
+                  {theme.contents}
+                </Center>
               </Box>
-            </Box>
-          </>
-        )}
-      </Box>
+            </>
+          ) : theme.type === 3 ? (
+            <>
+              <Box position='relative'>
+                <Center>
+                  <Image
+                    src={imagePath}
+                    alt="preview"
+                    width={w * 0.7}
+                    height={w * 0.7}
+                  />
+                </Center>
+                <Box
+                  w='100%'
+                  h='100%'
+                  p='5%'
+                  fontWeight='bold'
+                  fontSize='19px'
+                  textAlign='center'
+                  position='absolute'
+                  // top={w - 160}
+                >
+                  {theme.contents}
+                </Box>
+              </Box>
+            </>
+          ) : null}
+        </Box>
+      </Center>
     </>
+  )
+
+  return (
+    <></>
   )
 }
 
