@@ -75,13 +75,18 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
             <Center>
               <Button
                 disabled={!image}
-                colorScheme='pink'
-                w='40%'
+                color='black'
+                bg='white'
+                border='1px solid black'
+                borderRadius='30px'
+                w='80%'
+                h='60px'
+                fontSize='xl'
                 mt='30px'
                 mb='30px'
                 onClick={() => {setStep(2)}}
               >
-                次へ
+                確認画面へ
               </Button>
             </Center>
           </>
@@ -106,13 +111,18 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
             <Center>
               <Button
                 disabled={!contents}
-                colorScheme='pink'
-                w='40%'
+                color='black'
+                bg='white'
+                border='1px solid black'
+                borderRadius='30px'
+                w='80%'
+                h='60px'
+                fontSize='xl'
                 mt='30px'
                 mb='30px'
                 onClick={() => {setStep(2)}}
               >
-                次へ
+                確認画面へ
               </Button>
             </Center>
           </>
@@ -168,13 +178,18 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
             <Center>
               <Button
                 disabled={!image || !contents}
-                colorScheme='pink'
-                w='40%'
+                color='black'
+                bg='white'
+                border='1px solid black'
+                borderRadius='30px'
+                w='80%'
+                h='60px'
+                fontSize='xl'
                 mt='30px'
                 mb='30px'
                 onClick={() => {setStep(2)}}
               >
-                次へ
+                確認画面へ
               </Button>
             </Center>
           </>
