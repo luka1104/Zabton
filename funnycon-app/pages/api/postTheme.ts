@@ -9,6 +9,7 @@ const postTheme = async (data: Theme) => {
         contents: data.contents ? data.contents : '',
         imagePath: data.imagePath,
         type: data.type,
+        deadline: data.deadline,
       },
     });
     return resp
@@ -22,6 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     contents: req.body.contents,
     imagePath: req.body.imagePath,
     type: JSON.parse(req.body.type),
+    deadline: req.body.deadline,
   }
   console.log(data);
   const resp = await postTheme(data)

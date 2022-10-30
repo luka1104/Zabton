@@ -70,6 +70,7 @@ const Card: React.FC<Props> = ({ theme, w }) => {
                   color='black'
                   w='100%'
                   h='100%'
+                  p='5%'
                   fontWeight='bold'
                   fontSize='19px'
                   textAlign='center'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Image from 'next/image'
-import { Box, Center, Icon, Button } from '@chakra-ui/react'
+import { Box, Center, Icon, Button, Select } from '@chakra-ui/react'
 import { AiOutlineLeft } from 'react-icons/ai'
 import axios from 'axios'
 import { uploadStorage } from '../../supabase/storage'
@@ -16,6 +16,7 @@ interface Props {
 const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) => {
   const { address } = useContext(AccountContext)
   const [preview, setPreview] = useState<string>('')
+  const [deadline, setDeadline] = useState<number>(2)
 
   const handleUploadStorage = async (image: string | null) => {
     if (!image) return
@@ -27,7 +28,29 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
     return pathname
   }
 
+  const calcDeadline = () => {
+    var time = new Date
+    switch (deadline) {
+      case 1:
+        time.setHours(time.getHours() + 3)
+        break;
+      case 2:
+        time.setDate(time.getDate() + 1)
+        break;
+      case 3:
+        time.setDate(time.getDate() + 3)
+        break;
+      case 4:
+        time.setDate(time.getDate() + 7)
+        break;
+      default:
+        time
+    }
+    return time
+  }
+
   const handleSubmit = async () => {
+    const deadlineDateTime = calcDeadline()
     if(image) {
       const pathname = await handleUploadStorage(image)
       const data = {
@@ -35,6 +58,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
         'contents': contents ? contents : '',
         'imagePath': pathname,
         'type': selectedType,
+        'deadline': deadlineDateTime,
       }
       const config = {
         headers: {
@@ -59,6 +83,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
         'ownerAddress': '',
         'contents': contents,
         'type': selectedType,
+        'deadline': deadlineDateTime,
       }
       const config = {
         headers: {
@@ -88,32 +113,19 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
 
   return (
     <>
-      <Box pt='60px'>
-        <Center color='black' mt='20px' fontWeight='bold' fontSize='2xl'>
-        <Icon position='absolute' left='20px' float='left' as={AiOutlineLeft} onClick={() => {setStep(1)}} />
-          お題のプレビュー
-        </Center>
-      </Box>
-      <Box mt='20px'>
+      <Box pt='80px'>
         {selectedType === 1 ? (
           <>
-            <Image
-              src={preview}
-              alt="preview"
-              width={window.innerWidth}
-              height={window.innerHeight}
-            />
-            <Center>
-              <Button
-                colorScheme='pink'
-                w='40%'
-                mt='30px'
-                mb='30px'
-                onClick={handleSubmit}
-              >
-                これでOK！
-              </Button>
-            </Center>
+            <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+              <Center w='100%' h='100%'>
+                <Image
+                  src={preview}
+                  alt="preview"
+                  width={window.innerWidth}
+                  height={window.innerWidth}
+                />
+              </Center>
+            </Box>
           </>
         ) : selectedType === 2 ? (
           <>
@@ -122,17 +134,6 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
                 {contents}
               </Center>
             </Box>
-            <Center>
-              <Button
-                colorScheme='pink'
-                w='40%'
-                mt='30px'
-                mb='30px'
-                onClick={handleSubmit}
-              >
-                これでOK！
-              </Button>
-            </Center>
           </>
         ) : (
           <>
@@ -141,8 +142,8 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
                 <Image
                   src={preview}
                   alt="preview"
-                  width={window.innerWidth * 0.7}
-                  height={window.innerWidth * 0.7}
+                  width={window.innerWidth * 0.8}
+                  height={window.innerWidth * 0.8}
                 />
               </Center>
               <Box
@@ -158,19 +159,54 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
                 {contents}
               </Box>
             </Box>
-            <Center>
-              <Button
-                colorScheme='pink'
-                w='40%'
-                mt='30px'
-                mb='30px'
-                onClick={handleSubmit}
-              >
-                これでOK！
-              </Button>
-            </Center>
           </>
         )}
+        <Center color='black' mt='20px' fontSize='20px' fontWeight='bold' gap='5'>
+          回答期限
+          <Select
+            placeholder='期限を選択'
+            w='40%'
+            bg='white'
+            fontWeight='bold'
+            value={deadline}
+            onChange={(e) => {setDeadline(JSON.parse(e.target.value))}}
+          >
+            <option value='1'>1時間</option>
+            <option value='2'>24時間</option>
+            <option value='3'>3日間</option>
+            <option value='4'>1週間</option>
+          </Select>
+        </Center>
+        <Center gap='10'>
+          <Button
+            color='black'
+            bg='white'
+            border='1px solid black'
+            borderRadius='30px'
+            w='40%'
+            h='60px'
+            fontSize='xl'
+            mt='30px'
+            mb='30px'
+            onClick={() => {setStep(1)}}
+          >
+            戻る
+          </Button>
+          <Button
+            color='black'
+            bg='white'
+            border='1px solid black'
+            borderRadius='30px'
+            w='40%'
+            h='60px'
+            fontSize='xl'
+            mt='30px'
+            mb='30px'
+            onClick={handleSubmit}
+          >
+            確定
+          </Button>
+        </Center>
       </Box>
     </>
   )

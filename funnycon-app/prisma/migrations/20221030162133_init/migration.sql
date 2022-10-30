@@ -2,9 +2,10 @@
 CREATE TABLE "Theme" (
     "id" SERIAL NOT NULL,
     "ownerAddress" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
+    "contents" TEXT,
     "imagePath" TEXT,
     "type" INTEGER NOT NULL DEFAULT 1,
+    "deadline" TEXT NOT NULL,
 
     CONSTRAINT "Theme_pkey" PRIMARY KEY ("id")
 );

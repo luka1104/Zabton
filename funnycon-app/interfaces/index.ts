@@ -4,6 +4,7 @@ export interface Theme {
   contents?: string
   imagePath?: string
   type: number
+  deadline: string
   Answer?: Answer[]
 }
 

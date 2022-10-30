@@ -10,9 +10,10 @@ generator client {
 model Theme {
   id           Int      @id @default(autoincrement())
   ownerAddress String
-  contents     String
+  contents     String?
   imagePath    String?
   type         Int      @default(1)
+  deadline     String
   Answer       Answer[]
 }
 

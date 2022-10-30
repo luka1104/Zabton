@@ -34,16 +34,9 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
 
   return (
     <>
-      <Box pt='60px'>
-        <Center color='black' mt='20px' fontWeight='bold' fontSize='2xl'>
-        <Icon position='absolute' left='20px' float='left' as={AiOutlineLeft} onClick={() => {setStep(0)}} />
-          お題を作成
-        </Center>
+      <Box pt='80px'>
         {selectedType === 1 ? (
           <>
-            <Center color='black' mt='20px' fontWeight='bold' fontSize='xl' mb='10px'>
-              画像を選択
-            </Center>
             <Input
               hidden
               type='file'
@@ -54,15 +47,20 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
               }}
             />
             <Box position='relative'>
-              <Image
-                src={preview ? preview : inputForm}
-                alt="image form"
-                width={window.innerWidth}
-                height={window.innerWidth}
-                //@ts-ignore
-                onClick={() => {preview ? null : inputRef.current.click()}}
-              />
+              <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+                <Center w='100%' h='100%'>
+                <Image
+                    src={preview ? preview : inputForm}
+                    alt="image form"
+                    width={window.innerWidth}
+                    height={window.innerWidth}
+                    //@ts-ignore
+                    onClick={() => {preview ? null : inputRef.current.click()}}
+                  />
+                </Center>
+              </Box>
               <Icon
+                color='black'
                 display={preview ? 'block' : 'none'}
                 position='absolute'
                 top='10px'
@@ -92,17 +90,23 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
           </>
         ) : selectedType === 2 ? (
           <>
-            <Center color='black' mt='40px' fontWeight='bold' fontSize='xl' mb='20px'>
-              文字を入力
-            </Center>
-            <Center>
+            <Center color='black'>
               <Input
                 color='black'
                 bg='white'
+                _placeholder={{
+                  color: 'gray'
+                }}
                 placeholder={placeHolder}
                 type='text'
-                w='80%'
+                w={window.innerWidth}
+                h={window.innerWidth}
                 value={contents}
+                border='1px solid black'
+                borderRadius='0px'
+                fontSize='30px'
+                fontWeight='bold'
+                textAlign='center'
                 onFocus={() => {setPlaceHolder('お題を入力')}}
                 onBlur={() => {setPlaceHolder('Aa')}}
                 onChange={(e) => {setContents(e.target.value)}}
@@ -128,9 +132,6 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
           </>
         ) : (
           <>
-            <Center color='black' mt='20px' fontWeight='bold' fontSize='xl' mb='10px'>
-              画像を選択
-            </Center>
             <Input
               hidden
               type='file'
@@ -140,41 +141,49 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 previewImage(e)
               }}
             />
-            <Box position='relative'>
-              <Image
-                src={preview ? preview : inputForm}
-                alt="image form"
-                width={window.innerWidth}
-                height={window.innerWidth}
-                //@ts-ignore
-                onClick={() => {preview ? null : inputRefText.current.click()}}
-              />
-              <Icon
-                display={preview ? 'block' : 'none'}
+            <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+              <Center>
+                <Image
+                  src={preview ? preview : inputForm}
+                  alt="image form"
+                  width={window.innerWidth * 0.8}
+                  height={window.innerWidth * 0.8}
+                  //@ts-ignore
+                  onClick={() => {preview ? null : inputRefText.current.click()}}
+                />
+                <Icon
+                  display={preview ? 'block' : 'none'}
+                  color='black'
+                  position='absolute'
+                  top='10px'
+                  right='10px'
+                  fontSize='3xl'
+                  as={AiOutlineCloseCircle}
+                  onClick={() => {setPreview(''), setImage('')}}
+                />
+              </Center>
+              <Box
+                w='100%'
+                h='100%'
                 position='absolute'
-                top='10px'
-                right='10px'
-                fontSize='3xl'
-                as={AiOutlineCloseCircle}
-                onClick={() => {setPreview(''), setImage('')}}
-              />
+              >
+                <Input
+                  color='black'
+                  fontWeight='bold'
+                  fontSize='19px'
+                  bg='white'
+                  placeholder={placeHolder}
+                  type='text'
+                  textAlign='center'
+                  h={window.innerWidth * 0.19}
+                  w='100%'
+                  value={contents}
+                  onFocus={() => {setPlaceHolder('お題を入力')}}
+                  onBlur={() => {setPlaceHolder('Aa')}}
+                  onChange={(e) => {setContents(e.target.value)}}
+                />
+              </Box>
             </Box>
-            <Center color='black' mt='20px' fontWeight='bold' fontSize='xl' mb='10px'>
-              文字を入力
-            </Center>
-            <Center>
-              <Input
-                color='black'
-                bg='white'
-                placeholder={placeHolder}
-                type='text'
-                w='80%'
-                value={contents}
-                onFocus={() => {setPlaceHolder('お題を入力')}}
-                onBlur={() => {setPlaceHolder('Aa')}}
-                onChange={(e) => {setContents(e.target.value)}}
-              />
-            </Center>
             <Center>
               <Button
                 disabled={!image || !contents}
