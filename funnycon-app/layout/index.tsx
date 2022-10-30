@@ -9,7 +9,7 @@ type LayoutProps = Required<{
 
 export const Layout = ({ children }: LayoutProps) => (
   <>
-    <Box bg='#F1F2E6' minH='93vh'>
+    <Box bg='#F1F2E6' minH='100vh' w='100vw'>
       <Header />
         <Box marginBottom='60px'>
           {children}

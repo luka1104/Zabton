@@ -4,7 +4,7 @@ import { Box, SimpleGrid } from '@chakra-ui/react'
 import type { GetServerSideProps } from "next";
 import prisma from 'lib/prisma'
 import { Theme } from 'interfaces'
-import { shuffleArray } from 'utils'
+// import { shuffleArray } from 'utils'
 import Card from 'components/theme/card'
 
 type Props = {
