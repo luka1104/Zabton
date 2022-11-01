@@ -1,11 +1,18 @@
 import { NextPage } from 'next'
-import React, { useContext, useState } from 'react'
-import { Box, Center, Button, Text, Input, Link } from '@chakra-ui/react'
+import React, { useContext, useState, useRef } from 'react'
+import { Box, Center, Button, Text, Input, Link, Flex, Icon, Image, useDisclosure } from '@chakra-ui/react'
 import { AccountContext } from 'contexts/account'
 import axios from 'axios'
+import { CiBellOn } from 'react-icons/ci'
+import { IoSettingsOutline } from 'react-icons/io5'
+import ProgressBar from "@ramonak/react-progress-bar";
+import { useRouter } from 'next/router'
 
 const Auth: NextPage = () => {
+  const router = useRouter()
   const { login, logout, address, user, loading } = useContext(AccountContext)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const finalRef = useRef(null)
   const [nickname, setNickname] = useState<string>('')
   const [birthday, setBirthday] = useState<string>('')
 
@@ -140,23 +147,48 @@ const Auth: NextPage = () => {
 
   if(!loading) return (
     <>
-      <Box pt='60px'>
-        <Center color='black' mt='20px' fontWeight='bold' fontSize='3xl'>
-          ログアウト
-        </Center>
-        <Center h='60vh'>
-          <Box>
-            <Button bg='white' h='140px' borderRadius='0' border='1px solid black' onClick={() => {logout()}}>
-              <Text color='black'>
-                久しぶりに<br />
-                ログインしたら<br />
-                最悪だった。<br />
-                なんで？
-              </Text>
+      <Box pt='60px' ref={finalRef}>
+        <Center color='black' pt='40px' justifyContent='space-between' w='80%' m='0 auto'>
+          <Text fontWeight='bold' fontSize='20px'>{user?.nickname}</Text>
+          <Flex gap='2'>
+            <Button border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px'>
+              Lv.{user?.level}
             </Button>
-            <Text color='black' fontWeight='bold' fontSize='sm' mt='10px'>
-              ↑クリックしてログアウト
-            </Text>
+            <Button border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' w='20px' onClick={() => {router.replace('/mypage/notifications')}}>
+              <Icon as={CiBellOn} />
+            </Button>
+          </Flex>
+        </Center>
+        <Center mt='10px'>
+          <Box>
+            <ProgressBar
+              //@ts-ignore
+              width={window.innerWidth * 0.8}
+              height='35px'
+              completed={60}
+              customLabel="レート 60"
+              bgColor='#F345BE'
+              baseBgColor='#F5C9E6'
+            />
+            <Flex mt='10px' w='100%' color='black' gap='1.5'>
+              <Button p='3' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='13px'>
+                <Text mt='5px'>
+                  残り <span style={{fontSize: "23px"}}>1/4</span> ボケ
+                </Text>
+              </Button>
+              <Button p='3' border='1px solid black' bg='white' color='black' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/wallet')}}>
+                <Image
+                  src='/logo.png'
+                  alt="preview"
+                  w='30px'
+                  mr='3px'
+                />
+                26 ZBTN
+              </Button>
+              <Button p='0' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/options')}}>
+                <Icon as={IoSettingsOutline} />
+              </Button>
+            </Flex>
           </Box>
         </Center>
       </Box>

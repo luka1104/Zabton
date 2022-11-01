@@ -11,6 +11,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.3.6",
     "@prisma/client": "^4.5.0",
+    "@ramonak/react-progress-bar": "^5.0.3",
     "@supabase/supabase-js": "^2.0.4",
     "@web3auth/base": "^3.0.0",
     "@web3auth/modal": "^3.0.2",
@@ -22,6 +23,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.6.0",
     "react-slick": "^0.29.0",
+    "react-svg": "^15.1.11",
     "react-toastify": "^9.0.8",
     "slick-carousel": "^1.8.1",
     "uuid": "^9.0.0"
