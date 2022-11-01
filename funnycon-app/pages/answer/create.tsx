@@ -5,7 +5,7 @@ import type { GetServerSideProps } from "next";
 import prisma from 'lib/prisma'
 import Select from 'components/answer/select'
 import { Theme } from 'interfaces'
-import Input from 'components/answer/input';
+import InputForm from 'components/answer/input';
 import Preview from 'components/answer/preview';
 
 type Props = {
@@ -27,22 +27,38 @@ interface PropTypes {
 
 const Create: NextPage<PropTypes> = ({ themes }) => {
   const [step, setStep] = useState<number>(0)
+  const [selectedTheme, setSelectedTheme] = useState<Theme>()
+  const [contents, setContents] = useState<string>('')
+  const [preview, setPreview] = useState<string>('')
 
   return (
     <>
       <Box pt='60px'>
-        <Center color='black' mt='20px' fontWeight='bold' fontSize='2xl'>
-          どのお題でボケる？
-        </Center>
-        <Box>
-          {step === 0 ? (
-            <Select themes={themes} />
-          ) : step === 1 ? (
-            <Input />
-          ) : step === 2 ? (
-            <Preview />
-          ) : null }
-        </Box>
+        {step === 0 ? (
+          <Select
+            themes={themes}
+            setStep={setStep}
+            selectedTheme={selectedTheme}
+            setSelectedTheme={setSelectedTheme}
+          />
+        ) : step === 1 ? (
+          <InputForm
+            selectedTheme={selectedTheme!}
+            setSelectedTheme={setSelectedTheme}
+            setStep={setStep}
+            contents={contents}
+            setContents={setContents}
+            preview={preview}
+            setPreview={setPreview}
+          />
+        ) : step === 2 ? (
+          <Preview
+            selectedTheme={selectedTheme!}
+            setStep={setStep}
+            contents={contents}
+            preview={preview}
+          />
+        ) : null }
       </Box>
     </>
   )

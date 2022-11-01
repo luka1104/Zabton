@@ -9,7 +9,7 @@ export interface Theme {
 }
 
 export interface Answer {
-  id: number
+  id?: number
   ownerAddress: string
   contents: string
   themeId: number
