@@ -8,7 +8,7 @@ const Header: React.FC = () => {
       <Center top='0' position='fixed' w='100%' h='60px' bg='#F445BE' border='3px solid #242424' fontSize='2xl'>
         <NextLink href='/' passHref>
           <Text color='white'>
-            FunnyCon
+            ZABTON
           </Text>
         </NextLink>
       </Center>

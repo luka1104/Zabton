@@ -1,15 +1,18 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Image from 'next/image'
-import { Box, Center, Icon, Button } from '@chakra-ui/react'
-import { Theme } from 'interfaces'
+import { Box, Center, Text, Button } from '@chakra-ui/react'
+import { Answer, Theme } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
 
 interface Props {
   theme: Theme
+  answer: Answer
   w: number
+  imagePath: string
+  setImagePath: Function
 }
-const Card: React.FC<Props> = ({ theme, w }) => {
-  const [imagePath, setImagePath] = useState<string>('')
+
+const Card: React.FC<Props> = ({ theme, answer, w, imagePath, setImagePath }) => {
 
   const handleRenderImage = useCallback(async () => {
     if (!theme.imagePath) return;
@@ -30,14 +33,14 @@ const Card: React.FC<Props> = ({ theme, w }) => {
     <></>
   )
 
-  if(theme.type !== 2 && !imagePath) return (
-    <></>
+  if(!answer) return (
+    <>loading</>
   )
 
-  if(theme) return (
+  return (
     <>
-      <Center>
-        <Box w={w} h={w} bg='white' border='2px solid black'>
+      <Box mt='20px'>
+        <Center w={w} h={w} m='0 auto' bg='white' border='2px solid black'>
           {theme.type === 1 ? (
             <Center h={w}>
               <Image
@@ -70,6 +73,7 @@ const Card: React.FC<Props> = ({ theme, w }) => {
                   color='black'
                   w='100%'
                   h='100%'
+                  p='5%'
                   fontWeight='bold'
                   fontSize='19px'
                   textAlign='center'
@@ -80,13 +84,21 @@ const Card: React.FC<Props> = ({ theme, w }) => {
               </Box>
             </>
           ) : null}
-        </Box>
-      </Center>
+        </Center>
+        <Text
+          mt='10px'
+          w={window.innerWidth}
+          h='80px'
+          color='black'
+          borderRadius='0'
+          fontSize='30px'
+          textAlign='center'
+          fontWeight='bold'
+        >
+          {answer.contents}
+        </Text>
+      </Box>
     </>
-  )
-
-  return (
-    <></>
   )
 }
 
