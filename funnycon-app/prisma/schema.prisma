@@ -8,19 +8,42 @@ generator client {
 }
 
 model Theme {
-  id           Int      @id @default(autoincrement())
-  ownerAddress String
-  contents     String?
-  imagePath    String?
-  type         Int      @default(1)
-  deadline     String
-  Answer       Answer[]
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  contents  String?
+  imagePath String?
+  type      Int      @default(1)
+  deadline  String
+  Answer    Answer[]
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Answer {
-  id           Int    @id @default(autoincrement())
-  ownerAddress String
-  themeId      Int
-  contents     String
-  theme        Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  themeId  Int
+  contents String
+  theme    Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  address      String         @unique
+  nickname     String
+  birthday     String
+  level        Int            @default(0)
+  lifeLeft     Int            @default(4)
+  lifeLimit    Int            @default(4)
+  Theme        Theme[]
+  Answer       Answer[]
+  Notification Notification[]
+}
+
+model Notification {
+  id        Int    @id @default(autoincrement())
+  userId    Int
+  contents  String
+  timestamp Int
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

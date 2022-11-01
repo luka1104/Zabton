@@ -1,13 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from "lib/prisma";
-import { Answer } from 'interfaces/index'
+import { User } from 'interfaces/index'
 
-const postAnswer = async (data: Answer) => {
-    const resp = await prisma.answer.create({
+const postUser = async (data: User) => {
+    const resp = await prisma.user.create({
       data: {
-        userId: data.userId,
-        themeId: data.themeId,
-        contents: data.contents,
+        address: data.address,
+        nickname: data.nickname,
+        birthday: data.birthday,
+        level: 0,
+        lifeLeft: 4,
+        lifeLimit: 4,
       },
     });
     return resp
@@ -17,12 +20,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(req.body);
 
   const data = {
-    userId: req.body.userId,
-    themeId: req.body.themeId,
-    contents: req.body.contents,
+    address: req.body.address,
+    nickname: req.body.nickname,
+    birthday: req.body.birthday,
   }
   console.log(data);
-  const resp = await postAnswer(data)
+  const resp = await postUser(data)
   console.log(resp);
   if(resp) {
       res.status(200).json({"message":"Added successfully"})

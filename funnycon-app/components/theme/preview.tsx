@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) => {
-  const { address } = useContext(AccountContext)
+  const { user } = useContext(AccountContext)
   const [preview, setPreview] = useState<string>('')
   const [deadline, setDeadline] = useState<number>(2)
 
@@ -50,11 +50,12 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
   }
 
   const handleSubmit = async () => {
+    if(!user) return
     const deadlineDateTime = calcDeadline()
     if(image) {
       const pathname = await handleUploadStorage(image)
       const data = {
-        'ownerAddress': address ? address : '',
+        'userId': user.id,
         'contents': contents ? contents : '',
         'imagePath': pathname,
         'type': selectedType,
@@ -80,7 +81,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
       })
     } else {
       const data = {
-        'ownerAddress': '',
+        'userId': user.id,
         'contents': contents,
         'type': selectedType,
         'deadline': deadlineDateTime,

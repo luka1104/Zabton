@@ -13,11 +13,12 @@ interface PropTypes {
 }
 
 const Preview: React.FC<PropTypes> = ({ selectedTheme, setStep, contents, preview }) => {
-  const { address } = useContext(AccountContext)
+  const { user } = useContext(AccountContext)
 
   const handleSubmit = async () => {
+    if(!user) return
     const data = {
-      'ownerAddress': address ? address : '',
+      'userId': user.id,
       'themeId': selectedTheme.id,
       'contents': contents ? contents : '',
     }

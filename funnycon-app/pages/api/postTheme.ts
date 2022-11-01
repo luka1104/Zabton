@@ -5,7 +5,7 @@ import { Theme } from 'interfaces/index'
 const postTheme = async (data: Theme) => {
     const resp = await prisma.theme.create({
       data: {
-        ownerAddress: data.ownerAddress,
+        userId: data.userId,
         contents: data.contents ? data.contents : '',
         imagePath: data.imagePath,
         type: data.type,
@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(req.body);
 
   const data = {
-    ownerAddress: req.body.ownerAddress,
+    userId: req.body.userId,
     contents: req.body.contents,
     imagePath: req.body.imagePath,
     type: JSON.parse(req.body.type),

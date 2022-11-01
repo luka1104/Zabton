@@ -2,6 +2,8 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import RPC from "pages/api/ethersRPC";
+import axios from 'axios'
+import { User } from 'interfaces';
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';
@@ -18,6 +20,10 @@ export interface AccountContextInterface {
   getAddress: Function
   login: Function
   logout: Function
+  user: User | undefined
+  setUser: Function
+  loading: boolean
+  setLoading: Function
 }
 export const AccountContext = React.createContext<AccountContextInterface>({} as AccountContextInterface);
 
@@ -25,6 +31,8 @@ export const AccountProvider = ({ children }: Props) => {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null)
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(null)
   const [address, setAddress] = useState<string>('')
+  const [user, setUser] = useState<User>()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const getAddress = async () => {
     if (!provider) {
@@ -54,9 +62,31 @@ export const AccountProvider = ({ children }: Props) => {
     }
     await web3auth.logout();
     setProvider(null);
+    window.location.reload()
   };
 
+  const getUser = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    return new Promise((resolve, reject) => {
+      axios.post('/api/getUser', address, config)
+      .then(response => {
+        resolve(response)
+        if(response.data) setUser(response.data.user)
+        if(response.status === 200) setLoading(false)
+      })
+      .catch(e => {
+        reject(e)
+        throw new Error(e)
+      })
+    })
+  }
+
   useEffect(() => {
+    setLoading(true)
     console.log(clientId, API_URL);
 
     const init = async () => {
@@ -72,7 +102,9 @@ export const AccountProvider = ({ children }: Props) => {
         setWeb3auth(web3auth);
         await web3auth.initModal();if (web3auth.provider) {
           setProvider(web3auth.provider);
-        };
+        } else {
+          setLoading(false)
+        }
       } catch (error) {
         console.error(error);
       }
@@ -86,6 +118,11 @@ export const AccountProvider = ({ children }: Props) => {
     getAddress()
   }, [provider])
 
+  useEffect(() => {
+    if(address === '') return
+    getUser()
+  }, [address])
+
   return (
     <AccountContext.Provider
       value={{
@@ -96,6 +133,10 @@ export const AccountProvider = ({ children }: Props) => {
         getAddress,
         login,
         logout,
+        user,
+        setUser,
+        loading,
+        setLoading,
       }}
     >
       {children}
