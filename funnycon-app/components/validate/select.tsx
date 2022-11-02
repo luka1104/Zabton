@@ -34,7 +34,7 @@ const Select: NextPage<PropTypes> = ({ themes, setStep, selectedTheme, setSelect
         <SimpleGrid pt='20px' columns={2} spacing={2}>
           {themes.map((val: any, key: any) => {
             return (
-              <Box onClick={() => {setSelectedTheme(val)}}>
+              <Box key={key} onClick={() => {setSelectedTheme(val)}}>
                 <Card
                   theme={val}
                   w={width}

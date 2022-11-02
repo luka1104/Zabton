@@ -117,7 +117,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
         <Slider ref={sliderRef} {...settings}>
           {answers.filter(a => a.themeId === selectedTheme.id).map((val: any, key: any) => {
             return (
-              <Box>
+              <Box key={key}>
                 <Card
                   theme={selectedTheme}
                   answer={val}

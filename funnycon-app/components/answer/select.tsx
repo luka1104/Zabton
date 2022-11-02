@@ -82,7 +82,7 @@ const Select: React.FC<PropTypes> = ({ themes, setStep, selectedTheme, setSelect
         <Slider ref={sliderRef} {...settings}>
           {themes.map((val: any, key: any) => {
             return (
-              <Box>
+              <Box key={key}>
                 <Card
                   theme={val}
                   w={width}
