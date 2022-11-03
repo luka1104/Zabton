@@ -1,11 +1,13 @@
 import { Answer, Theme } from 'interfaces'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Box, Button, Center, Icon, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, Text, Checkbox } from '@chakra-ui/react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IoWarningOutline } from 'react-icons/io5'
 import Card from './card';
+import { AccountContext } from 'contexts/account';
+import axios from 'axios'
 
 interface Props {
   setStep: Function
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setImagePath, answers }) => {
+  const { user } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [tipOpen, setTipOpen] = useState<boolean>(false)
   const [width, setWidth] = useState<number>(0)
@@ -37,6 +40,32 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
     const now = new Date
     const timeLeft = (deadlineDateTime.getTime() - now.getTime()) / (60*60*1000)
     return Math.floor(timeLeft)
+  }
+
+  const handleSubmit = async (answerId: number) => {
+    if(!user) return
+    const data = {
+      'userId': user.id,
+      'answerId': answerId,
+    }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    console.log(data)
+    return new Promise((resolve, reject) => {
+      axios.post('/api/postValidation', data, config)
+      .then(response => {
+        if(response.status !== 200) throw Error("Server error")
+        resolve(response)
+        window.location.replace('/')
+      })
+      .catch(e => {
+        reject(e);
+        throw Error("Server error:" + e)
+      })
+    })
   }
 
   useEffect(() => {
@@ -173,7 +202,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                       colorScheme='pink'
                       borderRadius='30px'
                       border='1px solid black'
-                      // onClick={() => {setSelectedTheme(val)}}
+                      onClick={() => {handleSubmit(val.id)}}
                     >
                       ええやん
                     </Button>

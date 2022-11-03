@@ -28,6 +28,12 @@ export interface User {
   Notification?: Notification[]
 }
 
+export interface Validation {
+  id?: number
+  userId: number
+  answerId: number
+}
+
 export interface Notification {
   id: number
   userId: number
