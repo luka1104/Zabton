@@ -10,12 +10,18 @@ import { useRouter } from 'next/router'
 
 const Auth: NextPage = () => {
   const router = useRouter()
-  const { login, address, user, loading, zbtn } = useContext(AccountContext)
+  const { login, address, user, loading, zbtn, getBalance } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const finalRef = useRef(null)
   const [nickname, setNickname] = useState<string>('')
   const [birthday, setBirthday] = useState<string>('')
   const [levelModal, setLevelModal] = useState<boolean>(false)
+
+  useEffect(() => {
+    if(loading) return
+    if(!user) return
+    getBalance()
+  }, [loading])
 
   const handleSubmit = async () => {
     if(!address) return
@@ -235,13 +241,13 @@ const Auth: NextPage = () => {
               bgColor='#F345BE'
               baseBgColor='#F5C9E6'
             />
-            <Center mt='10px' w={window.innerWidth * 0.8} color='black' gap='1.5'>
-              <Button p='3' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='13px' onClick={onOpen}>
+            <Center mt='10px' w={window.innerWidth * 0.8} color='black' gap='1.5%'>
+              <Button p='' w='37%' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='13px' onClick={onOpen}>
                 <Text mt='5px'>
                   残り <span style={{fontSize: "23px"}}>1/4</span> ボケ
                 </Text>
               </Button>
-              <Button p='3' border='1px solid black' bg='white' color='black' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/wallet')}}>
+              <Button p='3' w='47%' border='1px solid black' bg='white' color='black' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/wallet')}}>
                 <Image
                   src='/Logo.png'
                   alt="preview"
@@ -250,7 +256,7 @@ const Auth: NextPage = () => {
                 />
                 {zbtn} ZBTN
               </Button>
-              <Button p='0' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/options')}}>
+              <Button p='0' w='13%' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/options')}}>
                 <Icon as={IoSettingsOutline} />
               </Button>
             </Center>

@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
-export const transfer = async (address: string, amount: number) => {
+export const transfer = async (address: string, amount: number, setLoading?: Function) => {
   const data = {
     'address': address,
     'amount': amount * (10 ** 8),
@@ -16,12 +17,12 @@ export const transfer = async (address: string, amount: number) => {
     .then(response => {
       if(response.status !== 200) throw Error("Server error")
       resolve(response)
-      console.log(response);
-      return response
+      if(setLoading) setLoading(false)
+      toast('ZBTNが発行されました！')
     })
     .catch(e => {
-      reject(e);
-      throw Error("Server error:" + e)
+      // エラー解決必須　useEffect経由での発火が問題？
+      console.log(e);
     })
   })
 }

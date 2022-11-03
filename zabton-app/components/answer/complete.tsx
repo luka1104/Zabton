@@ -8,55 +8,28 @@ import { calcTime } from 'utils'
 import { useRouter } from 'next/router'
 import PacmanLoader from "react-spinners/PacmanLoader"
 import { transfer } from 'utils/transferToken'
+import { Theme } from 'interfaces'
 
 interface Props {
-  selectedType: number
-  image?: Blob
-  contents?: string
-  deadline: number
+  selectedTheme: Theme
+  contents: string
+  preview: string
 }
 
-const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) => {
+const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
   const router = useRouter()
   const finalRef = useRef(null)
   const { user } = useContext(AccountContext)
-  const [preview, setPreview] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-
-  const calcDeadline = (deadline: number) => {
-    var time = new Date
-    switch (deadline) {
-      case 1:
-        time.setHours(time.getHours() + 3)
-        break;
-      case 2:
-        time.setDate(time.getDate() + 1)
-        break;
-      case 3:
-        time.setDate(time.getDate() + 3)
-        break;
-      case 4:
-        time.setDate(time.getDate() + 7)
-        break;
-      default:
-        time
-    }
-    return time
-  }
-
-  useEffect(() => {
-    if(!image) return
-    setPreview(window.URL.createObjectURL(image))
-  }, [image])
 
   useEffect(() => {
     setLoading(true)
-    transfer(user.address, 2, setLoading)
+    transfer(user.address, 1, setLoading)
   }, [])
 
   return (
     <>
-      <Box pt='80px' ref={finalRef}>
+      <Box ref={finalRef}>
         <Modal finalFocusRef={finalRef} isOpen={loading} onClose={() => {setLoading(false)}}>
           <ModalOverlay backdropFilter='blur(5px)' />
           <ModalContent bg='white' border='1px solid black' w='90%' h='350px' borderRadius='0' top='100px'>
@@ -98,55 +71,69 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
             </ModalBody>
           </ModalContent>
         </Modal>
-        {selectedType === 1 ? (
-          <>
-            <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-              <Center w='100%' h='100%'>
-                <Image
-                  src={preview}
-                  alt="preview"
-                  width={window.innerWidth}
-                  height={window.innerWidth}
-                />
-              </Center>
-            </Box>
-          </>
-        ) : selectedType === 2 ? (
-          <>
-            <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black' >
-              <Center w='100%' h='100%' fontWeight='bold' fontSize='30px' textAlign='center' color='black'>
-                {contents}
-              </Center>
-            </Box>
-          </>
-        ) : (
-          <>
-            <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-              <Center>
-                <Image
-                  src={preview}
-                  alt="preview"
-                  width={window.innerWidth * 0.8}
-                  height={window.innerWidth * 0.8}
-                />
-              </Center>
-              <Box
-                w='100%'
-                h='100%'
-                p='5%'
-                color='black'
-                fontWeight='bold'
-                fontSize='19px'
-                textAlign='center'
-                position='absolute'
-              >
-                {contents}
+        <Box pt='20px'>
+          {selectedTheme.type === 1 ? (
+            <>
+              <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+                <Center w='100%' h='100%'>
+                  <Image
+                    src={preview}
+                    alt="preview"
+                    width={window.innerWidth}
+                    height={window.innerWidth}
+                  />
+                </Center>
               </Box>
-            </Box>
-          </>
-        )}
+            </>
+          ) : selectedTheme.type === 2 ? (
+            <>
+              <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black' >
+                <Center w='100%' h='100%' fontWeight='bold' fontSize='30px' textAlign='center' color='black'>
+                  {selectedTheme.contents}
+                </Center>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+                <Center>
+                  <Image
+                    src={preview}
+                    alt="preview"
+                    width={window.innerWidth * 0.8}
+                    height={window.innerWidth * 0.8}
+                  />
+                </Center>
+                <Box
+                  w='100%'
+                  h='100%'
+                  p='5%'
+                  color='black'
+                  fontWeight='bold'
+                  fontSize='19px'
+                  textAlign='center'
+                  position='absolute'
+                >
+                  {selectedTheme.contents}
+                </Box>
+              </Box>
+            </>
+          )}
+        </Box>
+        <Text
+          mt='10px'
+          w={window.innerWidth}
+          h='80px'
+          color='black'
+          borderRadius='0'
+          fontSize='30px'
+          textAlign='center'
+          fontWeight='bold'
+        >
+          {contents}
+        </Text>
         <Center color='black' mt='5px' fontWeight='bold' fontSize='12px'>
-          ボケ募集中｜回答期限　残り{calcTime(calcDeadline(deadline))}時間
+          審査中｜回答期限　残り{calcTime(selectedTheme.deadline)}時間
         </Center>
         <Center color='black' mt='20px' fontWeight='bold' fontSize='25px'>
           Let&apos;s Share!
@@ -166,10 +153,10 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
             w='90%'
             h='60px'
             fontSize='xl'
-            mb='30px'
-            onClick={() => {router.reload()}}
+            mb='50px'
+            onClick={() => {router.replace('/mypage/auth')}}
           >
-            続けてお題を投稿する
+            マイページに戻る
           </Button>
         </Center>
       </Box>

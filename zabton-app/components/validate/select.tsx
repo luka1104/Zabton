@@ -27,7 +27,7 @@ const Select: NextPage<PropTypes> = ({ themes, setStep, selectedTheme, setSelect
 
   return (
     <>
-      <Box mt='60px' color='black'>
+      <Box color='black'>
         <Center color='black' pt='20px' fontWeight='bold' fontSize='2xl'>
           どのお題を評価する？
         </Center>

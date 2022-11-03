@@ -27,6 +27,7 @@ export interface AccountContextInterface {
   setLoading: Function
   zbtn: number
   setZbtn: Function
+  getBalance: Function
 }
 export const AccountContext = React.createContext<AccountContextInterface>({} as AccountContextInterface);
 
@@ -149,6 +150,7 @@ export const AccountProvider = ({ children }: Props) => {
         setLoading,
         zbtn,
         setZbtn,
+        getBalance,
       }}
     >
       {children}

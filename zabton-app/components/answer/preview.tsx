@@ -33,7 +33,7 @@ const Preview: React.FC<PropTypes> = ({ selectedTheme, setStep, contents, previe
       .then(response => {
         if(response.status !== 200) throw Error("Server error")
         resolve(response)
-        window.location.replace('/')
+        setStep(3)
       })
       .catch(e => {
         reject(e);

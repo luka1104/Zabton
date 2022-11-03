@@ -8,6 +8,7 @@ import Select from 'components/validate/select'
 import Validation from 'components/validate/validation'
 import Award from 'components/validate/award'
 import { Answer } from '.prisma/client';
+import Complete from 'components/validate/complete';
 
 type Props = {
   themes: Theme[]
@@ -36,9 +37,10 @@ const Validate: NextPage<PropTypes> = ({ themes, answers }) => {
   const [image, setImage] = useState<string>('')
   const [contents, setContents] = useState<string>('')
   const [imagePath, setImagePath] = useState<string>('')
+  const [answerId, setAnswerId] = useState<number>(0)
   return (
     <>
-      <Box mt='60px'>
+      <Box pt='60px'>
         {step === 0 ? (
           <Select
             themes={themes}
@@ -53,10 +55,14 @@ const Validate: NextPage<PropTypes> = ({ themes, answers }) => {
             imagePath={imagePath}
             setImagePath={setImagePath}
             answers={answers}
+            setAnswerId={setAnswerId}
           />
         ) : step === 2 ? (
-          <Award
-
+          <Complete
+            selectedTheme={selectedTheme!}
+            imagePath={imagePath}
+            answers={answers}
+            answerId={answerId}
           />
         ) : null }
       </Box>

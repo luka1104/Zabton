@@ -16,9 +16,10 @@ interface Props {
   imagePath: string
   setImagePath: Function
   answers: Answer[]
+  setAnswerId: Function
 }
 
-const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setImagePath, answers }) => {
+const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setImagePath, answers, setAnswerId }) => {
   const router = useRouter()
   const { user, zbtn } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -61,7 +62,8 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
       .then(response => {
         if(response.status !== 200) throw Error("Server error")
         resolve(response)
-        window.location.replace('/')
+        setAnswerId(answerId)
+        setStep(2)
       })
       .catch(e => {
         reject(e);

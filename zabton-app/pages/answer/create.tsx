@@ -7,6 +7,7 @@ import Select from 'components/answer/select'
 import { Theme } from 'interfaces'
 import InputForm from 'components/answer/input';
 import Preview from 'components/answer/preview';
+import Complete from 'components/answer/complete';
 
 type Props = {
   themes: Theme[]
@@ -55,6 +56,12 @@ const Create: NextPage<PropTypes> = ({ themes }) => {
           <Preview
             selectedTheme={selectedTheme!}
             setStep={setStep}
+            contents={contents}
+            preview={preview}
+          />
+        ) : step === 3 ? (
+          <Complete
+            selectedTheme={selectedTheme!}
             contents={contents}
             preview={preview}
           />

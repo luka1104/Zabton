@@ -11,7 +11,7 @@ const contractInterface = new utils.Interface(contract.abi as any)
 const ZBTNContract = new Contract(contractAddress, contractInterface, signer);
 
 const transfer = async (address: string, amount: number) => {
-  const receipt = await ZBTNContract.transfer(address, amount, { gasLimit: 100000, maxFeePerGas: 1000000, maxPriorityFeePerGas: 1000000 })
+  const receipt = await ZBTNContract.transfer(address, amount, { gasLimit: 1000000, maxFeePerGas: 1000000, maxPriorityFeePerGas: 1000000 })
   return receipt
 }
 
