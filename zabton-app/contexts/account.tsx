@@ -4,6 +4,7 @@ import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import RPC from "pages/api/ethersRPC";
 import axios from 'axios'
 import { User } from 'interfaces';
+import getZBTN from 'utils/getZBTN'
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';
@@ -24,6 +25,8 @@ export interface AccountContextInterface {
   setUser: Function
   loading: boolean
   setLoading: Function
+  zbtn: number
+  setZbtn: Function
 }
 export const AccountContext = React.createContext<AccountContextInterface>({} as AccountContextInterface);
 
@@ -33,6 +36,7 @@ export const AccountProvider = ({ children }: Props) => {
   const [address, setAddress] = useState<string>('')
   const [user, setUser] = useState<User>()
   const [loading, setLoading] = useState<boolean>(false)
+  const [zbtn, setZbtn] = useState<number>(0)
 
   const getAddress = async () => {
     if (!provider) {
@@ -113,6 +117,11 @@ export const AccountProvider = ({ children }: Props) => {
     init();
   }, []);
 
+  const getBalance = async () => {
+    const balance = await getZBTN(address)
+    setZbtn(Math.floor(parseInt(balance._hex, 16) / (10 ** 8)))
+  }
+
   useEffect(() => {
     if(!provider) return
     getAddress()
@@ -121,6 +130,7 @@ export const AccountProvider = ({ children }: Props) => {
   useEffect(() => {
     if(address === '') return
     getUser()
+    getBalance()
   }, [address])
 
   return (
@@ -137,6 +147,8 @@ export const AccountProvider = ({ children }: Props) => {
         setUser,
         loading,
         setLoading,
+        zbtn,
+        setZbtn,
       }}
     >
       {children}

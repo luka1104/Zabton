@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 
 const Auth: NextPage = () => {
   const router = useRouter()
-  const { login, address, user, loading } = useContext(AccountContext)
+  const { login, address, user, loading, zbtn } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const finalRef = useRef(null)
   const [nickname, setNickname] = useState<string>('')
@@ -162,7 +162,7 @@ const Auth: NextPage = () => {
                   回復させることができます。
                 </Text>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='20px'>
-                  残りZBTN 26 → 21
+                  残りZBTN {zbtn} → {zbtn - 5}
                 </Text>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px' mt='20px'>
                   残りボケ数 1/4 → 2/4
@@ -193,7 +193,7 @@ const Auth: NextPage = () => {
                   で、1日のボケ上限が増加します。
                 </Text>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='20px'>
-                  残りZBTN 26 → 16
+                  残りZBTN {zbtn} → {zbtn - 10}
                 </Text>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='3px'>
                   残りボケ数 1/4 → 5/5
@@ -235,7 +235,7 @@ const Auth: NextPage = () => {
               bgColor='#F345BE'
               baseBgColor='#F5C9E6'
             />
-            <Flex mt='10px' w='100%' color='black' gap='1.5'>
+            <Center mt='10px' w={window.innerWidth * 0.8} color='black' gap='1.5'>
               <Button p='3' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='13px' onClick={onOpen}>
                 <Text mt='5px'>
                   残り <span style={{fontSize: "23px"}}>1/4</span> ボケ
@@ -248,12 +248,12 @@ const Auth: NextPage = () => {
                   w='30px'
                   mr='3px'
                 />
-                26 ZBTN
+                {zbtn} ZBTN
               </Button>
               <Button p='0' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/options')}}>
                 <Icon as={IoSettingsOutline} />
               </Button>
-            </Flex>
+            </Center>
           </Box>
         </Center>
       </Box>

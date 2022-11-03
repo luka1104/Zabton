@@ -20,7 +20,7 @@ interface Props {
 
 const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setImagePath, answers }) => {
   const router = useRouter()
-  const { user } = useContext(AccountContext)
+  const { user, zbtn } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [tipOpen, setTipOpen] = useState<boolean>(false)
   const [width, setWidth] = useState<number>(0)
@@ -147,7 +147,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                   応援することができます！
                 </Text>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='18px' mt='20px'>
-                  残りZBTN 26 → 25
+                  残りZBTN {zbtn} → {zbtn - 1}
                 </Text>
                 <Center mt='25px' color='black'>
                   <Checkbox border='1px solid black' borderRadius='3px' />
@@ -201,7 +201,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                     </Box>
                     <Box w='25%' m='0 auto'>
                       <Center bg='white' color='black' fontWeight='bold'>
-                        26 ZBTN
+                        {zbtn} ZBTN
                       </Center>
                       <Center>
                         <Button
