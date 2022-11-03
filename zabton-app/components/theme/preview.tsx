@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Image from 'next/image'
-import { Box, Center, Icon, Button, Select } from '@chakra-ui/react'
-import { AiOutlineLeft } from 'react-icons/ai'
+import { Box, Center, Button, Select } from '@chakra-ui/react'
 import axios from 'axios'
 import { uploadStorage } from 'supabase/storage'
 import { AccountContext } from 'contexts/account'
+import { transfer } from 'utils/transferToken'
 
 interface Props {
   setStep: Function
@@ -72,7 +72,8 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
         .then(response => {
           if(response.status !== 200) throw Error("Server error")
           resolve(response)
-          window.location.replace('/')
+          transfer(user.address, 2)
+          // window.location.replace('/')
         })
         .catch(e => {
           reject(e);
@@ -97,6 +98,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
         .then(response => {
           if(response.status !== 200) throw Error("Server error")
           resolve(response)
+          transfer(user.address, 2)
           window.location.replace('/')
         })
         .catch(e => {
