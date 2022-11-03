@@ -28,11 +28,13 @@ const Wallet: React.FC = () => {
         <Center color='black' mt='40px' fontWeight='bold' fontSize='2xl'>
           History
         </Center>
-        <Center>
+        <Center color='black' mt='40px' fontWeight='bold' fontSize='xl'>
           {/* 履歴表示 */}
+          履歴はありません
         </Center>
         <Center>
           <Button
+            disabled
             color='black'
             bg='white'
             border='1px solid black'

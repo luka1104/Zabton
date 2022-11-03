@@ -10,6 +10,10 @@ const Notifications: React.FC = () => {
         <Center color='black' mt='20px' fontWeight='bold' fontSize='3xl'>
           通知一覧
         </Center>
+        <Center　color='black' mt='60px' fontWeight='bold' fontSize='xl'>
+          {/* 通知 */}
+          通知はありません
+        </Center>
         <Center>
           <Button
             color='black'

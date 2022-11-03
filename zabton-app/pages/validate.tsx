@@ -3,11 +3,10 @@ import React, { useState } from 'react'
 import type { GetServerSideProps } from "next";
 import prisma from 'lib/prisma'
 import { Box } from '@chakra-ui/react'
-import { Theme } from 'interfaces'
+import { Theme, Answer } from 'interfaces'
 import Select from 'components/validate/select'
 import Validation from 'components/validate/validation'
 import Award from 'components/validate/award'
-import { Answer } from '.prisma/client';
 import Complete from 'components/validate/complete';
 
 type Props = {

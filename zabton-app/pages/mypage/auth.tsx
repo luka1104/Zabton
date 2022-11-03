@@ -1,14 +1,39 @@
 import { NextPage } from 'next'
 import React, { useContext, useState, useRef, useEffect } from 'react'
-import { Box, Center, Button, Text, Input, Link, Flex, Icon, Image, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, } from '@chakra-ui/react'
+import { Box, Center, Button, Text, Input, Link, Flex, Icon, Image, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, SimpleGrid } from '@chakra-ui/react'
 import { AccountContext } from 'contexts/account'
 import axios from 'axios'
 import { CiBellOn } from 'react-icons/ci'
 import { IoSettingsOutline } from 'react-icons/io5'
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useRouter } from 'next/router'
+import type { GetServerSideProps } from "next";
+import prisma from 'lib/prisma'
+import { Theme, Answer } from 'interfaces'
+import Card from 'components/theme/card'
 
-const Auth: NextPage = () => {
+type Props = {
+  themes: Theme[]
+  answers: Answer[]
+}
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const themesRaw = await prisma.theme.findMany()
+  const themes = JSON.parse(JSON.stringify(themesRaw))
+  const answersRaw = await prisma.answer.findMany()
+  const answers = JSON.parse(JSON.stringify(answersRaw))
+  return {
+    props: {
+      themes,
+      answers,
+    },
+  };
+}
+interface PropTypes {
+  themes: Theme[]
+  answers: Answer[]
+}
+
+const Auth: NextPage<PropTypes> = ({ themes, answers }) => {
   const router = useRouter()
   const { login, address, user, loading, zbtn, getBalance } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -261,6 +286,43 @@ const Auth: NextPage = () => {
               </Button>
             </Center>
           </Box>
+        </Center>
+        <Center color='black' mt='40px' fontWeight='bold' fontSize='2xl'>
+          投稿したボケ
+        </Center>
+        <Center>
+          <SimpleGrid pt='20px' columns={2} spacing={2}>
+            {answers ? answers.filter(a => a.userId === user.id).map((val: Answer, key: any) => {
+              return (
+                <Box mt='5px'>
+                  <Card
+                    theme={themes.find(t => t.id === val.id)}
+                    w={window.innerWidth * 0.5}
+                    key={key}
+                  />
+                  <Center color='black' mt='5px' fontWeight='bold' fontSize='xl'>
+                    {val.contents}
+                  </Center>
+                </Box>
+              )
+            }) : null}
+          </SimpleGrid>
+        </Center>
+        <Center color='black' mt='40px' fontWeight='bold' fontSize='2xl'>
+          投稿したお題
+        </Center>
+        <Center>
+          <SimpleGrid pt='20px' columns={2} spacing={2}>
+            {themes ? themes.filter(t => t.userId === user.id).map((val: Theme, key: any) => {
+              return (
+                <Card
+                  theme={val}
+                  w={window.innerWidth * 0.5}
+                  key={key}
+                />
+              )
+            }) : null}
+          </SimpleGrid>
         </Center>
       </Box>
     </>
