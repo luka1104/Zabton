@@ -4,19 +4,19 @@ import { Box, Center, Button, Select } from '@chakra-ui/react'
 import axios from 'axios'
 import { uploadStorage } from 'supabase/storage'
 import { AccountContext } from 'contexts/account'
-import { transfer } from 'utils/transferToken'
 
 interface Props {
   setStep: Function
   selectedType: number
   image?: Blob
   contents?: string
+  deadline: number
+  setDeadline: Function
 }
 
-const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) => {
+const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, deadline, setDeadline }) => {
   const { user } = useContext(AccountContext)
   const [preview, setPreview] = useState<string>('')
-  const [deadline, setDeadline] = useState<number>(2)
 
   const handleUploadStorage = async (image: Blob | null) => {
     if (!image) return
@@ -72,8 +72,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
         .then(response => {
           if(response.status !== 200) throw Error("Server error")
           resolve(response)
-          transfer(user.address, 2)
-          // window.location.replace('/')
+          setStep(3)
         })
         .catch(e => {
           reject(e);
@@ -98,8 +97,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
         .then(response => {
           if(response.status !== 200) throw Error("Server error")
           resolve(response)
-          transfer(user.address, 2)
-          window.location.replace('/')
+          setStep(3)
         })
         .catch(e => {
           reject(e)

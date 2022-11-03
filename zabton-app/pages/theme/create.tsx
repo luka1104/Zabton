@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Select from 'components/theme/select'
 import InputForm from 'components/theme/input'
 import Preview from 'components/theme/preview'
+import Complete from 'components/theme/complete'
 
 const Create: NextPage = () => {
   const [step, setStep] = useState<number>(0)
@@ -10,6 +11,8 @@ const Create: NextPage = () => {
   const [image, setImage] = useState<Blob>()
   const [contents, setContents] = useState<string>('')
   const [preview, setPreview] = useState<string>('')
+  const [deadline, setDeadline] = useState<number>(2)
+
   return (
     <>
       {step === 0 ? (
@@ -34,6 +37,15 @@ const Create: NextPage = () => {
           selectedType={selectedType}
           image={image}
           contents={contents}
+          deadline={deadline}
+          setDeadline={setDeadline}
+        />
+      ) : step === 3 ? (
+        <Complete
+          selectedType={selectedType}
+          image={image}
+          contents={contents}
+          deadline={deadline}
         />
       ) : null }
     </>

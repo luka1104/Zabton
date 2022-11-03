@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Theme } from 'interfaces'
 import Card from 'components/answer/card'
 import { IoWarningOutline } from 'react-icons/io5'
+import { calcTime } from 'utils'
 
 interface PropTypes {
   themes: Theme[]
@@ -27,13 +28,6 @@ const Select: React.FC<PropTypes> = ({ themes, setStep, selectedTheme, setSelect
     //@ts-ignore
     dots: false,
     arrows: false,
-  }
-
-  const calcTime = (deadline: string) => {
-    const deadlineDateTime = new Date(deadline)
-    const now = new Date
-    const timeLeft = (deadlineDateTime.getTime() - now.getTime()) / (60*60*1000)
-    return Math.floor(timeLeft)
   }
 
   useEffect(() => {

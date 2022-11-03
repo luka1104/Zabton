@@ -11,13 +11,14 @@ const contractInterface = new utils.Interface(contract.abi as any)
 const ZBTNContract = new Contract(contractAddress, contractInterface, signer);
 
 const transfer = async (address: string, amount: number) => {
-  const receipt = await ZBTNContract.transfer(address, amount, { gasLimit: 100000 })
+  const receipt = await ZBTNContract.transfer(address, amount, { gasLimit: 100000, maxFeePerGas: 1000000, maxPriorityFeePerGas: 1000000 })
   return receipt
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log('REQ.BODY', req.body);
   const receipt = await transfer(req.body.address, req.body.amount)
-  if(receipt) res.status(200).json({ receipt: receipt })
+  if(receipt.hash) res.status(200).json({ hash: receipt.hash })
+  if(!receipt.hash) res.status(500)
 };
 export default handler;

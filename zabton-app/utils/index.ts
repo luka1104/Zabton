@@ -10,3 +10,10 @@ export const shuffleArray = (array: any) => {
 
   return cloneArray
 }
+
+export const calcTime = (deadline: string | Date) => {
+  const deadlineDateTime = new Date(deadline)
+  const now = new Date
+  const timeLeft = (deadlineDateTime.getTime() - now.getTime()) / (60*60*1000)
+  return Math.floor(timeLeft)
+}
