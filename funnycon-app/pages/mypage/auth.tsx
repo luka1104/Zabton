@@ -243,7 +243,7 @@ const Auth: NextPage = () => {
               </Button>
               <Button p='3' border='1px solid black' bg='white' color='black' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/wallet')}}>
                 <Image
-                  src='/logo.png'
+                  src='/Logo.png'
                   alt="preview"
                   w='30px'
                   mr='3px'
