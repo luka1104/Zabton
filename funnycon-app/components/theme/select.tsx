@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Box, Center, SimpleGrid } from '@chakra-ui/react'
 import imageOnly from 'assets/images/imageOnly.png'
 import imageText from 'assets/images/imageText.png'
-import TextOnly from 'assets/images/TextOnly.png'
+import TextOnly from 'assets/images/textOnly.png'
 
 interface Props {
   setStep: Function
