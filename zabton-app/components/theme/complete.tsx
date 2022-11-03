@@ -42,7 +42,7 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
         resolve(response)
         console.log(response.data.hash);
         setLoading(false)
-        toast('ZBTNが付与されました！')
+        toast('ZBTNが発行されました！')
       })
       .catch(e => {
         // エラー解決必須　useEffect経由での発火が問題？
@@ -196,7 +196,7 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
             h='60px'
             fontSize='xl'
             mb='30px'
-            onClick={() => {router.push('/theme/create')}}
+            onClick={() => {router.reload()}}
           >
             続けてお題を投稿する
           </Button>

@@ -8,6 +8,7 @@ import { IoWarningOutline } from 'react-icons/io5'
 import Card from './card';
 import { AccountContext } from 'contexts/account';
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 interface Props {
   setStep: Function
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setImagePath, answers }) => {
+  const router = useRouter()
   const { user } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [tipOpen, setTipOpen] = useState<boolean>(false)
@@ -78,8 +80,28 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
     setStep(1)
   }, [selectedTheme])
 
-  if(!answers) return (
-    <>loading</>
+  if(answers.filter(a => a.themeId === selectedTheme.id).length === 0) return (
+    <Box>
+      <Center color='black' pt='20px' fontWeight='bold' fontSize='2xl'>
+        ボケがまだないようです！
+      </Center>
+      <Center>
+        <Button
+          mt='30vh'
+          color='black'
+          bg='white'
+          border='1px solid black'
+          borderRadius='30px'
+          w='80%'
+          h='60px'
+          fontSize='xl'
+          mb='30px'
+          onClick={() => {router.push('/answer/create')}}
+        >
+          ボケる！
+        </Button>
+      </Center>
+    </Box>
   )
 
   return (
