@@ -294,13 +294,13 @@ const Auth: NextPage<PropTypes> = ({ themes, answers }) => {
           <SimpleGrid pt='20px' columns={2} spacing={2}>
             {answers ? answers.filter(a => a.userId === user.id).map((val: Answer, key: any) => {
               return (
-                <Box mt='5px'>
+                <Box key={key} mt='5px'>
                   <Card
                     theme={themes.find(t => t.id === val.id)}
                     w={window.innerWidth * 0.5}
                     key={key}
                   />
-                  <Center color='black' mt='5px' fontWeight='bold' fontSize='xl'>
+                  <Center key={key} color='black' mt='5px' fontWeight='bold' fontSize='xl'>
                     {val.contents}
                   </Center>
                 </Box>
