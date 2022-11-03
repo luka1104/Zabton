@@ -101,12 +101,12 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
         {selectedType === 1 ? (
           <>
             <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-              <Center w='100%' h='100%'>
+              <Center w='100%' h='100%' position='relative'>
                 <Image
                   src={preview}
                   alt="preview"
-                  width={window.innerWidth}
-                  height={window.innerWidth}
+                  fill={true}
+                  style={{objectFit: "contain"}}
                 />
               </Center>
             </Box>
@@ -122,12 +122,12 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
         ) : (
           <>
             <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-              <Center>
+              <Center w='100%' h='80%' position='relative'>
                 <Image
                   src={preview}
                   alt="preview"
-                  width={window.innerWidth * 0.8}
-                  height={window.innerWidth * 0.8}
+                  fill={true}
+                  style={{objectFit: "contain"}}
                 />
               </Center>
               <Box
@@ -136,7 +136,7 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
                 p='5%'
                 color='black'
                 fontWeight='bold'
-                fontSize='19px'
+                fontSize='25px'
                 textAlign='center'
                 position='absolute'
               >

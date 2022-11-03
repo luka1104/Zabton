@@ -48,12 +48,12 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
             />
             <Box position='relative'>
               <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-                <Center w='100%' h='100%'>
-                <Image
+                <Center w='100%' h='100%' position='relative'>
+                  <Image
                     src={preview ? preview : inputForm}
                     alt="image form"
-                    width={window.innerWidth}
-                    height={window.innerWidth}
+                    fill={true}
+                    style={{objectFit: "contain"}}
                     //@ts-ignore
                     onClick={() => {preview ? null : inputRef.current.click()}}
                   />
@@ -142,12 +142,12 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
               }}
             />
             <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-              <Center>
+              <Center w={window.innerWidth * 0.99} h={window.innerWidth * 0.8} position='relative'>
                 <Image
                   src={preview ? preview : inputForm}
                   alt="image form"
-                  width={window.innerWidth * 0.8}
-                  height={window.innerWidth * 0.8}
+                  fill={true}
+                  style={{objectFit: "contain"}}
                   //@ts-ignore
                   onClick={() => {preview ? null : inputRefText.current.click()}}
                 />
@@ -168,12 +168,16 @@ const InputForm: NextPage<Props> = ({ setStep, selectedType, setImage, image, se
                 position='absolute'
               >
                 <Input
+                  type="text"
                   color='black'
                   fontWeight='bold'
                   fontSize='19px'
                   bg='white'
+                  border='1px solid black'
+                  borderRadius='0'
+                  variant='outline'
+                  borderColor='black'
                   placeholder={placeHolder}
-                  type='text'
                   textAlign='center'
                   h={window.innerWidth * 0.19}
                   w='100%'

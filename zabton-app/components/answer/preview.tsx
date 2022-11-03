@@ -48,12 +48,12 @@ const Preview: React.FC<PropTypes> = ({ selectedTheme, setStep, contents, previe
         {selectedTheme.type === 1 ? (
           <>
             <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-              <Center w='100%' h='100%'>
+              <Center w='100%' h='100%' position='relative'>
                 <Image
                   src={preview}
                   alt="preview"
-                  width={window.innerWidth}
-                  height={window.innerWidth}
+                  fill={true}
+                  style={{objectFit: "contain"}}
                 />
               </Center>
             </Box>

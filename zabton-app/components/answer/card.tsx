@@ -39,12 +39,12 @@ const Card: React.FC<Props> = ({ theme, w }) => {
       <Center mt='20px'>
         <Box w={w} h={w} bg='white' border='2px solid black'>
           {theme.type === 1 ? (
-            <Center h={w}>
+            <Center w='100%' h='100%' position='relative'>
               <Image
                 src={imagePath}
                 alt="preview"
-                width={w}
-                height={w}
+                fill={true}
+                style={{objectFit: "contain"}}
               />
             </Center>
           ) : theme.type === 2 ? (
