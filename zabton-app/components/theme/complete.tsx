@@ -178,7 +178,7 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
           ボケ募集中｜回答期限　残り{calcTime(calcDeadline(deadline))}時間
         </Center>
         <Center color='black' mt='20px' fontWeight='bold' fontSize='25px'>
-          Let's Share!
+          Let&apos;s Share!
         </Center>
         <Center gap='2'>
           <Icon as={BsFacebook} fontSize='40px' color='#1977F2' />
