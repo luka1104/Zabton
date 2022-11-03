@@ -204,7 +204,7 @@ const Auth: NextPage<PropTypes> = ({ themes, answers }) => {
                 <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={onClose}>
                   また今度
                 </Button>
-                <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
+                <Button disabled={zbtn < 5} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
                   回復する
                 </Button>
               </Center>
@@ -238,7 +238,7 @@ const Auth: NextPage<PropTypes> = ({ themes, answers }) => {
                 <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setLevelModal(false)}}>
                   また今度
                 </Button>
-                <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
+                <Button disabled={zbtn < 10} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
                   回復する
                 </Button>
               </Center>
