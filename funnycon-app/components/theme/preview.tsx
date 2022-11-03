@@ -9,7 +9,7 @@ import { AccountContext } from 'contexts/account'
 interface Props {
   setStep: Function
   selectedType: number
-  image?: string
+  image?: Blob
   contents?: string
 }
 
@@ -18,7 +18,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents }) =>
   const [preview, setPreview] = useState<string>('')
   const [deadline, setDeadline] = useState<number>(2)
 
-  const handleUploadStorage = async (image: string | null) => {
+  const handleUploadStorage = async (image: Blob | null) => {
     if (!image) return
     const { pathname } = await uploadStorage({
       image,

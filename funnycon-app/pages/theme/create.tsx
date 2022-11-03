@@ -7,7 +7,7 @@ import Preview from '../../components/theme/preview'
 const Create: NextPage = () => {
   const [step, setStep] = useState<number>(0)
   const [selectedType, setSelectedType] = useState<number>(0)
-  const [image, setImage] = useState<string>('')
+  const [image, setImage] = useState<Blob>()
   const [contents, setContents] = useState<string>('')
   const [preview, setPreview] = useState<string>('')
   return (

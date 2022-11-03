@@ -9,7 +9,7 @@ interface Props {
   setStep: Function
   selectedType: number
   setImage: Function
-  image: string
+  image?: Blob
   setPreview: Function
   preview: string
   setContents: Function
