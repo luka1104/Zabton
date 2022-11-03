@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Box, Center, Icon, Button, Select } from '@chakra-ui/react'
 import { AiOutlineLeft } from 'react-icons/ai'
 import axios from 'axios'
-import { uploadStorage } from '../../supabase/storage'
+import { uploadStorage } from 'supabase/storage'
 import { AccountContext } from 'contexts/account'
 
 interface Props {

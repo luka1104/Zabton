@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import React, { useState } from 'react'
-import Select from '../../components/theme/select'
-import InputForm from '../../components/theme/input'
-import Preview from '../../components/theme/preview'
+import Select from 'components/theme/select'
+import InputForm from 'components/theme/input'
+import Preview from 'components/theme/preview'
 
 const Create: NextPage = () => {
   const [step, setStep] = useState<number>(0)

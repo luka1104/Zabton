@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useState, useRef, useCallback } from 'react'
 import { Box, Center, Icon, Input, Button } from '@chakra-ui/react'
 import { AiOutlineLeft, AiOutlineCloseCircle } from 'react-icons/ai'
-import inputForm from '../../assets/images/inputForm.png'
+import inputForm from 'assets/images/inputForm.png'
 
 interface Props {
   setStep: Function

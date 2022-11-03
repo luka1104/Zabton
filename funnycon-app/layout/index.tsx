@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { Box } from '@chakra-ui/react'
-import Header from '../components/Header/index'
-import Footer from '../components/Footer/index'
+import Header from 'components/Header/index'
+import Footer from 'components/Footer/index'
 
 type LayoutProps = Required<{
   readonly children: ReactElement
