@@ -16,6 +16,7 @@ CREATE TABLE "Answer" (
     "userId" INTEGER NOT NULL,
     "themeId" INTEGER NOT NULL,
     "contents" TEXT NOT NULL,
+    "place" INTEGER NOT NULL,
 
     CONSTRAINT "Answer_pkey" PRIMARY KEY ("id")
 );

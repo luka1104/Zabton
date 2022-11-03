@@ -7,8 +7,9 @@ import { getStorageFileURL } from 'supabase/storage'
 interface Props {
   theme: Theme
   w: number
+  notFinished?: string
 }
-const Card: React.FC<Props> = ({ theme, w }) => {
+const Card: React.FC<Props> = ({ theme, w, notFinished }) => {
   const [imagePath, setImagePath] = useState<string>('')
 
   const handleRenderImage = useCallback(async () => {
@@ -37,7 +38,12 @@ const Card: React.FC<Props> = ({ theme, w }) => {
   if(theme) return (
     <>
       <Center>
-        <Box w={w} h={w} bg='white' border='2px solid black'>
+        <Box w={w} h={w} bg='white' border={notFinished === undefined || notFinished === 'true' ? '2px solid black' : '2px solid #F345BE' } position='relative'>
+          {notFinished === 'false' ? (
+            <Center top='0' right='0' w='40%' h='20px' bg='#F345BE' color='white' position='absolute' zIndex='overlay' fontSize='12px' fontWeight='bold' borderBottomLeftRadius='10px'>
+              結果を見る
+            </Center>
+          ) : null }
           {theme.type === 1 ? (
             <Center w='100%' h='100%' position='relative'>
               <Image

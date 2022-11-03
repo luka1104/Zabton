@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Theme } from 'interfaces'
 import Card from 'components/answer/card'
 import { IoWarningOutline } from 'react-icons/io5'
-import { calcTime } from 'utils'
+import { calcTime, checkDeadline } from 'utils'
 
 interface PropTypes {
   themes: Theme[]
@@ -74,7 +74,7 @@ const Select: React.FC<PropTypes> = ({ themes, setStep, selectedTheme, setSelect
           </ModalContent>
         </Modal>
         <Slider ref={sliderRef} {...settings}>
-          {themes.map((val: any, key: any) => {
+          {themes.filter(t => checkDeadline(t.deadline)).map((val: any, key: any) => {
             return (
               <Box key={key}>
                 <Card

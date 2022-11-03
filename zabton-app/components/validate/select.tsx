@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react'
 import { Box, SimpleGrid, Center } from '@chakra-ui/react'
 import { Theme } from 'interfaces'
-// import { shuffleArray } from 'utils'
+import { checkDeadline } from 'utils'
 import Card from 'components/theme/card'
 
 interface PropTypes {
@@ -32,7 +32,7 @@ const Select: NextPage<PropTypes> = ({ themes, setStep, selectedTheme, setSelect
           どのお題を評価する？
         </Center>
         <SimpleGrid pt='20px' columns={2} spacing={2}>
-          {themes.map((val: any, key: any) => {
+          {themes.filter(t => checkDeadline(t.deadline)).map((val: any, key: any) => {
             return (
               <Box key={key} onClick={() => {setSelectedTheme(val)}}>
                 <Card

@@ -11,6 +11,7 @@ import type { GetServerSideProps } from "next";
 import prisma from 'lib/prisma'
 import { Theme, Answer } from 'interfaces'
 import Card from 'components/theme/card'
+import { checkDeadline } from 'utils'
 
 type Props = {
   themes: Theme[]
@@ -177,7 +178,7 @@ const Auth: NextPage<PropTypes> = ({ themes, answers }) => {
     </>
   )
 
-  if(!loading) return (
+  if(!loading && themes && answers) return (
     <>
       <Box pt='60px' ref={finalRef}>
         <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
@@ -291,38 +292,89 @@ const Auth: NextPage<PropTypes> = ({ themes, answers }) => {
           投稿したボケ
         </Center>
         <Center>
-          <SimpleGrid pt='20px' columns={2} spacing={2}>
-            {answers ? answers.filter(a => a.userId === user.id).map((val: Answer, key: any) => {
-              return (
-                <Box key={key} mt='5px'>
-                  <Card
-                    theme={themes.find(t => t.id === val.id)}
-                    w={window.innerWidth * 0.5}
-                    key={key}
-                  />
-                  <Center key={key} color='black' mt='5px' fontWeight='bold' fontSize='xl'>
-                    {val.contents}
-                  </Center>
-                </Box>
-              )
-            }) : null}
-          </SimpleGrid>
+          {answers.filter(a => a.userId === user.id).length !== 0 ? (
+            <SimpleGrid pt='20px' columns={2} spacing={2}>
+              {answers.filter(a => a.userId === user.id).map((val: Answer, key: any) => {
+                return (
+                  <Box key={key} mt='5px'>
+                    <Card
+                      theme={themes.find(t => t.id === val.themeId)}
+                      w={window.innerWidth * 0.5}
+                      notFinished={JSON.stringify(checkDeadline(themes.find(t => t.id === val.themeId).deadline))}
+                      key={key}
+                    />
+                    <Center key={key} color='black' mt='5px' fontWeight='bold' fontSize='xl'>
+                      {val.contents}
+                    </Center>
+                  </Box>
+                )
+              })}
+            </SimpleGrid>
+          ) : (
+            <>
+              <Box>
+                <Center　color='black' mt='40px' fontWeight='bold' fontSize='xl'>
+                  投稿したボケがありません
+                </Center><br />
+                <Center>
+                  <Button
+                    mt='5px'
+                    color='black'
+                    bg='white'
+                    border='1px solid black'
+                    borderRadius='30px'
+                    w={window.innerWidth * 0.9}
+                    h='60px'
+                    fontSize='xl'
+                    mb='30px'
+                    onClick={() => {router.push('/answer/create')}}
+                  >
+                    ボケる！
+                  </Button>
+                </Center>
+              </Box>
+            </>
+          )}
         </Center>
         <Center color='black' mt='40px' fontWeight='bold' fontSize='2xl'>
           投稿したお題
         </Center>
         <Center>
-          <SimpleGrid pt='20px' columns={2} spacing={2}>
-            {themes ? themes.filter(t => t.userId === user.id).map((val: Theme, key: any) => {
-              return (
-                <Card
-                  theme={val}
-                  w={window.innerWidth * 0.5}
-                  key={key}
-                />
-              )
-            }) : null}
-          </SimpleGrid>
+          {themes.filter(t => t.userId === user.id).length !== 0 ? (
+            <SimpleGrid pt='20px' columns={2} spacing={2}>
+              {themes.filter(t => t.userId === user.id).map((val: Theme, key: any) => {
+                return (
+                  <Card
+                    theme={val}
+                    w={window.innerWidth * 0.5}
+                    key={key}
+                  />
+                )
+              })}
+            </SimpleGrid>
+          ) : (
+            <Box>
+              <Center　color='black' mt='40px' fontWeight='bold' fontSize='xl'>
+                投稿したお題がありません
+              </Center><br />
+              <Center>
+                <Button
+                  mt='5px'
+                  color='black'
+                  bg='white'
+                  border='1px solid black'
+                  borderRadius='30px'
+                  w={window.innerWidth * 0.9}
+                  h='60px'
+                  fontSize='xl'
+                  mb='30px'
+                  onClick={() => {router.push('/theme/create')}}
+                >
+                  お題を投稿する！
+                </Button>
+              </Center>
+            </Box>
+          )}
         </Center>
       </Box>
     </>

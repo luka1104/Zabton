@@ -13,6 +13,7 @@ export interface Answer {
   userId: number
   contents: string
   themeId: number
+  place?: number
 }
 
 export interface User {

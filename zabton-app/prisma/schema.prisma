@@ -23,6 +23,7 @@ model Answer {
   userId     Int
   themeId    Int
   contents   String
+  place      Int?
   theme      Theme        @relation(fields: [themeId], references: [id], onDelete: Cascade)
   user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   Validation Validation[]

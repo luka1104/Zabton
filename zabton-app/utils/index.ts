@@ -17,3 +17,10 @@ export const calcTime = (deadline: string | Date) => {
   const timeLeft = (deadlineDateTime.getTime() - now.getTime()) / (60*60*1000)
   return Math.floor(timeLeft)
 }
+
+export const checkDeadline = (deadline: string | Date) => {
+  const deadlineDateTime = new Date(deadline)
+  const now = new Date
+  const isBeforeDeadline = deadlineDateTime.getTime() >= now.getTime()
+  return isBeforeDeadline
+}

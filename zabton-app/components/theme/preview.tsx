@@ -32,7 +32,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, dead
     var time = new Date
     switch (deadline) {
       case 1:
-        time.setHours(time.getHours() + 3)
+        time.setHours(time.getHours() + 1)
         break;
       case 2:
         time.setDate(time.getDate() + 1)
