@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text } from '@chakra-ui/react'
 import { BsFacebook, BsTelegram } from 'react-icons/bs'
@@ -7,25 +7,62 @@ import { AccountContext } from 'contexts/account'
 import { calcTime } from 'utils'
 import { useRouter } from 'next/router'
 import PacmanLoader from "react-spinners/PacmanLoader"
-import { transfer } from 'utils/transferToken'
-import { Theme } from 'interfaces'
+import axios from 'axios'
+import { Theme, Answer } from 'interfaces'
+import { getStorageFileURL } from 'supabase/storage'
 
 interface Props {
-  selectedTheme: Theme
-  contents: string
-  preview: string
+  theme: Theme
+  answer: Answer
 }
 
-const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
+const ViewResult: React.FC<Props> = ({ theme, answer}) => {
   const router = useRouter()
   const finalRef = useRef(null)
   const { user } = useContext(AccountContext)
   const [loading, setLoading] = useState<boolean>(false)
+  const [imagePath, setImagePath] = useState<string>('')
+
+  const handleRenderImage = useCallback(async () => {
+    if (!theme.imagePath) return;
+    const path = await getStorageFileURL({
+      bucketName: "themeimage",
+      pathName: theme.imagePath,
+    });
+    if (!path) return;
+    setImagePath(path);
+  }, []);
+
+  const checkResult = async () => {
+    if(answer.place) return
+    setLoading(true)
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    return new Promise((resolve, reject) => {
+      axios.post('/api/collectResult', theme.id, config)
+      .then(response => {
+        if(response.status !== 200) throw Error("Server error")
+        resolve(response)
+        setLoading(false)
+      })
+      .catch(e => {
+        reject(e);
+        throw Error("Server error:" + e)
+      })
+    })
+  }
 
   useEffect(() => {
-    setLoading(true)
-    transfer(user.address, 1, setLoading)
-  }, [])
+    if(theme.type === 2) return
+    handleRenderImage()
+  }, [theme])
+
+  useEffect(() => {
+    checkResult()
+  }, [answer])
 
   return (
     <>
@@ -72,12 +109,12 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
           </ModalContent>
         </Modal>
         <Box pt='20px'>
-          {selectedTheme.type === 1 ? (
+          {theme.type === 1 ? (
             <>
               <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
                 <Center w='100%' h='100%' position='relative'>
                   <Image
-                    src={preview}
+                    src={imagePath}
                     alt="preview"
                     fill={true}
                     style={{objectFit: "contain"}}
@@ -85,11 +122,11 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
                 </Center>
               </Box>
             </>
-          ) : selectedTheme.type === 2 ? (
+          ) : theme.type === 2 ? (
             <>
               <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black' >
                 <Center w='100%' h='100%' fontWeight='bold' fontSize='30px' textAlign='center' color='black'>
-                  {selectedTheme.contents}
+                  {theme.contents}
                 </Center>
               </Box>
             </>
@@ -98,7 +135,7 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
               <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
                 <Center>
                   <Image
-                    src={preview}
+                    src={imagePath}
                     alt="preview"
                     width={window.innerWidth * 0.8}
                     height={window.innerWidth * 0.8}
@@ -114,7 +151,7 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
                   textAlign='center'
                   position='absolute'
                 >
-                  {selectedTheme.contents}
+                  {theme.contents}
                 </Box>
               </Box>
             </>
@@ -130,10 +167,10 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
           textAlign='center'
           fontWeight='bold'
         >
-          {contents}
+          {answer.contents}
         </Text>
         <Center color='black' mt='5px' fontWeight='bold' fontSize='12px'>
-          審査中｜回答期限　残り{calcTime(selectedTheme.deadline)}時間
+          {answer.place}位｜　残り{calcTime(theme.deadline)}時間
         </Center>
         <Center color='black' mt='20px' fontWeight='bold' fontSize='25px'>
           Let&apos;s Share!
@@ -154,9 +191,9 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
             h='60px'
             fontSize='xl'
             mb='50px'
-            onClick={() => {router.replace('/mypage')}}
+            onClick={() => {router.reload()}}
           >
-            マイページに戻る
+            お題選びに戻る
           </Button>
         </Center>
       </Box>
@@ -164,4 +201,4 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
   )
 }
 
-export default Complete
+export default ViewResult

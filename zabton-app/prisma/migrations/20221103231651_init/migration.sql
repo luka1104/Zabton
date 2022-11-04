@@ -16,7 +16,7 @@ CREATE TABLE "Answer" (
     "userId" INTEGER NOT NULL,
     "themeId" INTEGER NOT NULL,
     "contents" TEXT NOT NULL,
-    "place" INTEGER NOT NULL,
+    "place" INTEGER,
 
     CONSTRAINT "Answer_pkey" PRIMARY KEY ("id")
 );
@@ -38,6 +38,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Validation" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
+    "themeId" INTEGER NOT NULL,
     "answerId" INTEGER NOT NULL,
 
     CONSTRAINT "Validation_pkey" PRIMARY KEY ("id")
@@ -56,6 +57,9 @@ CREATE TABLE "Notification" (
 -- CreateIndex
 CREATE UNIQUE INDEX "User_address_key" ON "User"("address");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Validation_id_key" ON "Validation"("id");
+
 -- AddForeignKey
 ALTER TABLE "Theme" ADD CONSTRAINT "Theme_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -64,6 +68,9 @@ ALTER TABLE "Answer" ADD CONSTRAINT "Answer_themeId_fkey" FOREIGN KEY ("themeId"
 
 -- AddForeignKey
 ALTER TABLE "Answer" ADD CONSTRAINT "Answer_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Validation" ADD CONSTRAINT "Validation_themeId_fkey" FOREIGN KEY ("themeId") REFERENCES "Theme"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Validation" ADD CONSTRAINT "Validation_answerId_fkey" FOREIGN KEY ("answerId") REFERENCES "Answer"("id") ON DELETE CASCADE ON UPDATE CASCADE;

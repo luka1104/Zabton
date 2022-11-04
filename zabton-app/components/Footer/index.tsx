@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
           <Icon fontSize='30px' as={HiOutlineClipboardDocumentList} />
         </NextLink>
         <Divider orientation='vertical' h='3vh' border='1.5px solid black' opacity='1' />
-        <NextLink href='/mypage/auth' passHref>
+        <NextLink href='/mypage' passHref>
           <Icon fontSize='30px' as={AiOutlineUser} />
         </NextLink>
       </Center>

@@ -6,6 +6,7 @@ export interface Theme {
   type: number
   deadline: string
   Answer?: Answer[]
+  Validation?: Validation[]
 }
 
 export interface Answer {
@@ -14,6 +15,7 @@ export interface Answer {
   contents: string
   themeId: number
   place?: number
+  Validation?: Validation[]
 }
 
 export interface User {
@@ -26,6 +28,7 @@ export interface User {
   lifeLimit?: number
   Theme?: Theme[]
   Answer?: Answer[]
+  Validation?: Validation[]
   Notification?: Notification[]
 }
 
@@ -33,6 +36,7 @@ export interface Validation {
   id?: number
   userId: number
   answerId: number
+  themeId: number
 }
 
 export interface Notification {

@@ -21,7 +21,7 @@ const Tos: React.FC = () => {
             h='60px'
             fontSize='xl'
             mb='30px'
-            onClick={() => {router.push('/mypage/auth')}}
+            onClick={() => {router.push('/mypage')}}
           >
             戻る
           </Button>

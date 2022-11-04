@@ -24,7 +24,7 @@ const Notifications: React.FC = () => {
             h='60px'
             fontSize='xl'
             mt='100px'
-            onClick={() => {router.replace('/mypage/auth')}}
+            onClick={() => {router.replace('/mypage')}}
           >
             戻る
           </Button>

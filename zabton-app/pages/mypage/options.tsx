@@ -87,7 +87,7 @@ const Options: React.FC = () => {
           h='60px'
           fontSize='xl'
           mt='10px'
-          onClick={() => {router.replace('/mypage/auth')}}
+          onClick={() => {router.replace('/mypage')}}
         >
           戻る
         </Button>

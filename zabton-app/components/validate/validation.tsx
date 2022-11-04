@@ -50,6 +50,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
     const data = {
       'userId': user.id,
       'answerId': answerId,
+      'themeId': selectedTheme.id
     }
     const config = {
       headers: {

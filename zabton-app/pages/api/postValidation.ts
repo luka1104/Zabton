@@ -7,6 +7,7 @@ const postValidation = async (data: Validation) => {
       data: {
         userId: data.userId,
         answerId: data.answerId,
+        themeId: data.themeId,
       },
     });
     return resp
@@ -17,7 +18,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const data = {
     userId: req.body.userId,
-    answerId: req.body.answerId
+    answerId: req.body.answerId,
+    themeId: req.body.themeId,
   }
   console.log(data);
   const resp = await postValidation(data)
