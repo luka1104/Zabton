@@ -57,6 +57,33 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
     })
   }
 
+  const handleMint = async () => {
+    setLoading(true)
+    const data = {
+      'address': user.address,
+      'theme': theme,
+      'answer': answer,
+    }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    return new Promise((resolve, reject) => {
+      axios.post('/api/tokens/mintBFT', data, config)
+      .then(response => {
+        if(response.status !== 200) throw Error("Server error")
+        resolve(response)
+        console.log(response.data.hash);
+        setLoading(false)
+      })
+      .catch(e => {
+        reject(e);
+        throw Error("Server error:" + e)
+      })
+    })
+  }
+
   useEffect(() => {
     if(theme.type === 2) return
     handleRenderImage()
@@ -188,7 +215,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
           <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setSelectedAnswer()}}>
             戻る
           </Button>
-          <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
+          <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={handleMint}>
             {/* 発行処理 */}
             NFTを発行する
           </Button>
