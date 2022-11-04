@@ -305,7 +305,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                 <SimpleGrid pt='20px' columns={2} spacing={2}>
                   {answers.filter(a => a.userId === user.id).map((val: Answer, key: any) => {
                     return (
-                      <Box key={key} mt='5px' onClick={!checkDeadline(themes.find(t => t.id === val.themeId).deadline) ? null : () => setSelectedAnswer(val)}>
+                      <Box key={key} mt='5px' onClick={checkDeadline(themes.find(t => t.id === val.themeId).deadline) ? null : () => setSelectedAnswer(val)}>
                         <Card
                           theme={themes.find(t => t.id === val.themeId)}
                           w={window.innerWidth * 0.5}

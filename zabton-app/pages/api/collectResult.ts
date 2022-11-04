@@ -40,6 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   resultArr.sort((first: any, second: any) => {
     return first[1] - second[1]
   })
+  resultArr.reverse()
   const firstId = resultArr[0][0]
   const secondId = resultArr[1][0]
   const thirdId = resultArr[2][0]
