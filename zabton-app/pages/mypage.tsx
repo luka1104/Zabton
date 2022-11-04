@@ -187,6 +187,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
           <ViewResult
             theme={themes.find(t => t.id === selectedAnswer.themeId)}
             answer={selectedAnswer}
+            setSelectedAnswer={setSelectedAnswer}
           />
         ) : (
           <>

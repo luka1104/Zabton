@@ -14,14 +14,16 @@ import { getStorageFileURL } from 'supabase/storage'
 interface Props {
   theme: Theme
   answer: Answer
+  setSelectedAnswer: Function
 }
 
-const ViewResult: React.FC<Props> = ({ theme, answer}) => {
+const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   const router = useRouter()
   const finalRef = useRef(null)
   const { user } = useContext(AccountContext)
   const [loading, setLoading] = useState<boolean>(false)
   const [imagePath, setImagePath] = useState<string>('')
+  const [date, setDate] = useState<Date>()
 
   const handleRenderImage = useCallback(async () => {
     if (!theme.imagePath) return;
@@ -62,6 +64,8 @@ const ViewResult: React.FC<Props> = ({ theme, answer}) => {
 
   useEffect(() => {
     checkResult()
+    const deadlineDate = new Date(theme.deadline)
+    setDate(deadlineDate)
   }, [answer])
 
   return (
@@ -170,7 +174,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer}) => {
           {answer.contents}
         </Text>
         <Center color='black' mt='5px' fontWeight='bold' fontSize='12px'>
-          {answer.place}位｜　残り{calcTime(theme.deadline)}時間
+          {answer.place}位｜ {`${date?.getFullYear()}.${date?.getMonth()}.${date?.getDay()}`}
         </Center>
         <Center color='black' mt='20px' fontWeight='bold' fontSize='25px'>
           Let&apos;s Share!
@@ -180,20 +184,13 @@ const ViewResult: React.FC<Props> = ({ theme, answer}) => {
           <Icon as={AiFillTwitterCircle} fontSize='46px' color='#1C9BF0' />
           <Icon as={BsTelegram} fontSize='40px' color='#26A4E2' />
         </Center>
-        <Center>
-          <Button
-            mt='50px'
-            color='black'
-            bg='white'
-            border='1px solid black'
-            borderRadius='30px'
-            w='90%'
-            h='60px'
-            fontSize='xl'
-            mb='50px'
-            onClick={() => {router.reload()}}
-          >
-            お題選びに戻る
+        <Center pt='20px' gap='5'>
+          <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setSelectedAnswer()}}>
+            戻る
+          </Button>
+          <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
+            {/* 発行処理 */}
+            NFTを発行する
           </Button>
         </Center>
       </Box>
