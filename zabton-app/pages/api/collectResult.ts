@@ -23,10 +23,39 @@ const assignPlace = async (answerId: number, place: number) => {
   return resp
 }
 
+const assignPlaces = async (resultArr: any[]) => {
+  switch(resultArr.length) {
+    case 0:
+      break;
+    case 1:
+      await assignPlace(resultArr[0][0], 1)
+      break;
+    case 2:
+      await assignPlace(resultArr[0][0], 1)
+      await assignPlace(resultArr[1][0], 2)
+      break;
+    default:
+      await assignPlace(resultArr[0][0], 1)
+      await assignPlace(resultArr[1][0], 2)
+      await assignPlace(resultArr[2][0], 3)
+      break;
+  }
+  return true
+}
+
+const getPlace = async (answerId: number) => {
+  const resp = await prisma.answer.findUnique({
+    where: {
+      id: answerId,
+    },
+  });
+  return resp
+}
+
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(req.body);
-  const validations = await getValidation(req.body)
+  const validations = await getValidation(req.body.themeId)
   console.log(validations);
   let answerIds = []
   validations.map((val: Validation, key: number) => {
@@ -41,12 +70,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return first[1] - second[1]
   })
   resultArr.reverse()
-  const firstId = resultArr[0][0]
-  // const secondId = resultArr[1][0]
-  // const thirdId = resultArr[2][0]
-  assignPlace(firstId, 1)
-  // if(secondId) assignPlace(secondId, 2)
-  // if(thirdId) assignPlace(thirdId, 3)
-  res.status(200)
+  await assignPlaces(resultArr)
+  return new Promise((resolve, reject) => {
+    getPlace(req.body.answerId)
+      .then(response => {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Cache-Control', 'max-age=180000');
+        res.end(JSON.stringify(response));
+        resolve(response);
+      })
+      .catch(error => {
+        res.json(error);
+        res.status(405).end();
+        reject();
+      });
+  });
 };
 export default handler;

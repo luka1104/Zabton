@@ -24,6 +24,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [imagePath, setImagePath] = useState<string>('')
   const [date, setDate] = useState<Date>()
+  const [place, setPlace] = useState<number>()
 
   const handleRenderImage = useCallback(async () => {
     if (!theme.imagePath) return;
@@ -38,16 +39,21 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   const checkResult = async () => {
     if(answer.place) return
     setLoading(true)
+    const data = {
+      'themeId': theme.id,
+      'answerId': answer.id,
+    }
     const config = {
       headers: {
         'Content-Type': 'application/json',
       }
     }
     return new Promise((resolve, reject) => {
-      axios.post('/api/collectResult', theme.id, config)
+      axios.post('/api/collectResult', data, config)
       .then(response => {
         if(response.status !== 200) throw Error("Server error")
         resolve(response)
+        setPlace(response.data.place)
         setLoading(false)
       })
       .catch(e => {
@@ -104,7 +110,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
             <ModalBody paddingInline='0'>
               <Box mt='20px'>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
-                  ZBTNを用意しています！
+                  結果を集計しています！
                 </Text>
                 <Center w='80%' mt='40px' mb='40px'>
                   <PacmanLoader
@@ -201,7 +207,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
           {answer.contents}
         </Text>
         <Center color='black' mt='5px' fontWeight='bold' fontSize='12px'>
-          {answer.place}位｜ {`${date?.getFullYear()}.${date?.getMonth()}.${date?.getDay()}`}
+          {answer.place ? answer.place : place}位｜ {`${date?.getFullYear()}.${date?.getMonth()}.${date?.getDay()}`}
         </Center>
         <Center color='black' mt='20px' fontWeight='bold' fontSize='25px'>
           Let&apos;s Share!
@@ -216,7 +222,6 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
             戻る
           </Button>
           <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={handleMint}>
-            {/* 発行処理 */}
             NFTを発行する
           </Button>
         </Center>
