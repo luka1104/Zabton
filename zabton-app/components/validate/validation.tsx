@@ -1,4 +1,4 @@
-import { Answer, Theme } from 'interfaces'
+import { Answer, Theme, User } from 'interfaces'
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Box, Button, Center, Icon, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, Text, Checkbox } from '@chakra-ui/react'
 import Slider from "react-slick";
@@ -9,6 +9,8 @@ import Card from './card';
 import { AccountContext } from 'contexts/account';
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { transferFrom } from 'utils/transferToken'
+import PacmanLoader from "react-spinners/PacmanLoader"
 
 interface Props {
   setStep: Function
@@ -17,14 +19,16 @@ interface Props {
   setImagePath: Function
   answers: Answer[]
   setAnswerId: Function
+  users: User[]
 }
 
-const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setImagePath, answers, setAnswerId }) => {
+const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setImagePath, answers, setAnswerId, users }) => {
   const router = useRouter()
   const { user, zbtn } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [tipOpen, setTipOpen] = useState<boolean>(false)
   const [width, setWidth] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const finalRef = useRef(null)
   const sliderRef = useRef(null)
@@ -137,41 +141,88 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
             </ModalBody>
           </ModalContent>
         </Modal>
-        <Modal finalFocusRef={finalRef} isOpen={tipOpen} onClose={() => {setTipOpen(false)}}>
-          <ModalOverlay backdropFilter='blur(5px)' />
-          <ModalContent bg='white' border='1px solid black' w='90%' h='350px' borderRadius='0' top='100px'>
-            <ModalBody paddingInline='0'>
-              <Box mt='20px'>
-                <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
-                  「ざぶとん一枚！」
-                </Text>
-                <Text color='black' textAlign='center' fontWeight='bold' fontSize='18px' mt='20px'>
-                  ZBTNを一枚消費してボケ主を<br />
-                  応援することができます！
-                </Text>
-                <Text color='black' textAlign='center' fontWeight='bold' fontSize='18px' mt='20px'>
-                  残りZBTN {zbtn} → {zbtn - 1}
-                </Text>
-                <Center mt='25px' color='black'>
-                  <Checkbox border='1px solid black' borderRadius='3px' />
-                  <Text fontWeight='bold' fontSize='15px' ml='5px'>今後、この確認を出さない。</Text>
-                </Center>
-              </Box>
-              <Center mt='30px' gap='10'>
-                <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setTipOpen(false)}}>
-                  また今度
-                </Button>
-                <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
-                  応援する
-                </Button>
-              </Center>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
         <Slider ref={sliderRef} {...settings}>
           {answers.filter(a => a.themeId === selectedTheme.id).map((val: any, key: any) => {
             return (
-              <Box key={key}>
+              <Box key={key} ref={finalRef}>
+                <Modal finalFocusRef={finalRef} isOpen={tipOpen} onClose={() => {setTipOpen(false)}}>
+                  <ModalOverlay backdropFilter='blur(5px)' />
+                  <ModalContent bg='white' border='1px solid black' w='90%' h='350px' borderRadius='0' top='100px'>
+                    <ModalBody paddingInline='0'>
+                      <Box mt='20px'>
+                        <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
+                          「ざぶとん一枚！」
+                        </Text>
+                        <Text color='black' textAlign='center' fontWeight='bold' fontSize='18px' mt='20px'>
+                          ZBTNを一枚消費してボケ主を<br />
+                          応援することができます！
+                        </Text>
+                        <Text color='black' textAlign='center' fontWeight='bold' fontSize='18px' mt='20px'>
+                          残りZBTN {zbtn} → {zbtn - 1}
+                        </Text>
+                        <Center mt='25px' color='black'>
+                          <Checkbox border='1px solid black' borderRadius='3px' />
+                          <Text fontWeight='bold' fontSize='15px' ml='5px'>今後、この確認を出さない。</Text>
+                        </Center>
+                      </Box>
+                      <Center mt='30px' gap='10'>
+                        <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setTipOpen(false)}}>
+                          また今度
+                        </Button>
+                        <Button
+                          w='40%'
+                          h='60px'
+                          fontSize='20px'
+                          color='black'
+                          bg='#F5F5F5'
+                          border='1px solid black'
+                          borderRadius='30px'
+                          onClick={() => {transferFrom(user.address, users.find(u => u.id === val.userId).address, 1, setLoading), setTipOpen(false)}}
+                        >
+                          応援する
+                        </Button>
+                      </Center>
+                    </ModalBody>
+                  </ModalContent>
+                </Modal>
+                <Modal finalFocusRef={finalRef} isOpen={loading} onClose={() => {setLoading(false)}}>
+                  <ModalOverlay backdropFilter='blur(5px)' />
+                  <ModalContent bg='white' border='1px solid black' w='90%' h='350px' borderRadius='0' top='100px'>
+                    <ModalBody paddingInline='0'>
+                      <Box mt='20px'>
+                        <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
+                          ZBTNを用意しています！
+                        </Text>
+                        <Center w='80%' mt='40px' mb='40px'>
+                          <PacmanLoader
+                            color='#F345BE'
+                            loading={loading}
+                            // cssOverride={override}
+                            size={50}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                          />
+                        </Center>
+                        <Center>
+                          <Button
+                            mt='50px'
+                            color='black'
+                            bg='white'
+                            border='1px solid black'
+                            borderRadius='30px'
+                            w='90%'
+                            h='60px'
+                            fontSize='xl'
+                            mb='30px'
+                            onClick={() => {setLoading(false)}}
+                          >
+                            閉じる
+                          </Button>
+                        </Center>
+                      </Box>
+                    </ModalBody>
+                  </ModalContent>
+                </Modal>
                 <Card
                   theme={selectedTheme}
                   answer={val}
