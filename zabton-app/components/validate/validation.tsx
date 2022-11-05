@@ -9,7 +9,7 @@ import Card from './card';
 import { AccountContext } from 'contexts/account';
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { transferFrom } from 'utils/transferToken'
+import { transfer, transferFrom } from 'utils/transferToken'
 import PacmanLoader from "react-spinners/PacmanLoader"
 
 interface Props {
@@ -248,7 +248,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                         borderRadius='20px'
                         border='1px solid black'
                         //@ts-ignore
-                        onClick={() => (sliderRef.current ? sliderRef.current.slickNext() : null)}
+                        onClick={() => (transfer(user.address, 1), sliderRef.current ? sliderRef.current.slickNext() : null)}
                       >
                         ちゃう
                       </Button>
