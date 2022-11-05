@@ -27,6 +27,12 @@ run ```mv .env-example .env```
 
 set the environment variables at .env
 
+### Setup Prisma
+
+run ```npx prisma migrate dev``` and input the name of migration
+
+run ```npx prisma generate client```
+
 run ```npm run dev```
 
 Access to http://localhost:3000/mypage
