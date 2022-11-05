@@ -5,6 +5,7 @@ import RPC from "pages/api/ethersRPC";
 import axios from 'axios'
 import { User } from 'interfaces';
 import getZBTN from 'utils/getZBTN'
+import { useRouter } from 'next/router'
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';
@@ -32,6 +33,7 @@ export interface AccountContextInterface {
 export const AccountContext = React.createContext<AccountContextInterface>({} as AccountContextInterface);
 
 export const AccountProvider = ({ children }: Props) => {
+  const router = useRouter()
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null)
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(null)
   const [address, setAddress] = useState<string>('')
@@ -82,6 +84,7 @@ export const AccountProvider = ({ children }: Props) => {
         resolve(response)
         if(response.data) setUser(response.data.user)
         if(response.status === 200) setLoading(false)
+        if(!response.data.user) router.push('/mypage')
       })
       .catch(e => {
         reject(e)
@@ -109,6 +112,7 @@ export const AccountProvider = ({ children }: Props) => {
           setProvider(web3auth.provider);
         } else {
           setLoading(false)
+          router.push('/mypage')
         }
       } catch (error) {
         console.error(error);
