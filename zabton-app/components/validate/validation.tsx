@@ -247,7 +247,6 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                         bg='white'
                         borderRadius='20px'
                         border='1px solid black'
-                        //@ts-ignore
                         onClick={() => (transfer(user.address, 1), sliderRef.current ? sliderRef.current.slickNext() : null)}
                       >
                         ちゃう
@@ -278,7 +277,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                       colorScheme='pink'
                       borderRadius='30px'
                       border='1px solid black'
-                      onClick={() => {handleSubmit(val.id)}}
+                      onClick={() => (transfer(user.address, 1), sliderRef.current ? sliderRef.current.slickNext() : null)}
                     >
                       ええやん
                     </Button>
