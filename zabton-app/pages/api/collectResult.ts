@@ -42,11 +42,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   })
   resultArr.reverse()
   const firstId = resultArr[0][0]
-  const secondId = resultArr[1][0]
-  const thirdId = resultArr[2][0]
+  // const secondId = resultArr[1][0]
+  // const thirdId = resultArr[2][0]
   assignPlace(firstId, 1)
-  if(secondId) assignPlace(secondId, 2)
-  if(thirdId) assignPlace(thirdId, 3)
+  // if(secondId) assignPlace(secondId, 2)
+  // if(thirdId) assignPlace(thirdId, 3)
   res.status(200)
 };
 export default handler;

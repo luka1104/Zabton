@@ -1,13 +1,36 @@
-import React, { useContext, useEffect } from 'react'
-import { Box, Center, Button, Text, Image } from '@chakra-ui/react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Box, Center, Button, Text, Image, SimpleGrid} from '@chakra-ui/react'
 import { AccountContext } from 'contexts/account'
+import getBFT from 'utils/getBFT'
+import type { NextPage } from "next";
+import Card from 'components/mypage/card';
+import ViewNFT from 'components/mypage/viewNFT';
 
-const Wallet: React.FC = () => {
-  const { zbtn } = useContext(AccountContext)
+
+const Wallet: NextPage = () => {
+  const { zbtn, user } = useContext(AccountContext)
+  const [BFTs, setBFTs] = useState<any[]>()
+  const [uri, setUri] = useState<any>()
+
+  const getBFTs = async () => {
+    const uris = await getBFT(user.address)
+    setBFTs(uris)
+  }
 
   useEffect(() => {
-    console.log(zbtn);
   }, [zbtn])
+
+  useEffect(() => {
+    if(!user) return
+    getBFTs()
+  }, [user])
+
+  if(uri) return (
+    <>
+      <ViewNFT val={JSON.parse(uri)} />
+    </>
+  )
+
   return (
     <>
       <Box pt='60px'>
@@ -43,7 +66,6 @@ const Wallet: React.FC = () => {
             h='60px'
             fontSize='xl'
             mt='30px'
-            // onClick={() => {logout()}}
           >
             もっと見る
           </Button>
@@ -51,6 +73,16 @@ const Wallet: React.FC = () => {
         <Center color='black' mt='40px' fontWeight='bold' fontSize='2xl'>
           保有NFT
         </Center>
+        <SimpleGrid pt='20px' columns={2} spacing={2}>
+          {BFTs?.map((val: any, key: any) => {
+            if(!val) return
+            return (
+              <Box mt='40px' key={key} onClick={() => {setUri(val)}}>
+                <Card val={JSON.parse(val)} key={key} />
+              </Box>
+            )
+          })}
+        </SimpleGrid>
       </Box>
     </>
   )

@@ -23,7 +23,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     'place': req.body.answer.place,
     'date': req.body.theme.deadline,
   }
-  const receipt = await mint(req.body.address, data)
+  console.log(JSON.stringify(data));
+  const receipt = await mint(req.body.address, JSON.stringify(data))
   if(receipt.hash) res.status(200).json({ hash: receipt.hash })
   if(!receipt.hash) res.status(500)
 };
