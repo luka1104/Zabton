@@ -4,12 +4,14 @@ import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody
 import { BsFacebook, BsTelegram } from 'react-icons/bs'
 import { AiFillTwitterCircle } from 'react-icons/ai'
 import { AccountContext } from 'contexts/account'
-import { calcTime } from 'utils'
+import { transfer } from 'utils/transferToken'
 import { useRouter } from 'next/router'
 import PacmanLoader from "react-spinners/PacmanLoader"
 import axios from 'axios'
 import { Theme, Answer } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
+import { prizeAmount } from 'constants/index'
+import { toast } from 'react-toastify'
 
 interface Props {
   theme: Theme
@@ -22,6 +24,8 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   const finalRef = useRef(null)
   const { user } = useContext(AccountContext)
   const [loading, setLoading] = useState<boolean>(false)
+  const [zbtnLoading, setZbtnLoading] = useState<boolean>(false)
+  const [mintLoading, setMintLoading] = useState<boolean>(false)
   const [imagePath, setImagePath] = useState<string>('')
   const [date, setDate] = useState<Date>()
   const [place, setPlace] = useState<number>()
@@ -64,7 +68,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   }
 
   const handleMint = async () => {
-    setLoading(true)
+    setMintLoading(true)
     const data = {
       'address': user.address,
       'theme': theme,
@@ -81,7 +85,8 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
         if(response.status !== 200) throw Error("Server error")
         resolve(response)
         console.log(response.data.hash);
-        setLoading(false)
+        setMintLoading(false)
+        toast('NFTが発行されました！')
       })
       .catch(e => {
         reject(e);
@@ -100,6 +105,12 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
     const deadlineDate = new Date(theme.deadline)
     setDate(deadlineDate)
   }, [answer])
+
+  useEffect(() => {
+    if(!place) return
+    setZbtnLoading(true)
+    transfer(user.address, prizeAmount[place -1], setZbtnLoading)
+  }, [place])
 
   return (
     <>
@@ -139,9 +150,83 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
                   </Button>
                 </Center>
               </Box>
-              <Center mt='60px' gap='10'>
-
-              </Center>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <Modal finalFocusRef={finalRef} isOpen={zbtnLoading} onClose={() => {setZbtnLoading(false)}}>
+          <ModalOverlay backdropFilter='blur(5px)' />
+          <ModalContent bg='white' border='1px solid black' w='90%' h='400px' borderRadius='0' top='100px'>
+            <ModalBody paddingInline='0'>
+              <Box mt='20px'>
+                <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
+                  {place}位だったので{prizeAmount[place -1]}ZBTN付与！
+                  ZBTNを用意しています！
+                </Text>
+                <Center w='80%' mt='40px' mb='40px'>
+                  <PacmanLoader
+                    color='#F345BE'
+                    loading={zbtnLoading}
+                    // cssOverride={override}
+                    size={50}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </Center>
+                <Center>
+                  <Button
+                    mt='50px'
+                    color='black'
+                    bg='white'
+                    border='1px solid black'
+                    borderRadius='30px'
+                    w='90%'
+                    h='60px'
+                    fontSize='xl'
+                    mb='30px'
+                    onClick={() => {setZbtnLoading(false)}}
+                  >
+                    閉じる
+                  </Button>
+                </Center>
+              </Box>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <Modal finalFocusRef={finalRef} isOpen={mintLoading} onClose={() => {setMintLoading(false)}}>
+          <ModalOverlay backdropFilter='blur(5px)' />
+          <ModalContent bg='white' border='1px solid black' w='90%' h='350px' borderRadius='0' top='100px'>
+            <ModalBody paddingInline='0'>
+              <Box mt='20px'>
+                <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
+                  NFTを発行しています！
+                </Text>
+                <Center w='80%' mt='40px' mb='40px'>
+                  <PacmanLoader
+                    color='#F345BE'
+                    loading={mintLoading}
+                    // cssOverride={override}
+                    size={50}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </Center>
+                <Center>
+                  <Button
+                    mt='50px'
+                    color='black'
+                    bg='white'
+                    border='1px solid black'
+                    borderRadius='30px'
+                    w='90%'
+                    h='60px'
+                    fontSize='xl'
+                    mb='30px'
+                    onClick={() => {setMintLoading(false)}}
+                  >
+                    閉じる
+                  </Button>
+                </Center>
+              </Box>
             </ModalBody>
           </ModalContent>
         </Modal>
