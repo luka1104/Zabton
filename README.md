@@ -1,5 +1,9 @@
 # Zabton
-For Tokyo Web3 Hackathon
+ZABTONとは、次世代のYouTubeを目指す、お笑いのショーレースGameFi、言わば大喜利GameFi。
+アプリ版で50万MAUを10年キープしている「bokete」というサービスと、「Golden」というWeb3版Wikipediaから着想を得ている。ゲームでは、誰でも決められたフォーマットからお題を作り、ボケを回答、集まったボケを全員で審査し、勝ち負けを決めて遊べる。この全てのアクションに対して荷重をかけてTokenを付与することで、特定のトピック（お題）に対してコンテンツ（回答, UGC）作成を促進し、Validation（審査）を通じて良いコンテンツを選別、キュレーションできるコンテンツメディアを作っていく。
+既存のGameFiより大幅にMass Adoptionを意識し、ソーシャルログインの実装やNFT/仮想通貨を保有せずとも遊べる設計にし、直接課金や広告収入で持続的な仕組みを目指す。
+細かい設計やTokenomicsまでWhitepaperにまとめたのでご確認ください。
+https://zabton.gitbook.io/zabton/
 
 ## Setup Contracts
 
