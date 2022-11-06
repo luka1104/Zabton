@@ -58,5 +58,6 @@ https://vercel.com/luka1104/zabton
 
 ### repo: 
 https://github.com/luka1104/Zabton
-### link: 
+### How to access: 
+open the link below with smartphone. otherwise the layouts will be terrible.
 https://zabton.vercel.app/mypage
