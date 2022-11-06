@@ -52,8 +52,8 @@ Polygon(Mumbai)
 https://mumbai.polygonscan.com/address/0xB431c7847c493326eC4b2a55d9c554B6EB154a24
 0xf781b3F9CE62CBDCd6a1DE525d362028C4d424D2
 https://mumbai.polygonscan.com/address/0xf781b3F9CE62CBDCd6a1DE525d362028C4d424D2
-###application code?: 
-https://app.supabase.com/project/delnwukkhgeymbzezhoe,
+### application code: 
+https://app.supabase.com/project/delnwukkhgeymbzezhoe<br>
 https://vercel.com/luka1104/zabton
 
 ### repo: 
