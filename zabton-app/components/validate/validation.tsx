@@ -287,6 +287,22 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
             )
           })}
         </Slider>
+        <Center>
+          <Button
+            mt='30px'
+            color='black'
+            bg='white'
+            border='1px solid black'
+            borderRadius='30px'
+            w='80%'
+            h='60px'
+            fontSize='xl'
+            mb='30px'
+            onClick={() => {router.reload()}}
+          >
+            お題選びに戻る
+          </Button>
+        </Center>
       </Box>
     </>
   )

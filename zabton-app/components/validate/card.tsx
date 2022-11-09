@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
-import Image from 'next/image'
-import { Box, Center, Text, Button } from '@chakra-ui/react'
+// import Image from 'next/image'
+import { Box, Center, Text, Button, Image } from '@chakra-ui/react'
 import { Answer, Theme } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
 import { getFontSize } from 'utils'
@@ -45,16 +45,15 @@ const Card: React.FC<Props> = ({ theme, answer, w, imagePath, setImagePath }) =>
           {theme.type === 1 ? (
             <Center w='100%' h='100%' position='relative'>
               <Image
-                src={imagePath}
+                src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                 alt="preview"
-                fill={true}
-                style={{objectFit: "contain"}}
+                maxH={w * 0.99}
               />
             </Center>
           ) : theme.type === 2 ? (
             <>
               <Box>
-                <Center w={w} h={w} color='black' fontWeight='bold' fontSize='30px' textAlign='center'>
+                <Center w={w} h={w} color='black' fontWeight='bold' fontSize='30px' p='10px' textAlign='center'>
                   {theme.contents}
                 </Center>
               </Box>
@@ -64,18 +63,17 @@ const Card: React.FC<Props> = ({ theme, answer, w, imagePath, setImagePath }) =>
               <Box w='100%' h='80%' position='relative'>
                 <Center>
                   <Image
-                    src={imagePath}
+                    src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                     alt="preview"
-                    fill={true}
-                    style={{objectFit: "contain"}}
+                    maxH={w * 0.85}
                   />
                 </Center>
                 <Box
                   color='black'
                   w='100%'
                   h='100%'
-                  p='5%'
-                  mt={getFontSize(theme.contents) ? '80%' : '75%'}
+                  p='5px'
+                  // mt={getFontSize(theme.contents) ? '80%' : '75%'}
                   fontWeight='bold'
                   fontSize='19px'
                   textAlign='center'
