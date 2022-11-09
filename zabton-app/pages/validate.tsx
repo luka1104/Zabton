@@ -36,6 +36,7 @@ interface PropTypes {
 }
 
 const Validate: NextPage<PropTypes> = ({ themes, answers, users }) => {
+  const reverseThemes =  themes.reverse()
   const [step, setStep] = useState<number>(0)
   const [selectedTheme, setSelectedTheme] = useState<Theme>()
   const [imagePath, setImagePath] = useState<string>('')
@@ -45,7 +46,7 @@ const Validate: NextPage<PropTypes> = ({ themes, answers, users }) => {
       <Box pt='60px'>
         {step === 0 ? (
           <Select
-            themes={themes}
+            themes={reverseThemes}
             setStep={setStep}
             selectedTheme={selectedTheme}
             setSelectedTheme={setSelectedTheme}

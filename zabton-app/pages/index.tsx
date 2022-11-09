@@ -25,7 +25,7 @@ interface PropTypes {
 }
 
 const Home: NextPage<PropTypes> = ({ themes }) => {
-  // const randThemes =  shuffleArray(themes)
+  const reverseThemes =  themes.reverse()
   const [width, setWidth] = useState<number>(0)
   useEffect(() => {
     setWidth(window.innerWidth * 0.45)
@@ -34,7 +34,7 @@ const Home: NextPage<PropTypes> = ({ themes }) => {
     <>
       <Box mt='60px' color='black'>
         <SimpleGrid columns={2} spacing={5}>
-          {themes.map((val: any, key: any) => {
+          {reverseThemes.map((val: any, key: any) => {
             return (
               <Card
                 theme={val}
