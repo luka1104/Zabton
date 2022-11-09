@@ -24,3 +24,9 @@ export const checkDeadline = (deadline: string | Date) => {
   const isBeforeDeadline = deadlineDateTime.getTime() >= now.getTime()
   return isBeforeDeadline
 }
+
+export const getFontSize = (contents: string) => {
+  const len = contents.length
+  if(len <= 11) return true
+  false
+}
