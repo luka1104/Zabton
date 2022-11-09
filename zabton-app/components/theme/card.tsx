@@ -63,13 +63,13 @@ const Card: React.FC<Props> = ({ theme, w, notFinished }) => {
             </>
           ) : theme.type === 3 ? (
             <>
-              <Box position='relative'>
+              <Box w='100%' h='80%' position='relative'>
                 <Center>
                   <Image
                     src={imagePath}
                     alt="preview"
-                    width={w * 0.8}
-                    height={w * 0.8}
+                    fill={true}
+                    style={{objectFit: "contain"}}
                   />
                 </Center>
                 <Box
@@ -77,7 +77,8 @@ const Card: React.FC<Props> = ({ theme, w, notFinished }) => {
                   w='100%'
                   h='100%'
                   fontWeight='bold'
-                  fontSize='19px'
+                  mt='85%'
+                  fontSize='15px'
                   textAlign='center'
                   position='absolute'
                 >
