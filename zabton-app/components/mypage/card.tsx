@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import Image from 'next/image'
-import { Box, Center, Icon, Button } from '@chakra-ui/react'
+import { Box, Center, Icon, Button, Image } from '@chakra-ui/react'
 import { Theme } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
 
@@ -40,10 +39,9 @@ const Card: React.FC<Props> = ({ val }) => {
         <Box w={window.innerWidth * 0.5} h={window.innerWidth * 0.5} bg='white' border='2px solid black' position='relative'>
           <Center w='100%' h='100%' position='relative'>
             <Image
-              src={imagePath}
+              src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
               alt="preview"
-              fill={true}
-              style={{objectFit: "contain"}}
+              maxH={window.innerWidth * 0.49}
             />
           </Center>
           <Center color='black' mt='5px' fontWeight='bold' fontSize='xl'>

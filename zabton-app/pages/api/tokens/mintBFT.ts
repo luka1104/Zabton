@@ -19,6 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log('REQ.BODY', req.body);
   const data = {
     'imagePath': req.body.theme.imagePath,
+    'theme': req.body.theme,
     'contents': req.body.answer.contents,
     'place': req.body.answer.place,
     'date': req.body.theme.deadline,

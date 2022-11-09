@@ -182,7 +182,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
 
   if(!loading && themes && answers) return (
     <>
-      <Box pt='60px' ref={finalRef}>
+      <Box pt='60px' pb='100px' ref={finalRef}>
         {selectedAnswer ? (
           <ViewResult
             theme={themes.find(t => t.id === selectedAnswer.themeId)}

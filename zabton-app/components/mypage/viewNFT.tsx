@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import Image from 'next/image'
-import { Box, Center, Icon, Button } from '@chakra-ui/react'
+import { Box, Center, Icon, Button, Image } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { getStorageFileURL } from 'supabase/storage'
 
@@ -9,7 +8,7 @@ interface Props {
 }
 
 const ViewNFT: React.FC<Props> = ({ val }) => {
-  const ruoter = useRouter()
+  const router = useRouter()
   const [imagePath, setImagePath] = useState<string>('')
 
   const handleRenderImage = useCallback(async () => {
@@ -41,10 +40,9 @@ const ViewNFT: React.FC<Props> = ({ val }) => {
         <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black' position='relative'>
           <Center w='100%' h='100%' position='relative'>
             <Image
-              src={imagePath}
+              src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
               alt="preview"
-              fill={true}
-              style={{objectFit: "contain"}}
+              maxH={window.innerWidth * 0.99}
             />
           </Center>
           <Center color='black' mt='5px' fontWeight='bold' fontSize='4xl'>
@@ -63,9 +61,9 @@ const ViewNFT: React.FC<Props> = ({ val }) => {
               h='60px'
               fontSize='xl'
               mt='30px'
-              onClick={() => {ruoter.push('/mypage')}}
+              onClick={() => {router.reload()}}
             >
-              マイページに戻る
+              一覧に戻る
             </Button>
           </Center>
         </Box>

@@ -5,9 +5,11 @@ import getBFT from 'utils/getBFT'
 import type { NextPage } from "next";
 import Card from 'components/mypage/card';
 import ViewNFT from 'components/mypage/viewNFT';
+import { useRouter } from 'next/router'
 
 
 const Wallet: NextPage = () => {
+  const router = useRouter()
   const { zbtn, user } = useContext(AccountContext)
   const [BFTs, setBFTs] = useState<any[]>()
   const [uri, setUri] = useState<any>()
@@ -83,6 +85,22 @@ const Wallet: NextPage = () => {
             )
           })}
         </SimpleGrid>
+        <Center>
+          <Button
+            color='black'
+            bg='white'
+            border='1px solid black'
+            borderRadius='30px'
+            w='90%'
+            h='60px'
+            fontSize='xl'
+            mt='100px'
+            mb='30px'
+            onClick={() => {router.push('/mypage')}}
+          >
+            マイページに戻る
+          </Button>
+        </Center>
       </Box>
     </>
   )
