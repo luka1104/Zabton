@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Box, Center, Text, Button } from '@chakra-ui/react'
 import { Answer, Theme } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
+import { getFontSize } from 'utils'
 
 interface Props {
   theme: Theme
@@ -40,7 +41,7 @@ const Card: React.FC<Props> = ({ theme, answer, w, imagePath, setImagePath }) =>
   return (
     <>
       <Box mt='20px'>
-        <Center w={w} h={w} m='0 auto' bg='white' border='2px solid black'>
+        <Box w={w} h={w} m='0 auto' bg='white' border='2px solid black'>
           {theme.type === 1 ? (
             <Center w='100%' h='100%' position='relative'>
               <Image
@@ -60,13 +61,13 @@ const Card: React.FC<Props> = ({ theme, answer, w, imagePath, setImagePath }) =>
             </>
           ) : theme.type === 3 ? (
             <>
-              <Box position='relative'>
+              <Box w='100%' h='80%' position='relative'>
                 <Center>
                   <Image
                     src={imagePath}
                     alt="preview"
-                    width={w * 0.8}
-                    height={w * 0.8}
+                    fill={true}
+                    style={{objectFit: "contain"}}
                   />
                 </Center>
                 <Box
@@ -74,6 +75,7 @@ const Card: React.FC<Props> = ({ theme, answer, w, imagePath, setImagePath }) =>
                   w='100%'
                   h='100%'
                   p='5%'
+                  mt={getFontSize(theme.contents) ? '80%' : '75%'}
                   fontWeight='bold'
                   fontSize='19px'
                   textAlign='center'
@@ -84,7 +86,7 @@ const Card: React.FC<Props> = ({ theme, answer, w, imagePath, setImagePath }) =>
               </Box>
             </>
           ) : null}
-        </Center>
+        </Box>
         <Text
           mt='10px'
           w={window.innerWidth}
