@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Image from 'next/image'
-import { Box, Center, Button, Select } from '@chakra-ui/react'
+import { Box, Center, Button, Select, Image } from '@chakra-ui/react'
 import axios from 'axios'
 import { uploadStorage } from 'supabase/storage'
 import { AccountContext } from 'contexts/account'
@@ -120,10 +119,9 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, dead
             <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
               <Center w='100%' h='100%' position='relative'>
                 <Image
-                  src={preview}
+                  src={preview ? preview : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                   alt="preview"
-                  fill={true}
-                  style={{objectFit: "contain"}}
+                  maxH={window.innerWidth * 0.99}
                 />
               </Center>
             </Box>
@@ -141,16 +139,15 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, dead
             <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
               <Center w='100%' h='80%' position='relative'>
                 <Image
-                  src={preview}
+                  src={preview ? preview : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                   alt="preview"
-                  fill={true}
-                  style={{objectFit: "contain"}}
+                  maxH={window.innerWidth * 0.85}
                 />
               </Center>
               <Box
                 w='100%'
                 h='100%'
-                p='5%'
+                p='5px'
                 color='black'
                 fontWeight='bold'
                 fontSize='25px'

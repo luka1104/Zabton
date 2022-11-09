@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from 'react'
-// import Image from 'next/image'
 import { Box, Center, Text, Button, Image } from '@chakra-ui/react'
 import { Answer, Theme } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
