@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import Image from 'next/image'
-import { Box, Center, Icon, Button } from '@chakra-ui/react'
+import { Box, Center, Icon, Button, Image } from '@chakra-ui/react'
 import { Theme } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
 import { getFontSize } from 'utils'
@@ -42,10 +41,9 @@ const Card: React.FC<Props> = ({ theme, w }) => {
           {theme.type === 1 ? (
             <Center w='100%' h='100%' position='relative'>
               <Image
-                src={imagePath}
+                src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                 alt="preview"
-                fill={true}
-                style={{objectFit: "contain"}}
+                maxH={w * 0.99}
               />
             </Center>
           ) : theme.type === 2 ? (
@@ -61,18 +59,16 @@ const Card: React.FC<Props> = ({ theme, w }) => {
               <Box w='100%' h='80%' position='relative'>
                 <Center>
                   <Image
-                    src={imagePath}
+                    src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                     alt="preview"
-                    fill={true}
-                    style={{objectFit: "contain"}}
+                    maxH={w * 0.85}
                   />
                 </Center>
                 <Box
                   color='black'
                   w='100%'
                   h='100%'
-                  p='5%'
-                  mt={getFontSize(theme.contents) ? '80%' : '75%'}
+                  p='5px'
                   fontWeight='bold'
                   fontSize='19px'
                   textAlign='center'

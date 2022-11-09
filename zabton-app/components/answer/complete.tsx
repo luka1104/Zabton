@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import Image from 'next/image'
-import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text } from '@chakra-ui/react'
+import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text, Image } from '@chakra-ui/react'
 import { BsFacebook, BsTelegram } from 'react-icons/bs'
 import { AiFillTwitterCircle } from 'react-icons/ai'
 import { AccountContext } from 'contexts/account'
@@ -77,10 +76,9 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
               <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
                 <Center w='100%' h='100%' position='relative'>
                   <Image
-                    src={preview}
+                    src={preview ? preview : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                     alt="preview"
-                    fill={true}
-                    style={{objectFit: "contain"}}
+                    maxH={window.innerWidth * 0.99}
                   />
                 </Center>
               </Box>
@@ -98,16 +96,15 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
               <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
                 <Center>
                   <Image
-                    src={preview}
+                    src={preview ? preview : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                     alt="preview"
-                    width={window.innerWidth * 0.8}
-                    height={window.innerWidth * 0.8}
+                    maxH={window.innerWidth * 0.85}
                   />
                 </Center>
                 <Box
                   w='100%'
                   h='100%'
-                  p='5%'
+                  p='5px'
                   color='black'
                   fontWeight='bold'
                   fontSize='19px'
