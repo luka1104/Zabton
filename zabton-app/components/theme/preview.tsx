@@ -137,7 +137,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, dead
         ) : (
           <>
             <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
-              <Center w='100%' h='80%' position='relative'>
+              <Center>
                 <Image
                   src={preview ? preview : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
                   alt="preview"
