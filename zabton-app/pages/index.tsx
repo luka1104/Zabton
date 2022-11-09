@@ -12,7 +12,7 @@ type Props = {
 }
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const themesRaw = await prisma.theme.findMany()
-  const themes = JSON.parse(JSON.stringify(themesRaw))
+  const themes = JSON.parse(JSON.stringify(themesRaw)).reverse()
   return {
     props: {
       themes,
@@ -25,7 +25,6 @@ interface PropTypes {
 }
 
 const Home: NextPage<PropTypes> = ({ themes }) => {
-  const reverseThemes =  themes.reverse()
   const [width, setWidth] = useState<number>(0)
   useEffect(() => {
     setWidth(window.innerWidth * 0.45)
@@ -34,7 +33,7 @@ const Home: NextPage<PropTypes> = ({ themes }) => {
     <>
       <Box mt='60px' color='black'>
         <SimpleGrid columns={2} spacing={5}>
-          {reverseThemes.map((val: any, key: any) => {
+          {themes.map((val: any, key: any) => {
             return (
               <Card
                 theme={val}

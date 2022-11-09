@@ -16,7 +16,7 @@ type Props = {
 }
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const themesRaw = await prisma.theme.findMany()
-  const themes = JSON.parse(JSON.stringify(themesRaw))
+  const themes = JSON.parse(JSON.stringify(themesRaw)).reverse()
   const answersRaw = await prisma.answer.findMany()
   const answers = JSON.parse(JSON.stringify(answersRaw))
   const usersRaw = await prisma.user.findMany()
@@ -36,7 +36,6 @@ interface PropTypes {
 }
 
 const Validate: NextPage<PropTypes> = ({ themes, answers, users }) => {
-  const reverseThemes =  themes.reverse()
   const [step, setStep] = useState<number>(0)
   const [selectedTheme, setSelectedTheme] = useState<Theme>()
   const [imagePath, setImagePath] = useState<string>('')
@@ -46,7 +45,7 @@ const Validate: NextPage<PropTypes> = ({ themes, answers, users }) => {
       <Box pt='60px'>
         {step === 0 ? (
           <Select
-            themes={reverseThemes}
+            themes={themes}
             setStep={setStep}
             selectedTheme={selectedTheme}
             setSelectedTheme={setSelectedTheme}

@@ -56,7 +56,7 @@ const Card: React.FC<Props> = ({ theme, w, notFinished }) => {
           ) : theme.type === 2 ? (
             <>
               <Box>
-                <Center w={w} h={w} color='black' fontWeight='bold' fontSize='30px' textAlign='center'>
+                <Center w={w} h={w} color='black' fontWeight='bold' fontSize='23px' p='10px' textAlign='center'>
                   {theme.contents}
                 </Center>
               </Box>
