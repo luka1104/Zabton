@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Box, Center, Icon, Button } from '@chakra-ui/react'
 import { Theme } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
+import { getFontSize } from 'utils'
 
 interface Props {
   theme: Theme
@@ -50,20 +51,20 @@ const Card: React.FC<Props> = ({ theme, w }) => {
           ) : theme.type === 2 ? (
             <>
               <Box>
-                <Center w={w} h={w} color='black' fontWeight='bold' fontSize='30px' textAlign='center'>
+                <Center w={w} h={w} color='black' fontWeight='bold' fontSize='30px' p='10px' textAlign='center'>
                   {theme.contents}
                 </Center>
               </Box>
             </>
           ) : theme.type === 3 ? (
             <>
-              <Box position='relative'>
+              <Box w='100%' h='80%' position='relative'>
                 <Center>
                   <Image
                     src={imagePath}
                     alt="preview"
-                    width={w * 0.8}
-                    height={w * 0.8}
+                    fill={true}
+                    style={{objectFit: "contain"}}
                   />
                 </Center>
                 <Box
@@ -71,6 +72,7 @@ const Card: React.FC<Props> = ({ theme, w }) => {
                   w='100%'
                   h='100%'
                   p='5%'
+                  mt={getFontSize(theme.contents) ? '80%' : '75%'}
                   fontWeight='bold'
                   fontSize='19px'
                   textAlign='center'
