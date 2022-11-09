@@ -7,9 +7,9 @@ import headerBanner from 'assets/images/headerBanner.png'
 const Header: React.FC = () => {
   return (
     <>
-      <Center top='0' position='fixed' zIndex='overlay' w='100%' h='60px' bg='#F445BE' border='3px solid #242424' fontSize='2xl'>
+      <Center maxW={{ base: '100vw', md: '100vw', lg: '25vw' }} top='0' position='fixed' zIndex='overlay' w='100%' h='60px' bg='#F445BE' border='3px solid #242424' fontSize='2xl'>
         <NextLink href='/' passHref>
-          <Image src={headerBanner} alt='header banner' />
+          <Image src={headerBanner} alt='header banner' height='60' />
         </NextLink>
       </Center>
     </>
