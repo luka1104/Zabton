@@ -14,7 +14,7 @@ type Props = {
 }
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const themesRaw = await prisma.theme.findMany()
-  const themes = JSON.parse(JSON.stringify(themesRaw))
+  const themes = JSON.parse(JSON.stringify(themesRaw)).reverse()
   return {
     props: {
       themes,
