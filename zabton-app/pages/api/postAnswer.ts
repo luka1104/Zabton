@@ -17,7 +17,10 @@ const postAnswer = async (data: Answer) => {
     data: {
       answerLeft: {
         increment: -1,
-      }
+      },
+      exp: {
+        increment: 5,
+      },
     },
   })
   return resp

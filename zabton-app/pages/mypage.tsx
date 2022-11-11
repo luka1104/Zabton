@@ -13,7 +13,7 @@ import { Theme, Answer } from 'interfaces'
 import Card from 'components/theme/card'
 import { checkDeadline } from 'utils'
 import ViewResult from 'components/mypage/viewResult'
-import { answerDayCap } from 'constants/index'
+import { answerDayCap, expRequired, upgradeFee } from 'constants/index'
 
 type Props = {
   themes: Theme[]
@@ -252,25 +252,25 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                       レベルアァッップ！！
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='18px' mt='20px'>
-                      ZBTNを10枚消費してレベルをあげる<br />
+                      ZBTNを{upgradeFee[user.level]}枚消費してレベルをあげる<br />
                       ことができます。レベルを上げること<br />
                       で、1日のボケ上限が増加します。
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='20px'>
-                      残りZBTN {zbtn} → {zbtn - 10}
+                      残りZBTN {zbtn} → {zbtn - upgradeFee[user.level]}
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='3px'>
                       残りボケ数 {`${user.answerLeft}/${user.answerLimit} → ${answerDayCap[user.level + 1]}/${answerDayCap[user.level + 1]}`}
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='30px' mt='20px'>
-                      Lv. 0 → 1
+                      {`Lv. ${user.level} → ${user.level + 1}`}
                     </Text>
                   </Box>
                   <Center mt='60px' gap='10'>
                     <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setLevelModal(false)}}>
                       また今度
                     </Button>
-                    <Button disabled={zbtn < 10} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
+                    <Button disabled={zbtn < upgradeFee[user.level] || user.exp < expRequired[user.level]} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
                       レベルアップ
                     </Button>
                   </Center>
@@ -281,7 +281,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
               <Text fontWeight='bold' fontSize='20px'>{user?.nickname}</Text>
               <Flex gap='2'>
                 <Button border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {setLevelModal(true)}}>
-                  Lv.{user?.level}
+                  Lv.{user.level}
                 </Button>
                 <Button border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' w='20px' onClick={() => {router.replace('/mypage/notifications')}}>
                   <Icon as={CiBellOn} />
@@ -292,10 +292,13 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
               <Box>
                 <ProgressBar
                   //@ts-ignore
-                  width={window.innerWidth * 0.8}
+                  width={window.innerWidth * 0.65}
                   height='35px'
-                  completed={60}
-                  customLabel="レート 60"
+                  completed={user.exp}
+                  maxCompleted={100}
+                  labelAlignment='outside'
+                  labelColor='black'
+                  customLabel={`EXP ${user.exp}`}
                   bgColor='#F345BE'
                   baseBgColor='#F5C9E6'
                 />

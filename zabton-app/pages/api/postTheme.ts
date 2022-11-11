@@ -19,7 +19,10 @@ const postTheme = async (data: Theme) => {
       data: {
         themeLeft: {
           increment: -1,
-        }
+        },
+        exp: {
+          increment: 10,
+        },
       },
     })
     return resp

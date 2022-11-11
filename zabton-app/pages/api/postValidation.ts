@@ -17,7 +17,10 @@ const postValidation = async (data: Validation) => {
       data: {
         validateLeft: {
           increment: -1,
-        }
+        },
+        exp: {
+          increment: 1,
+        },
       },
     })
     return resp
