@@ -8,6 +8,7 @@ import { getRandNum } from 'utils'
 import Card from 'components/theme/card'
 import AnswerCard from 'components/index/answerCard';
 import { checkDeadline, calcPlace } from 'utils'
+import { useRouter } from 'next/router'
 
 type Props = {
   themes: Theme[]
@@ -37,6 +38,7 @@ interface PropTypes {
 }
 
 const Home: NextPage<PropTypes> = ({ themes, answers, validations }) => {
+  const router = useRouter()
   const [width, setWidth] = useState<number>(0)
   const [answerIds, setAnswerIds] = useState<any>([])
   // const [randAnswer, setRandAnswer] = useState<Answer>()
@@ -69,8 +71,11 @@ const Home: NextPage<PropTypes> = ({ themes, answers, validations }) => {
           <SimpleGrid columns={2} spacing={5}>
             {answerIds.map((val: any, key: number) => {
               let answer = answers.find(a => a.id === val[0])
+              let theme = themes.find(t => t.id === answer.themeId)
               return (
-                <AnswerCard theme={themes.find(t => t.id === answer.themeId)} answer={answer} w={width} key={key} />
+                <Box key={key} onClick={() => {router.push(`/answer/view?id=${answer.id}&themeId=${theme.id}`)}}>
+                  <AnswerCard theme={theme} answer={answer} w={width} key={key} />
+                </Box>
               )
             })}
           </SimpleGrid>
@@ -79,13 +84,15 @@ const Home: NextPage<PropTypes> = ({ themes, answers, validations }) => {
           New
         </Center>
         <SimpleGrid pb='40px' columns={2} spacing={5}>
-          {themes.slice(0, 6).map((val: any, key: any) => {
+          {themes.slice(0, 6).map((val: Theme, key: number) => {
             return (
-              <Card
-                theme={val}
-                w={width}
-                key={key}
-              />
+              <Box key={key} onClick={() => {checkDeadline(val.deadline) ? router.push(`/answer/create?id=${val.id}`) : ''}}>
+                <Card
+                  theme={val}
+                  w={width}
+                  key={key}
+                />
+              </Box>
             )
           })}
         </SimpleGrid>

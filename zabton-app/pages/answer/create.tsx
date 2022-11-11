@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
-import { Box, Button, Center } from '@chakra-ui/react'
+import { Box, Button, Center, theme } from '@chakra-ui/react'
 import type { GetServerSideProps } from "next";
 import prisma from 'lib/prisma'
 import Select from 'components/answer/select'
@@ -8,6 +8,7 @@ import { Theme } from 'interfaces'
 import InputForm from 'components/answer/input';
 import Preview from 'components/answer/preview';
 import Complete from 'components/answer/complete';
+import { useRouter } from 'next/router'
 
 type Props = {
   themes: Theme[]
@@ -27,10 +28,19 @@ interface PropTypes {
 }
 
 const Create: NextPage<PropTypes> = ({ themes }) => {
+  const router = useRouter()
   const [step, setStep] = useState<number>(0)
   const [selectedTheme, setSelectedTheme] = useState<Theme>()
   const [contents, setContents] = useState<string>('')
   const [preview, setPreview] = useState<string>('')
+
+  useEffect(() => {
+    if(themes.length === 0 || !router) return
+    if(router.query.id) {
+      setSelectedTheme(themes.find(t => t.id === JSON.parse(router.query.id as string)))
+      setStep(1)
+    }
+  }, [router, themes])
 
   return (
     <>
