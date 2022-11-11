@@ -295,10 +295,10 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                   width={window.innerWidth * 0.65}
                   height='35px'
                   completed={user.exp}
-                  maxCompleted={100}
+                  maxCompleted={expRequired[user.level]}
                   labelAlignment='outside'
                   labelColor='black'
-                  customLabel={`EXP ${user.exp}`}
+                  customLabel={`${user.exp} EXP`}
                   bgColor='#F345BE'
                   baseBgColor='#F5C9E6'
                 />

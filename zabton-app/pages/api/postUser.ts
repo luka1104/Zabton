@@ -1,16 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from "lib/prisma";
-import { User } from 'interfaces/index'
+import { User } from '.prisma/client';
 
-const postUser = async (data: User) => {
+const postUser = async (data) => {
     const resp = await prisma.user.create({
       data: {
         address: data.address,
         nickname: data.nickname,
         birthday: data.birthday,
-        level: 0,
-        lifeLeft: 4,
-        lifeLimit: 4,
       },
     });
     return resp
