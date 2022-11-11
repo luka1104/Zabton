@@ -20,9 +20,6 @@ const Wallet: NextPage = () => {
   }
 
   useEffect(() => {
-  }, [zbtn])
-
-  useEffect(() => {
     if(!user) return
     getBFTs()
   }, [user])
