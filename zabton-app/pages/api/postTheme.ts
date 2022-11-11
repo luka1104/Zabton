@@ -12,6 +12,16 @@ const postTheme = async (data: Theme) => {
         deadline: data.deadline,
       },
     });
+    if(resp) await prisma.user.update({
+      where: {
+        id: data.userId,
+      },
+      data: {
+        themeLeft: {
+          increment: -1,
+        }
+      },
+    })
     return resp
 }
 

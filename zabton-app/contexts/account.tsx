@@ -3,9 +3,9 @@ import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import RPC from "pages/api/ethersRPC";
 import axios from 'axios'
-import { User } from 'interfaces';
 import getZBTN from 'utils/getZBTN'
 import { useRouter } from 'next/router'
+import { User } from '.prisma/client';
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';

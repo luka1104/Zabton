@@ -10,6 +10,16 @@ const postValidation = async (data: Validation) => {
         themeId: data.themeId,
       },
     });
+    if(resp) await prisma.user.update({
+      where: {
+        id: data.userId,
+      },
+      data: {
+        validateLeft: {
+          increment: -1,
+        }
+      },
+    })
     return resp
 }
 

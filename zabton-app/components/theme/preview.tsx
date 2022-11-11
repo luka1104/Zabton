@@ -175,6 +175,16 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, dead
             <option value='4'>1週間</option>
           </Select>
         </Center>
+        <Center mt='10px' color='black' w={window.innerWidth} fontWeight='bold'>
+          残りお題数　{`${user.themeLeft}/${user.themeLimit} → ${user.themeLeft - 1}/${user.themeLimit}`}
+        </Center>
+        {user.themeLeft === 0 && (
+          <>
+            <Center fontSize='13px' color='red' w={window.innerWidth} fontWeight='bold'>
+              ボケ上限が足りません！！
+            </Center>
+          </>
+        )}
         <Center gap='10'>
           <Button
             color='black'
@@ -191,6 +201,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, dead
             戻る
           </Button>
           <Button
+            disabled={user.themeLeft === 0}
             color='black'
             bg='white'
             border='1px solid black'

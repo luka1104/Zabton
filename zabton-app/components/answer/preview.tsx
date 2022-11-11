@@ -102,9 +102,15 @@ const Preview: React.FC<PropTypes> = ({ selectedTheme, setStep, contents, previe
           {contents}
         </Text>
         <Center color='black' w={window.innerWidth} fontWeight='bold'>
-          {/* 実際の数値入れる */}
-          残りボケ数　2/4 → 1/4
+          残りボケ数　{`${user.answerLeft}/${user.answerLimit} → ${user.answerLeft - 1}/${user.answerLimit}`}
         </Center>
+        {user.answerLeft === 0 && (
+          <>
+            <Center fontSize='13px' color='red' w={window.innerWidth} fontWeight='bold'>
+              ボケ上限が足りません！！
+            </Center>
+          </>
+        )}
         <Center gap='10'>
           <Button
             color='black'
@@ -121,6 +127,7 @@ const Preview: React.FC<PropTypes> = ({ selectedTheme, setStep, contents, previe
             戻る
           </Button>
           <Button
+            disabled={user.answerLeft === 0}
             color='black'
             bg='white'
             border='1px solid black'

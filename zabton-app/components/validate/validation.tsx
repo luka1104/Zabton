@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { transfer, transferFrom } from 'utils/transferToken'
 import PacmanLoader from "react-spinners/PacmanLoader"
+import { toast } from 'react-toastify';
 
 interface Props {
   setStep: Function
@@ -47,6 +48,14 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
     const now = new Date
     const timeLeft = (deadlineDateTime.getTime() - now.getTime()) / (60*60*1000)
     return Math.floor(timeLeft)
+  }
+
+  const handleTransfer = () => {
+    if(user.validateLeft <= 0) {
+      toast('審査上限に達したためZBTNは発行されません')
+    } else {
+      transfer(user.address, 0.1)
+    }
   }
 
   const handleSubmit = async (answerId: number) => {
@@ -247,7 +256,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                         bg='white'
                         borderRadius='20px'
                         border='1px solid black'
-                        onClick={() => (handleSubmit(val.id), transfer(user.address, 0.1), sliderRef.current ? sliderRef.current.slickNext() : null)}
+                        onClick={() => (handleSubmit(val.id), handleTransfer, sliderRef.current ? sliderRef.current.slickNext() : null)}
                       >
                         ちゃう
                       </Button>
@@ -277,7 +286,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                       colorScheme='pink'
                       borderRadius='30px'
                       border='1px solid black'
-                      onClick={() => (handleSubmit(val.id), transfer(user.address, 0.1), sliderRef.current ? sliderRef.current.slickNext() : null)}
+                      onClick={() => (handleSubmit(val.id), handleTransfer(), sliderRef.current ? sliderRef.current.slickNext() : null)}
                     >
                       ええやん
                     </Button>

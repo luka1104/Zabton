@@ -13,6 +13,7 @@ import { Theme, Answer } from 'interfaces'
 import Card from 'components/theme/card'
 import { checkDeadline } from 'utils'
 import ViewResult from 'components/mypage/viewResult'
+import { answerDayCap } from 'constants/index'
 
 type Props = {
   themes: Theme[]
@@ -204,10 +205,10 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                       回復させることができます。
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='20px'>
-                      残りZBTN {zbtn} → {zbtn - 5}
+                      残りZBTN {zbtn} → {zbtn - 2}
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px' mt='20px'>
-                      残りボケ数 1/4 → 2/4
+                      残りボケ数 {`${user.answerLeft}/${user.answerLimit} → ${user.answerLimit}/${user.answerLimit}`}
                     </Text>
                   </Box>
                   <Center mt='30px' gap='10'>
@@ -238,7 +239,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                       残りZBTN {zbtn} → {zbtn - 10}
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='3px'>
-                      残りボケ数 1/4 → 5/5
+                      残りボケ数 {`${user.answerLeft}/${user.answerLimit} → ${answerDayCap[user.level + 1]}/${answerDayCap[user.level + 1]}`}
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='30px' mt='20px'>
                       Lv. 0 → 1
@@ -249,7 +250,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                       また今度
                     </Button>
                     <Button disabled={zbtn < 10} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
-                      回復する
+                      レベルアップ
                     </Button>
                   </Center>
                 </ModalBody>
@@ -280,7 +281,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                 <Center mt='10px' w={window.innerWidth * 0.8} color='black' gap='1.5%'>
                   <Button p='' w='37%' border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='13px' onClick={onOpen}>
                     <Text mt='5px'>
-                      残り <span style={{fontSize: "23px"}}>1/4</span> ボケ
+                      残り <span style={{fontSize: "23px"}}>{`${user.answerLeft}/${user.answerLimit}`}</span> ボケ
                     </Text>
                   </Button>
                   <Button p='3' w='47%' border='1px solid black' bg='white' color='black' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {router.replace('/mypage/wallet')}}>
