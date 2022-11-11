@@ -31,17 +31,23 @@ model Answer {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  address      String         @unique
-  nickname     String
-  birthday     String
-  level        Int            @default(0)
-  lifeLeft     Int            @default(4)
-  lifeLimit    Int            @default(4)
-  Theme        Theme[]
-  Answer       Answer[]
-  Notification Notification[]
-  Validation   Validation[]
+  id            Int            @id @default(autoincrement())
+  address       String         @unique
+  nickname      String
+  birthday      String
+  level         Int            @default(0)
+  exp           Int            @default(0)
+  themeLeft     Int            @default(1)
+  themeLimit    Int            @default(1)
+  answerLeft    Int            @default(2)
+  answerLimit   Int            @default(2)
+  validateLeft  Int            @default(6)
+  validateLimit Int            @default(6)
+  Theme         Theme[]
+  Answer        Answer[]
+  Notification  Notification[]
+  Validation    Validation[]
+  zbtnDetail    zbtnDetail[]
 }
 
 model Validation {
@@ -58,6 +64,15 @@ model Notification {
   id        Int    @id @default(autoincrement())
   userId    Int
   contents  String
+  timestamp Int
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model zbtnDetail {
+  id        Int    @id @default(autoincrement())
+  userId    Int
+  contents  String
+  amount    Int
   timestamp Int
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
