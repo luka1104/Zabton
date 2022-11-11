@@ -79,6 +79,27 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
     })
   }
 
+  const handleHeal = async () => {
+    if(!user) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    return new Promise((resolve, reject) => {
+      axios.post('/api/updateAnswerLimit', user, config)
+      .then(response => {
+        if(response.status !== 200) throw Error("Server error")
+        resolve(response)
+        window.location.reload()
+      })
+      .catch(e => {
+        reject(e);
+        throw Error("Server error:" + e)
+      })
+    })
+  }
+
   if(!address && !loading) return (
     <Box pt='60px'>
       <Center color='black' mt='20px' fontWeight='bold' fontSize='3xl'>
@@ -201,7 +222,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                       もっとボケよう！
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='18px' mt='20px'>
-                      ZBTNを5枚消費して残りボケ数を<br />
+                      ZBTNを2枚消費して残りボケ数を<br />
                       回復させることができます。
                     </Text>
                     <Text color='black' textAlign='center' fontWeight='bold' fontSize='13px' mt='20px'>
@@ -215,7 +236,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                     <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={onClose}>
                       また今度
                     </Button>
-                    <Button disabled={zbtn < 5} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
+                    <Button disabled={zbtn < 2 || user.answerLeft === answerDayCap[user.level]} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={handleHeal}>
                       回復する
                     </Button>
                   </Center>
