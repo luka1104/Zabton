@@ -35,7 +35,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     //@ts-ignore
     dots: false,
@@ -67,8 +67,8 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
       .then(response => {
         if(response.status !== 200) throw Error("Server error")
         resolve(response)
-        setAnswerId(answerId)
-        setStep(2)
+        // setAnswerId(answerId)
+        // setStep(2)
       })
       .catch(e => {
         reject(e);
@@ -247,7 +247,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                         bg='white'
                         borderRadius='20px'
                         border='1px solid black'
-                        onClick={() => (transfer(user.address, 1), sliderRef.current ? sliderRef.current.slickNext() : null)}
+                        onClick={() => (handleSubmit(val.id), transfer(user.address, 1), sliderRef.current ? sliderRef.current.slickNext() : null)}
                       >
                         ちゃう
                       </Button>
@@ -277,7 +277,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                       colorScheme='pink'
                       borderRadius='30px'
                       border='1px solid black'
-                      onClick={() => (transfer(user.address, 1), sliderRef.current ? sliderRef.current.slickNext() : null)}
+                      onClick={() => (handleSubmit(val.id), transfer(user.address, 1), sliderRef.current ? sliderRef.current.slickNext() : null)}
                     >
                       ええやん
                     </Button>
