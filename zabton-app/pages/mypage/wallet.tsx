@@ -38,7 +38,7 @@ const Wallet: NextPage = () => {
       <Box pt='60px'>
         <Center color='black' mt='40px' fontWeight='bold' fontSize='7xl' h='58px'>
           <Image
-            src='/Logo.png'
+            src='/LogoWallet.png'
             alt="preview"
             w='30px'
             mr='5px'
