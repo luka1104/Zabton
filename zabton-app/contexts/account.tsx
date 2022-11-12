@@ -5,7 +5,7 @@ import RPC from "pages/api/ethersRPC";
 import axios from 'axios'
 import getZBTN from 'utils/getZBTN'
 import { useRouter } from 'next/router'
-import { User } from '.prisma/client';
+import { User } from 'interfaces'
 
 const clientId = process.env.NEXT_PUBLIC_AUTH_CLIENT_ID || '';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://rpc.ankr.com/polygon_mumbai';
@@ -29,6 +29,7 @@ export interface AccountContextInterface {
   zbtn: number
   setZbtn: Function
   getBalance: Function
+  getUser: Function
 }
 export const AccountContext = React.createContext<AccountContextInterface>({} as AccountContextInterface);
 
@@ -155,6 +156,7 @@ export const AccountProvider = ({ children }: Props) => {
         zbtn,
         setZbtn,
         getBalance,
+        getUser,
       }}
     >
       {children}

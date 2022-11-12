@@ -74,7 +74,7 @@ const Home: NextPage<PropTypes> = ({ themes, answers, validations }) => {
               let theme = themes.find(t => t.id === answer.themeId)
               return (
                 <Box key={key} onClick={() => {router.push(`/answer/view?id=${answer.id}&themeId=${theme.id}`)}}>
-                  <AnswerCard theme={theme} answer={answer} w={width} key={key} />
+                  <AnswerCard theme={theme} answer={answer} w={width} />
                 </Box>
               )
             })}
@@ -90,7 +90,6 @@ const Home: NextPage<PropTypes> = ({ themes, answers, validations }) => {
                 <Card
                   theme={val}
                   w={width}
-                  key={key}
                 />
               </Box>
             )

@@ -38,7 +38,7 @@ interface PropTypes {
 
 const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
   const router = useRouter()
-  const { login, address, user, loading, zbtn, getBalance } = useContext(AccountContext)
+  const { login, address, user, loading, zbtn, getBalance, getUser } = useContext(AccountContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const finalRef = useRef(null)
   const [nickname, setNickname] = useState<string>('')
@@ -51,6 +51,11 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
     if(!user) return
     getBalance()
   }, [loading])
+
+  useEffect(() => {
+    if(!address) return
+    getUser()
+  }, [])
 
   const handleSubmit = async () => {
     if(!address) return

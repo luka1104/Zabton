@@ -23,9 +23,14 @@ export interface User {
   address: string
   nickname: string
   birthday: string
-  level?: number
-  lifeLeft?: number
-  lifeLimit?: number
+  level: number
+  exp: number
+  themeLeft: number
+  themeLimit: number
+  answerLeft: number
+  answerLimit: number
+  validateLeft: number
+  validateLimit: number
   Theme?: Theme[]
   Answer?: Answer[]
   Validation?: Validation[]

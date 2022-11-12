@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text, Image } from '@chakra-ui/react'
+import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text, Image, useDisclosure } from '@chakra-ui/react'
 import { BsFacebook, BsTelegram } from 'react-icons/bs'
 import { AiFillTwitterCircle } from 'react-icons/ai'
 import { AccountContext } from 'contexts/account'
@@ -8,6 +8,8 @@ import { useRouter } from 'next/router'
 import PacmanLoader from "react-spinners/PacmanLoader"
 import { transfer } from 'utils/transferToken'
 import { Theme } from 'interfaces'
+import ProgressBar from '@ramonak/react-progress-bar'
+import { expRequired } from 'constants/index'
 
 interface Props {
   selectedTheme: Theme
@@ -19,12 +21,22 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
   const router = useRouter()
   const finalRef = useRef(null)
   const { user } = useContext(AccountContext)
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState<boolean>(false)
+  const [isFinish, setIsFinish] = useState(false)
+  const [exp, setExp] = useState<number>(user.exp)
 
   useEffect(() => {
     setLoading(true)
-    transfer(user.address, 1, setLoading)
+    transfer(user.address, 1, setLoading, setIsFinish)
   }, [])
+
+  useEffect(() => {
+    if(isFinish)  {
+      onOpen()
+      setInterval(setExp, 500, user.exp + 5)
+    }
+  }, [isFinish])
 
   return (
     <>
@@ -59,6 +71,54 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
                     fontSize='xl'
                     mb='30px'
                     onClick={() => {setLoading(false)}}
+                  >
+                    閉じる
+                  </Button>
+                </Center>
+              </Box>
+              <Center mt='60px' gap='10'>
+
+              </Center>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay backdropFilter='blur(5px)' />
+          <ModalContent bg='white' border='1px solid black' w='90%' h='320px' borderRadius='0' top='100px'>
+            <ModalBody paddingInline='0'>
+              <Box mt='20px'>
+                <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
+                  5EXPが付与されました！！
+                </Text>
+                <Center w='100%' mt='40px' mb='20px'>
+                  <ProgressBar
+                    //@ts-ignore
+                    width={window.innerWidth * 0.5}
+                    height='35px'
+                    completed={exp}
+                    maxCompleted={expRequired[user.level]}
+                    labelAlignment='outside'
+                    labelColor='black'
+                    customLabel={`${exp} EXP`}
+                    bgColor='#F345BE'
+                    baseBgColor='#F5C9E6'
+                  />
+                </Center>
+                <Center color='black' fontWeight='bold'>
+                  レベルアップまで：{expRequired[user.level] - exp}
+                </Center>
+                <Center>
+                  <Button
+                    mt='50px'
+                    color='black'
+                    bg='white'
+                    border='1px solid black'
+                    borderRadius='30px'
+                    w='90%'
+                    h='60px'
+                    fontSize='xl'
+                    mb='30px'
+                    onClick={onClose}
                   >
                     閉じる
                   </Button>
