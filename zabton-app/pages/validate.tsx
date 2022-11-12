@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { GetServerSideProps } from "next";
 import prisma from 'lib/prisma'
 import { Box } from '@chakra-ui/react'
@@ -8,6 +8,7 @@ import Select from 'components/validate/select'
 import Validation from 'components/validate/validation'
 import Award from 'components/validate/award'
 import Complete from 'components/validate/complete';
+import { useRouter } from 'next/router'
 
 type Props = {
   themes: Theme[]
@@ -36,10 +37,19 @@ interface PropTypes {
 }
 
 const Validate: NextPage<PropTypes> = ({ themes, answers, users }) => {
+  const router = useRouter()
   const [step, setStep] = useState<number>(0)
   const [selectedTheme, setSelectedTheme] = useState<Theme>()
   const [imagePath, setImagePath] = useState<string>('')
   const [answerId, setAnswerId] = useState<number>(0)
+
+  useEffect(() => {
+    if(!themes) return
+    if(router.query.id) {
+      setSelectedTheme(themes.find(t => t.id === JSON.parse(router.query.id as string)))
+      setStep(1)
+    }
+  }, [router])
   return (
     <>
       <Box pt='60px'>
