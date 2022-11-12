@@ -7,11 +7,11 @@ interface Props {
 }
 
 const WalletCard: React.FC<Props> = ({ detail }) => {
-  const [date, setDate] = useState<Date>()
+  // const [date, setDate] = useState<Date>()
 
   useEffect(() => {
-    const date = new Date(detail.timestamp * 1000)
-    setDate(date)
+    // const date = new Date(detail.timestamp * 1000)
+    // setDate(date)
   }, [detail])
   return (
     <>
@@ -25,7 +25,7 @@ const WalletCard: React.FC<Props> = ({ detail }) => {
           </Text>
         </Center>
         <Box pl='5%' fontSize='13px'>
-          {date && `${date.getFullYear()}.${date.getMonth()}.${date.getDay()}`}
+          {`${detail.timestamp.slice(0, 4)}.${detail.timestamp.slice(5, 7)}.${detail.timestamp.slice(8, 10)}`}
         </Box>
       </Box>
     </>

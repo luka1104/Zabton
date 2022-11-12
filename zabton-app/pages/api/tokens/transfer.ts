@@ -16,7 +16,7 @@ const transfer = async (address: string, amount: number) => {
   return receipt
 }
 
-const createNotification = async (userId: number, contents: string, timestamp: number) => {
+const createNotification = async (userId: number, contents: string, timestamp: string) => {
   const resp = await prisma.notification.create({
     data: {
       userId: userId,
@@ -27,7 +27,7 @@ const createNotification = async (userId: number, contents: string, timestamp: n
   return resp
 }
 
-const createHistory = async (userId: number, contents: string, timestamp: number, amount: number) => {
+const createHistory = async (userId: number, contents: string, timestamp: string, amount: number) => {
   const resp = await prisma.zbtnDetail.create({
     data: {
       userId: userId,

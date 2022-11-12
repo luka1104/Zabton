@@ -85,21 +85,23 @@ const Wallet: NextPage<PropTypes> = ({ details }) => {
           )}
 
         </Box>
-        <Center>
-          <Button
-            disabled
-            color='black'
-            bg='white'
-            border='1px solid black'
-            borderRadius='30px'
-            w='90%'
-            h='60px'
-            fontSize='xl'
-            mt='30px'
-          >
-            もっと見る
-          </Button>
-        </Center>
+        {details.filter(d => d.userId === user.id).length > 3 && (
+          <Center>
+            <Button
+              color='black'
+              bg='white'
+              border='1px solid black'
+              borderRadius='30px'
+              w='90%'
+              h='60px'
+              fontSize='xl'
+              mt='30px'
+              onClick={() => {router.push('/mypage/history')}}
+            >
+              もっと見る
+            </Button>
+          </Center>
+        )}
         <Center color='black' mt='40px' fontWeight='bold' fontSize='2xl'>
           保有NFT
         </Center>

@@ -7,7 +7,7 @@ export const transfer = async (user: User, amount: number, contents: string, set
     'user': user,
     'amount': amount * (10 ** 8),
     'contents': contents,
-    'timestamp': Date.now(),
+    'timestamp': new Date(),
   }
   const config = {
     headers: {

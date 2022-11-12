@@ -50,7 +50,7 @@ export interface Notification {
   id: number
   userId: number
   contents: string
-  timestamp: number
+  timestamp: string
   isRead: boolean
 }
 
@@ -58,6 +58,6 @@ export interface ZbtnDetail {
   id: number
   userId: number
   contents: string
-  timestamp: number
+  timestamp: string
   amount: number
 }
