@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from "lib/prisma";
-import { Answer } from 'interfaces/index'
 
-const postAnswer = async (data: Answer) => {
+const postAnswer = async (data: any) => {
   const resp = await prisma.answer.create({
     data: {
       userId: data.userId,
