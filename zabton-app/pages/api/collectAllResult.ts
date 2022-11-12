@@ -43,11 +43,15 @@ const assignPlaces = async (resultArr: any[]) => {
   return true
 }
 
-const getPlace = async (answerId: number) => {
-  const resp = await prisma.answer.findUnique({
+const updateTheme = async (id: number, contents?: string[]) => {
+  const resp = await prisma.theme.update({
     where: {
-      id: answerId,
+      id: id,
     },
+    data: {
+      isFinished: true,
+      // answers: contents,
+    }
   });
   return resp
 }
@@ -62,6 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   })
   answerIds = Array.from(new Set(answerIds))
   let resultArr = []
+  // let answerContents = []
   answerIds.map((val: number, key: number) => {
     resultArr.push([val, validations.filter(v => v.answerId === val).length])
   })
@@ -69,9 +74,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return first[1] - second[1]
   })
   resultArr.reverse()
+  // resultArr.map((val: any, key: any) => {
+  //   answerContents.push([req.body.answers.find(a => a.id === val).contents])
+  // })
+  // console.log(answerContents);
   await assignPlaces(resultArr)
   return new Promise((resolve, reject) => {
-    getPlace(req.body.answerId)
+    updateTheme(req.body.themeId)
       .then(response => {
         res.statusCode = 200
         res.setHeader('Content-Type', 'application/json');

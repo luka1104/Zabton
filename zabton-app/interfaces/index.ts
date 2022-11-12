@@ -5,6 +5,8 @@ export interface Theme {
   imagePath?: string
   type: number
   deadline: string
+  isFinished: boolean
+  answers: string[]
   Answer?: Answer[]
   Validation?: Validation[]
 }
@@ -17,6 +19,7 @@ export interface Answer {
   place?: number
   hasReceived: boolean
   hasMinted: boolean
+  getResult: boolean
   Validation?: Validation[]
 }
 

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from "lib/prisma";
 import { Theme } from 'interfaces/index'
 
-const postTheme = async (data: Theme) => {
+const postTheme = async (data: any) => {
     const resp = await prisma.theme.create({
       data: {
         userId: data.userId,

@@ -11,22 +11,21 @@ import { Theme, Answer } from 'interfaces'
 import { getStorageFileURL } from 'supabase/storage'
 import { prizeAmount } from 'constants/index'
 import { toast } from 'react-toastify'
-import type { GetServerSideProps } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import prisma from 'lib/prisma'
 
 type Props = {
   theme: Theme
-  answer: Answer
+  answers: Answer[]
 }
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const id = JSON.parse(context.query.id as string);
-  const themeId = JSON.parse(context.query.themeId as string);
-  const answerRaw = await prisma.answer.findUnique({
+  const themeId = JSON.parse(context.query.id as string);
+  const answersRaw = await prisma.answer.findMany({
     where: {
-      id: id,
+      themeId: themeId,
     },
   });
-  const answer = JSON.parse(JSON.stringify(answerRaw));
+  const answers = JSON.parse(JSON.stringify(answersRaw));
   const themeRaw = await prisma.theme.findUnique({
     where: {
       id: themeId,
@@ -36,17 +35,17 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   return {
     props: {
       theme,
-      answer,
+      answers,
     },
   };
 }
 
 interface PropTypes {
   theme: Theme
-  answer: Answer
+  answers: Answer[]
 }
 
-const View: React.FC<PropTypes> = ({ theme, answer }) => {
+const View: NextPage<PropTypes> = ({ theme, answers }) => {
   const router = useRouter()
   const finalRef = useRef(null)
   const { user } = useContext(AccountContext)
@@ -68,11 +67,10 @@ const View: React.FC<PropTypes> = ({ theme, answer }) => {
   }, []);
 
   const checkResult = async () => {
-    if(answer.place) return
     setLoading(true)
     const data = {
       'themeId': theme.id,
-      'answerId': answer.id,
+      'answers': answers,
     }
     const config = {
       headers: {
@@ -94,34 +92,6 @@ const View: React.FC<PropTypes> = ({ theme, answer }) => {
     })
   }
 
-  const handleMint = async () => {
-    setMintLoading(true)
-    const data = {
-      'address': user.address,
-      'theme': theme,
-      'answer': answer,
-    }
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }
-    return new Promise((resolve, reject) => {
-      axios.post('/api/tokens/mintBFT', data, config)
-      .then(response => {
-        if(response.status !== 200) throw Error("Server error")
-        resolve(response)
-        console.log(response.data.hash);
-        setMintLoading(false)
-        toast('NFTが発行されました！')
-      })
-      .catch(e => {
-        reject(e);
-        throw Error("Server error:" + e)
-      })
-    })
-  }
-
   useEffect(() => {
     if(theme.type === 2) return
     console.log(theme);
@@ -129,10 +99,10 @@ const View: React.FC<PropTypes> = ({ theme, answer }) => {
   }, [theme])
 
   useEffect(() => {
-    if(!answer.place && answer.getResult) checkResult()
+    checkResult()
     const deadlineDate = new Date(theme.deadline)
     setDate(deadlineDate)
-  }, [answer])
+  }, [answers])
 
   // useEffect(() => {
   //   if(!place) return
@@ -305,20 +275,24 @@ const View: React.FC<PropTypes> = ({ theme, answer }) => {
             </>
           )}
         </Box>
-        <Text
-          mt='10px'
-          w={window.innerWidth}
-          h='80px'
-          color='black'
-          borderRadius='0'
-          fontSize='30px'
-          textAlign='center'
-          fontWeight='bold'
-        >
-          {answer.contents}
-        </Text>
+        {theme.answers.map((val: string, key: number) => {
+          return (
+            <Text
+              mt='10px'
+              w={window.innerWidth}
+              h='80px'
+              color='black'
+              borderRadius='0'
+              fontSize='30px'
+              textAlign='center'
+              fontWeight='bold'
+            >
+              {val}
+            </Text>
+          )
+        })}
         <Center color='black' mt='5px' fontWeight='bold' fontSize='12px'>
-          {!answer.place && !place ? '集計中です！' : answer.place ? `${answer.place}位` : `${place}位`}｜ {`${date?.getFullYear()}.${date?.getMonth()}.${date?.getDay()}`}
+          {`${date?.getFullYear()}.${date?.getMonth()}.${date?.getDay()}`}
         </Center>
         <Center color='black' mt='20px' fontWeight='bold' fontSize='25px'>
           Let&apos;s Share!
