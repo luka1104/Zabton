@@ -20,14 +20,16 @@ model Theme {
 }
 
 model Answer {
-  id         Int          @id @default(autoincrement())
-  userId     Int
-  themeId    Int
-  contents   String
-  place      Int?
-  theme      Theme        @relation(fields: [themeId], references: [id], onDelete: Cascade)
-  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Validation Validation[]
+  id          Int          @id @default(autoincrement())
+  userId      Int
+  themeId     Int
+  contents    String
+  place       Int?
+  hasReceived Boolean      @default(false)
+  hasMinted   Boolean      @default(false)
+  theme       Theme        @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Validation  Validation[]
 }
 
 model User {
