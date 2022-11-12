@@ -430,8 +430,9 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
           <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setSelectedAnswer()}}>
             戻る
           </Button>
-          <Button disabled={answer.hasMinted || hasMinted} w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={handleMint}>
-            NFTを発行する
+          <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black'
+          borderRadius='30px' onClick={() => {answer.hasMinted || hasMinted ? router.push('/mypage/wallet') : handleMint}}>
+            {answer.hasMinted || hasMinted ? 'NFTを見る' : 'NFTを発行する'}
           </Button>
         </Center>
       </Box>

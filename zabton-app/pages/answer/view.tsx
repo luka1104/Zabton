@@ -134,11 +134,11 @@ const View: React.FC<PropTypes> = ({ theme, answer }) => {
     setDate(deadlineDate)
   }, [answer])
 
-  useEffect(() => {
-    if(!place) return
-    setZbtnLoading(true)
-    transfer(user.address, prizeAmount[place -1], setZbtnLoading)
-  }, [place])
+  // useEffect(() => {
+  //   if(!place) return
+  //   setZbtnLoading(true)
+  //   transfer(user.address, prizeAmount[place -1], setZbtnLoading)
+  // }, [place])
 
   return (
     <>
