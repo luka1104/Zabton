@@ -8,7 +8,7 @@ import { HiOutlineClipboardDocumentList } from 'react-icons/hi2'
 const Footer: React.FC = () => {
   return (
     <>
-      <Center maxW={{ base: '100vw', md: '100vw', lg: '25vw' }} bottom='0' position='fixed' w='100%' h='60px' bg='#F445BE' border='3px solid #242424' fontSize='2xl' color='black' gap={8}>
+      <Center maxW={{ base: '100vw', md: '100vw', lg: '25vw' }} bottom='0' position='fixed' w='100%' h='60px' bg='#F445BE' border='3px solid #242424' fontSize='2xl' color='black' gap={8} zIndex='overlay'>
         <NextLink href='/theme/create' passHref>
           <Icon fontSize='30px' as={RiQuestionnaireLine} />
         </NextLink>

@@ -232,7 +232,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
         <Box pt='20px'>
           {theme.type === 1 ? (
             <>
-              <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+              <Box w='100%' h={window.innerWidth} bg='white' border='2px solid black'>
                 <Center w='100%' h='100%' position='relative'>
                   <Image
                     src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
@@ -244,7 +244,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
             </>
           ) : theme.type === 2 ? (
             <>
-              <Box w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black' >
+              <Box w='100%' h={window.innerWidth} bg='white' border='2px solid black' >
                 <Center w='100%' h='100%' fontWeight='bold' fontSize='30px' textAlign='center' color='black'>
                   {theme.contents}
                 </Center>
@@ -252,7 +252,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
             </>
           ) : (
             <>
-              <Box position='relative' w={window.innerWidth} h={window.innerWidth} bg='white' border='2px solid black'>
+              <Box position='relative' w='100%' h={window.innerWidth} bg='white' border='2px solid black'>
                 <Center>
                   <Image
                     src={imagePath ? imagePath : 'https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=82a1493bfjwdf7s60z91zdcn2shhelixehwbsbke650n3kxp&rid=200w.gif&ct=g'}
