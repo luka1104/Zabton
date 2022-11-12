@@ -1,5 +1,5 @@
 import { ZbtnDetail } from 'interfaces'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Center, Box, Text } from '@chakra-ui/react'
 
 interface Props {
@@ -7,12 +7,6 @@ interface Props {
 }
 
 const WalletCard: React.FC<Props> = ({ detail }) => {
-  // const [date, setDate] = useState<Date>()
-
-  useEffect(() => {
-    // const date = new Date(detail.timestamp * 1000)
-    // setDate(date)
-  }, [detail])
   return (
     <>
       <Box>
