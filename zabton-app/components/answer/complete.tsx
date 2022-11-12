@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text, Image, useDisclosure } from '@chakra-ui/react'
+import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text, Image, useDisclosure, Link } from '@chakra-ui/react'
 import { BsFacebook, BsTelegram } from 'react-icons/bs'
 import { AiFillTwitterCircle } from 'react-icons/ai'
 import { AccountContext } from 'contexts/account'
@@ -197,7 +197,9 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
         </Center>
         <Center gap='2'>
           <Icon as={BsFacebook} fontSize='40px' color='#1977F2' />
-          <Icon as={AiFillTwitterCircle} fontSize='46px' color='#1C9BF0' onClick={() => {router.push(`http://twitter.com/share?url=https://zabton.vercel.app/validate?id=${selectedTheme.id}`)}} />
+          <Link href={`http://twitter.com/share?url=https://zabton.vercel.app/validate?id=${selectedTheme.id}`}>
+            <Icon as={AiFillTwitterCircle} fontSize='46px' color='#1C9BF0' />
+          </Link>
           <Icon as={BsTelegram} fontSize='40px' color='#26A4E2' />
         </Center>
         <Center>
