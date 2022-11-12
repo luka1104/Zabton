@@ -325,7 +325,7 @@ const View: React.FC<PropTypes> = ({ theme, answer }) => {
         </Center>
         <Center gap='2'>
           <Icon as={BsFacebook} fontSize='40px' color='#1977F2' />
-          <Icon as={AiFillTwitterCircle} fontSize='46px' color='#1C9BF0' />
+          <Icon as={AiFillTwitterCircle} fontSize='46px' color='#1C9BF0' onClick={() => {router.push(`http://twitter.com/share?url=https://zabton.vercel.app/answer/view?id=${answer.id}&themeId=${theme.id}`)}} />
           <Icon as={BsTelegram} fontSize='40px' color='#26A4E2' />
         </Center>
         <Center pt='20px' gap='5'>
