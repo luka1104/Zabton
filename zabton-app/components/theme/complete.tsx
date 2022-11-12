@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text, Image, useDisclosure } from '@chakra-ui/react'
+import { Box, Center, Button, Icon, Modal, ModalOverlay, ModalContent, ModalBody, Text, Image, useDisclosure, theme } from '@chakra-ui/react'
 import { BsFacebook, BsTelegram } from 'react-icons/bs'
 import { AiFillTwitterCircle } from 'react-icons/ai'
 import { AccountContext } from 'contexts/account'
@@ -55,7 +55,7 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
 
   useEffect(() => {
     setLoading(true)
-    transfer(user.address, 2, setLoading, setIsFinish)
+    transfer(user, 2, `お題${selectedType === 2 ? `『${contents}}』` : ''}を投稿した報酬として2ZBTN受け取りました。`, setLoading, setIsFinish)
   }, [])
 
   useEffect(() => {

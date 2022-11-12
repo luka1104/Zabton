@@ -1,10 +1,13 @@
 import axios from 'axios'
+import { User } from 'interfaces'
 import { toast } from 'react-toastify'
 
-export const transfer = async (address: string, amount: number, setLoading?: Function, setIsFinish?: Function) => {
+export const transfer = async (user: User, amount: number, contents: string, setLoading?: Function, setIsFinish?: Function) => {
   const data = {
-    'address': address,
+    'user': user,
     'amount': amount * (10 ** 8),
+    'contents': contents,
+    'timestamp': Date.now(),
   }
   const config = {
     headers: {

@@ -148,14 +148,14 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   const sendPrizes = async () => {
     setZbtnLoading(true)
     handleAnswerUpdate()
-    transfer(user.address, prizeAmount[place -1], setZbtnLoading, setIsFinish)
+    transfer(user, prizeAmount[place -1], `ボケ『${answer.contents}』が${place}位を獲得した報酬として${prizeAmount[place -1]}ZBTN受け取りました。`, setZbtnLoading, setIsFinish)
     addExp(prizeExp[place - 1])
   }
 
   const sendPrizesAfter = async () => {
     setZbtnLoading(true)
     handleAnswerUpdate()
-    transfer(user.address, prizeAmount[answer.place -1], setZbtnLoading, setIsFinish)
+    transfer(user, prizeAmount[answer.place -1], `ボケ『${answer.contents}』が${answer.place}位を獲得した報酬として${prizeAmount[answer.place -1]}ZBTN受け取りました。`, setZbtnLoading, setIsFinish)
     addExp(prizeExp[answer.place - 1])
   }
 

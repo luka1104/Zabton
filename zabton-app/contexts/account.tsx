@@ -125,7 +125,7 @@ export const AccountProvider = ({ children }: Props) => {
 
   const getBalance = async () => {
     const balance = await getZBTN(address)
-    setZbtn(Math.floor(parseInt(balance._hex, 16) / (10 ** 8)))
+    setZbtn(parseInt(balance._hex, 16) / (10 ** 8))
   }
 
   useEffect(() => {

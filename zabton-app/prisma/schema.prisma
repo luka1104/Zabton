@@ -63,11 +63,12 @@ model Validation {
 }
 
 model Notification {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   userId    Int
   contents  String
   timestamp Int
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isRead    Boolean @default(false)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model zbtnDetail {

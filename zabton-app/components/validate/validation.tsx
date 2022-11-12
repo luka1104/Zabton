@@ -50,11 +50,11 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
     return Math.floor(timeLeft)
   }
 
-  const handleTransfer = () => {
+  const handleTransfer = (id: number) => {
     if(user.validateLeft <= 0) {
       toast('審査上限に達したためZBTNは発行されません')
     } else {
-      transfer(user.address, 0.1)
+      transfer(user, 0.1, `ボケ『${answers.find(a => a.id === id).contents}』を審査した報酬として0.1ZBTNを受け取りました。`)
     }
   }
 
@@ -286,7 +286,7 @@ const Validation: React.FC<Props> = ({ setStep, selectedTheme, imagePath, setIma
                       colorScheme='pink'
                       borderRadius='30px'
                       border='1px solid black'
-                      onClick={() => (handleSubmit(val.id), handleTransfer(), sliderRef.current ? sliderRef.current.slickNext() : null)}
+                      onClick={() => (handleSubmit(val.id), handleTransfer(val.id), sliderRef.current ? sliderRef.current.slickNext() : null)}
                     >
                       ええやん
                     </Button>

@@ -28,7 +28,7 @@ const Complete: React.FC<Props> = ({ selectedTheme, contents, preview }) => {
 
   useEffect(() => {
     setLoading(true)
-    transfer(user.address, 1, setLoading, setIsFinish)
+    transfer(user, 1, `ボケ『${contents}』を投稿した報酬として1ZBTN受け取りました。`, setLoading, setIsFinish)
   }, [])
 
   useEffect(() => {

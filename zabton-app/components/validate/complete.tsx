@@ -24,7 +24,7 @@ const Complete: React.FC<Props> = ({ selectedTheme, imagePath, answers, answerId
 
   useEffect(() => {
     setLoading(true)
-    transfer(user.address, 1, setLoading)
+    // transfer(user, 1, `ボケ${}`, setLoading)
   }, [])
 
   return (
