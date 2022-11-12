@@ -51,4 +51,13 @@ export interface Notification {
   userId: number
   contents: string
   timestamp: number
+  isRead: boolean
+}
+
+export interface ZbtnDetail {
+  id: number
+  userId: number
+  contents: string
+  timestamp: number
+  amount: number
 }

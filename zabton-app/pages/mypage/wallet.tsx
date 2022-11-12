@@ -6,9 +6,29 @@ import type { NextPage } from "next";
 import Card from 'components/mypage/card';
 import ViewNFT from 'components/mypage/viewNFT';
 import { useRouter } from 'next/router'
+import type { GetServerSideProps } from "next";
+import prisma from 'lib/prisma'
+import { ZbtnDetail } from 'interfaces'
+import WalletCard from 'components/mypage/walletCard';
 
+type Props = {
+  details: ZbtnDetail[]
+}
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const detailsRaw = await prisma.zbtnDetail.findMany()
+  const details = JSON.parse(JSON.stringify(detailsRaw)).reverse()
+  return {
+    props: {
+      details,
+    },
+  };
+}
 
-const Wallet: NextPage = () => {
+interface PropTypes {
+  details: ZbtnDetail[]
+}
+
+const Wallet: NextPage<PropTypes> = ({ details }) => {
   const router = useRouter()
   const { zbtn, user } = useContext(AccountContext)
   const [BFTs, setBFTs] = useState<any[]>()
@@ -50,10 +70,21 @@ const Wallet: NextPage = () => {
         <Center color='black' mt='40px' fontWeight='bold' fontSize='2xl'>
           History
         </Center>
-        <Center color='black' mt='40px' fontWeight='bold' fontSize='xl'>
-          {/* 履歴表示 */}
-          履歴はありません
-        </Center>
+        <Box color='black' mt='10px' fontWeight='bold' fontSize='xl'>
+          {details && user && details.filter(d => d.userId === user.id).slice(0, 3).map((val: ZbtnDetail, key: number) => {
+            return (
+              <Box key={key}>
+                <WalletCard detail={val} />
+              </Box>
+            )
+          })}
+          {details.length === 0 && (
+            <>
+              履歴はありません
+            </>
+          )}
+
+        </Box>
         <Center>
           <Button
             disabled

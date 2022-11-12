@@ -66,7 +66,7 @@ model Notification {
   id        Int     @id @default(autoincrement())
   userId    Int
   contents  String
-  timestamp Int
+  timestamp String
   isRead    Boolean @default(false)
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -76,6 +76,6 @@ model zbtnDetail {
   userId    Int
   contents  String
   amount    Int
-  timestamp Int
+  timestamp String
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
