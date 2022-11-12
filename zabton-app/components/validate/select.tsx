@@ -16,7 +16,7 @@ const Select: NextPage<PropTypes> = ({ themes, setStep, selectedTheme, setSelect
   const [width, setWidth] = useState<number>(0)
 
   useEffect(() => {
-    setWidth(window.innerWidth * 0.5)
+    setWidth(window.innerWidth * 0.48)
   }, [])
 
   useEffect(() => {
