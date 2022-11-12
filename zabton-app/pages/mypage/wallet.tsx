@@ -11,7 +11,7 @@ import prisma from 'lib/prisma'
 import { ZbtnDetail } from 'interfaces'
 import WalletCard from 'components/mypage/walletCard';
 
-type Props = {
+interface Props  {
   details: ZbtnDetail[]
 }
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
