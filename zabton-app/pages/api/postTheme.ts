@@ -42,7 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const resp = await postTheme(data)
   console.log(resp);
   if(resp) {
-      res.status(200).json({"message":"Added successfully"})
+      res.status(200).json({"theme": resp})
   } else {
       res.status(500).json({"message":"Sorry, Something went wrong"})
   }

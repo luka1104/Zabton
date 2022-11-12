@@ -11,9 +11,10 @@ interface Props {
   contents?: string
   deadline: number
   setDeadline: Function
+  setTheme: Function
 }
 
-const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, deadline, setDeadline }) => {
+const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, deadline, setDeadline, setTheme }) => {
   const { user } = useContext(AccountContext)
   const [preview, setPreview] = useState<string>('')
 
@@ -71,6 +72,7 @@ const Preview: React.FC<Props> = ({ setStep, selectedType, image, contents, dead
         .then(response => {
           if(response.status !== 200) throw Error("Server error")
           resolve(response)
+          setTheme(response.data.theme)
           setStep(3)
         })
         .catch(e => {

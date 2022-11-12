@@ -4,6 +4,7 @@ import Select from 'components/theme/select'
 import InputForm from 'components/theme/input'
 import Preview from 'components/theme/preview'
 import Complete from 'components/theme/complete'
+import { Theme } from 'interfaces'
 
 const Create: NextPage = () => {
   const [step, setStep] = useState<number>(0)
@@ -12,6 +13,7 @@ const Create: NextPage = () => {
   const [contents, setContents] = useState<string>('')
   const [preview, setPreview] = useState<string>('')
   const [deadline, setDeadline] = useState<number>(2)
+  const [theme, setTheme] = useState<Theme>()
 
   return (
     <>
@@ -39,6 +41,7 @@ const Create: NextPage = () => {
           contents={contents}
           deadline={deadline}
           setDeadline={setDeadline}
+          setTheme={setTheme}
         />
       ) : step === 3 ? (
         <Complete
@@ -46,6 +49,7 @@ const Create: NextPage = () => {
           image={image}
           contents={contents}
           deadline={deadline}
+          theme={theme}
         />
       ) : null }
     </>

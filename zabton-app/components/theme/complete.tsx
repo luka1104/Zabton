@@ -9,15 +9,17 @@ import PacmanLoader from "react-spinners/PacmanLoader"
 import { transfer } from 'utils/transferToken'
 import ProgressBar from '@ramonak/react-progress-bar'
 import { expRequired } from 'constants/index'
+import { Theme } from 'interfaces'
 
 interface Props {
   selectedType: number
   image?: Blob
   contents?: string
   deadline: number
+  theme: Theme
 }
 
-const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) => {
+const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline, theme }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const finalRef = useRef(null)
@@ -210,7 +212,7 @@ const Complete: React.FC<Props> = ({ selectedType, image, contents, deadline }) 
         </Center>
         <Center gap='2'>
           <Icon as={BsFacebook} fontSize='40px' color='#1977F2' />
-          <Icon as={AiFillTwitterCircle} fontSize='46px' color='#1C9BF0' />
+          <Icon as={AiFillTwitterCircle} fontSize='46px' color='#1C9BF0' onClick={() => {router.push(`http://twitter.com/share?url=https://zabton.vercel.app/answer/create?id=${theme.id}`)}} />
           <Icon as={BsTelegram} fontSize='40px' color='#26A4E2' />
         </Center>
         <Center>
