@@ -96,7 +96,29 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
       .then(response => {
         if(response.status !== 200) throw Error("Server error")
         resolve(response)
-        window.location.reload()
+        getUser()
+      })
+      .catch(e => {
+        reject(e);
+        throw Error("Server error:" + e)
+      })
+    })
+  }
+
+  const handleLevelUp = async () => {
+    if(!user) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    return new Promise((resolve, reject) => {
+      axios.post('/api/levelUp', user, config)
+      .then(response => {
+        if(response.status !== 200) throw Error("Server error")
+        resolve(response)
+        setLevelModal(false)
+        getUser()
       })
       .catch(e => {
         reject(e);
@@ -275,7 +297,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                     <Button w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setLevelModal(false)}}>
                       また今度
                     </Button>
-                    <Button disabled={zbtn < upgradeFee[user.level] || user.exp < expRequired[user.level]} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px'>
+                    <Button disabled={zbtn < upgradeFee[user.level] || user.exp < expRequired[user.level]} w='40%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={handleLevelUp}>
                       レベルアップ
                     </Button>
                   </Center>
@@ -285,7 +307,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
             <Center color='black' pt='40px' justifyContent='space-between' w='80%' m='0 auto'>
               <Text fontWeight='bold' fontSize='20px'>{user?.nickname}</Text>
               <Flex gap='2'>
-                <Button border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {setLevelModal(true)}}>
+                <Button border={user.exp >= expRequired[user.level] ? '1px solid #F244BE' : '1px solid black'} bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' onClick={() => {setLevelModal(true)}}>
                   Lv.{user.level}
                 </Button>
                 <Button border='1px solid black' bg='white' borderRadius='0' fontWeight='bold' fontSize='20px' w='20px' onClick={() => {router.replace('/mypage/notifications')}}>
