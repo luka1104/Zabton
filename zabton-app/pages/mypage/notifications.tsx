@@ -49,7 +49,7 @@ const Notifications: NextPage<PropTypes> = ({ notifications }) => {
             )
           )}
         </Box>
-        <Center>
+        <Center pb='30px'>
           <Button
             color='black'
             bg='white'
@@ -58,7 +58,7 @@ const Notifications: NextPage<PropTypes> = ({ notifications }) => {
             w='90%'
             h='60px'
             fontSize='xl'
-            mt='100px'
+            mt='50px'
             onClick={() => {router.replace('/mypage')}}
           >
             戻る

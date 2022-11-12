@@ -286,6 +286,7 @@ const View: NextPage<PropTypes> = ({ theme, answers }) => {
               fontSize='30px'
               textAlign='center'
               fontWeight='bold'
+              key={key}
             >
               {val}
             </Text>
