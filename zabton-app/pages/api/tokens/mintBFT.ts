@@ -1,5 +1,6 @@
 import { providers, Wallet, Contract, utils } from 'ethers'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import prisma from "lib/prisma";
 
 const PRIVATE_KEY = process.env.NEXT_PUBLIC_PRIVATE_KEY || "0x";
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY || "hogehoge";
@@ -15,6 +16,18 @@ const mint = async (address: string, tokenUri: any) => {
   return receipt
 }
 
+const updateAnswer = async (id: number) => {
+  const resp = await prisma.answer.update({
+    where: {
+      id: id
+    },
+    data: {
+      hasMinted: true,
+    },
+  });
+  return resp
+}
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log('REQ.BODY', req.body);
   const data = {
@@ -26,7 +39,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   console.log(JSON.stringify(data));
   const receipt = await mint(req.body.address, JSON.stringify(data))
-  if(receipt.hash) res.status(200).json({ hash: receipt.hash })
+  if(receipt.hash) {
+    const resp = updateAnswer(req.body.answer.id)
+    if(resp) res.status(200).json({ hash: receipt.hash })
+  }
   if(!receipt.hash) res.status(500)
 };
 export default handler;

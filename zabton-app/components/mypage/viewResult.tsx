@@ -33,6 +33,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isFinish, setIsFinish] = useState(false)
   const [exp, setExp] = useState<number>(user.exp)
+  const [hasMinted, setHasMinted] = useState<boolean>(false)
 
   const handleRenderImage = useCallback(async () => {
     if (!theme.imagePath) return;
@@ -71,11 +72,11 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
     })
   }
 
-  const addExp = async () => {
+  const addExp = async (amount: number) => {
     if(!answer) return
     const data = {
       userId: user.id,
-      amount: prizeExp[place - 1],
+      amount: amount,
     }
     const config = {
       headers: {
@@ -115,12 +116,47 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
         console.log(response.data.hash);
         setMintLoading(false)
         toast('NFTが発行されました！')
+        setHasMinted(true)
       })
       .catch(e => {
         reject(e);
         throw Error("Server error:" + e)
       })
     })
+  }
+
+  const handleAnswerUpdate = async () => {
+    if(!answer) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    return new Promise((resolve, reject) => {
+      axios.post('/api/updateAnswerStatus', answer.id, config)
+      .then(response => {
+        if(response.status !== 200) throw Error("Server error")
+        resolve(response)
+      })
+      .catch(e => {
+        reject(e);
+        throw Error("Server error:" + e)
+      })
+    })
+  }
+
+  const sendPrizes = async () => {
+    setZbtnLoading(true)
+    handleAnswerUpdate()
+    transfer(user.address, prizeAmount[place -1], setZbtnLoading, setIsFinish)
+    addExp(prizeExp[place - 1])
+  }
+
+  const sendPrizesAfter = async () => {
+    setZbtnLoading(true)
+    handleAnswerUpdate()
+    transfer(user.address, prizeAmount[answer.place -1], setZbtnLoading, setIsFinish)
+    addExp(prizeExp[answer.place - 1])
   }
 
   useEffect(() => {
@@ -136,13 +172,18 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
 
   useEffect(() => {
     if(!place) return
-    setZbtnLoading(true)
-    transfer(user.address, prizeAmount[place -1], setZbtnLoading, setIsFinish)
-    addExp()
+    sendPrizes()
   }, [place])
 
   useEffect(() => {
-    if(isFinish) {
+    if(answer.place && !answer.hasReceived) sendPrizesAfter()
+  }, [])
+
+  useEffect(() => {
+    if(isFinish && answer.place && !answer.hasReceived) {
+      onOpen()
+      setInterval(setExp, 500, user.exp + prizeExp[answer.place - 1])
+    } else if(isFinish) {
       onOpen()
       setInterval(setExp, 500, user.exp + prizeExp[place - 1])
     }
@@ -195,7 +236,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
             <ModalBody paddingInline='0'>
               <Box mt='20px'>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
-                  {place}位だったので{prizeAmount[place -1]}ZBTN付与！
+                  {place ? place : answer.place}位だったので{prizeAmount[place ? place : answer.place -1]}ZBTN付与！
                   ZBTNを用意しています！
                 </Text>
                 <Center w='80%' mt='40px' mb='40px'>
@@ -234,8 +275,8 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
             <ModalBody paddingInline='0'>
               <Box mt='20px'>
                 <Text color='black' textAlign='center' fontWeight='bold' fontSize='25px'>
-                  {place}位だったので
-                  {prizeExp[place - 1]}EXPが付与されました！！
+                  {place ? place : answer.place}位だったので
+                  {prizeExp[place ? place : answer.place - 1]}EXPが付与されました！！
                 </Text>
                 <Center w='100%' mt='40px' mb='20px'>
                   <ProgressBar
@@ -252,7 +293,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
                   />
                 </Center>
                 <Center color='black' fontWeight='bold'>
-                  レベルアップまで：{expRequired[user.level] - exp}
+                  レベルアップまで：{expRequired[user.level] < exp ? 'レベルアップ可能！' : expRequired[user.level] - exp}
                 </Center>
                 <Center>
                   <Button
@@ -389,7 +430,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
           <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={() => {setSelectedAnswer()}}>
             戻る
           </Button>
-          <Button w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={handleMint}>
+          <Button disabled={answer.hasMinted || hasMinted} w='45%' h='60px' fontSize='20px' color='black' bg='#F5F5F5' border='1px solid black' borderRadius='30px' onClick={handleMint}>
             NFTを発行する
           </Button>
         </Center>

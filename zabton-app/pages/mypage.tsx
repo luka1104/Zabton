@@ -361,7 +361,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                       <Box key={key} mt='5px' onClick={checkDeadline(themes.find(t => t.id === val.themeId).deadline) ? null : () => setSelectedAnswer(val)}>
                         <Card
                           theme={themes.find(t => t.id === val.themeId)}
-                          w={window.innerWidth * 0.5}
+                          w={window.innerWidth * 0.48}
                           notFinished={JSON.stringify(checkDeadline(themes.find(t => t.id === val.themeId).deadline))}
                           key={key}
                         />
@@ -408,7 +408,7 @@ const Mypage: NextPage<PropTypes> = ({ themes, answers }) => {
                     return (
                       <Card
                         theme={val}
-                        w={window.innerWidth * 0.5}
+                        w={window.innerWidth * 0.48}
                         key={key}
                       />
                     )
