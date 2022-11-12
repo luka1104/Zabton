@@ -15,6 +15,8 @@ export interface Answer {
   contents: string
   themeId: number
   place?: number
+  hasReceived: boolean
+  hasMinted: boolean
   Validation?: Validation[]
 }
 
