@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from "lib/prisma";
-import { answerDayCap } from 'constants/index';
+import { answerDayCap, themeDayCap, validateDayCap } from 'constants/index';
 import { User } from '.prisma/client';
 
 const postAnswer = async (user: User) => {
@@ -9,9 +9,9 @@ const postAnswer = async (user: User) => {
       id: user.id,
     },
     data: {
-      answerLeft: {
-        increment: answerDayCap[user.level],
-      }
+      themeLeft: themeDayCap[user.level],
+      answerLeft: answerDayCap[user.level],
+      validateLeft: validateDayCap[user.level],
     },
   })
   return resp

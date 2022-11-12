@@ -29,7 +29,7 @@ const ViewResult: React.FC<Props> = ({ theme, answer, setSelectedAnswer }) => {
   const [mintLoading, setMintLoading] = useState<boolean>(false)
   const [imagePath, setImagePath] = useState<string>('')
   const [date, setDate] = useState<Date>()
-  const [place, setPlace] = useState<number>(answer.place)
+  const [place, setPlace] = useState<number>()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isFinish, setIsFinish] = useState(false)
   const [exp, setExp] = useState<number>(user.exp)
